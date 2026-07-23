@@ -32,12 +32,28 @@ export const ProductApp = () => {
   }, [products, searchTerm, selectedCategory]);
 
   const handleChooseItem = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === product.id);
+
+      if (existingItem) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
   };
 
   const cartTotal = useMemo(() => {
     console.log("Đang tính tiền");
-    return cart.reduce((total, item) => total + item.price, 0);
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  }, [cart]);
+
+  const totalItems = useMemo(() => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
   }, [cart]);
 
   return (
@@ -51,17 +67,13 @@ export const ProductApp = () => {
           type="text"
           placeholder="Tìm kiếm sản phẩm..."
           value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="flex-1 px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black transition"
         />
 
         <select
           value={selectedCategory}
-          onChange={(e) => {
-            setSelectedCategory(e.target.value);
-          }}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           className="md:w-48 px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-gray-500 transition"
         >
           <option value="All">Tất cả</option>
@@ -115,18 +127,26 @@ export const ProductApp = () => {
 
         <div className="p-4 border-2 h-fit">
           <h3 className="text-md font-medium text-gray-700 mb-3 border-b border-gray-200 pb-2">
-            Giỏ hàng ({cart.length})
+            Giỏ hàng ({totalItems})
           </h3>
 
           <ul className="space-y-2 mb-4 max-h-60 overflow-y-auto">
-            {cart.map((item, index) => (
+            {cart.map((item) => (
+              // 3. Cập nhật key và hiển thị UI
               <li
-                key={`${item.id}-${index}`}
+                key={item.id}
                 className="flex justify-between items-center text-sm bg-white p-2 border border-gray-200 rounded"
               >
-                <span className="text-gray-800 truncate pr-2">{item.name}</span>
+                <span className="text-gray-800 truncate pr-2">
+                  {item.name}
+                  {item.quantity > 1 && (
+                    <span className="ml-2 font-bold text-blue-600">
+                      x{item.quantity}
+                    </span>
+                  )}
+                </span>
                 <span className="text-gray-600 font-medium whitespace-nowrap">
-                  ${item.price}
+                  ${item.price * item.quantity}
                 </span>
               </li>
             ))}
