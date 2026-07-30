@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@theme {
+  --color-tuychon: #232323;
+  --color-check: #23c235;
+}
