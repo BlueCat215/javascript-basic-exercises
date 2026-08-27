@@ -5,7 +5,7 @@ import {
   updateProduct,
   patchItem,
   deleteProduct,
-} from "../api/productService";
+} from "../api/service/productService";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 

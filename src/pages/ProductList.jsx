@@ -1,5 +1,7 @@
 import { useMemo, useState, useCallback } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import { logout as logoutApi } from "../api/service/authService";
 import {
   useProducts,
   useProductDetail,
@@ -20,6 +22,7 @@ import {
 } from "../components/products/StatusState";
 
 import { CartDrawer } from "../components/cart/CartDrawer";
+import api from "../api/config/config";
 
 const initialForm = {
   title: "",
@@ -27,6 +30,16 @@ const initialForm = {
   description: "",
   image: "",
   category: "",
+};
+
+//Test
+const handleTestAuth = async () => {
+  try {
+    const data = await api.get("http://localhost:4000/auth/me");
+    console.log("Thông tin user:", data);
+  } catch (e) {
+    console.log("Lỗi:", e.message);
+  }
 };
 
 export default function ListProduct() {
@@ -46,6 +59,10 @@ export default function ListProduct() {
     usePatchPriceMutation();
   const { mutate: deleteProductMutate } = useDeleteMutation();
 
+  const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+
   const filteredProducts = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return products;
@@ -55,6 +72,18 @@ export default function ListProduct() {
         p.category?.toLowerCase().includes(q),
     );
   }, [products, query]);
+
+  const handleLogout = async () => {
+    try {
+      const refreshTokenValue = localStorage.getItem("refreshToken");
+      await logoutApi(refreshTokenValue);
+    } catch (e) {
+      // vẫn clear local dù API lỗi
+    } finally {
+      clearAuth();
+      navigate("/login");
+    }
+  };
 
   const handleInputChange = useCallback((e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -136,6 +165,7 @@ export default function ListProduct() {
 
   return (
     <div className="min-h-screen bg-paper">
+      <button onClick={handleTestAuth}>Test Auth</button>
       <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
         <ProductToolbar
           query={query}
@@ -144,6 +174,15 @@ export default function ListProduct() {
           total={products.length}
           onOpenCart={handleOpenCart}
         />
+        <div className="flex justify-end items-center gap-3 mb-2">
+          <span className="text-sm text-ink/60">Xin chào, {user?.name}</span>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-rust hover:underline"
+          >
+            Đăng xuất
+          </button>
+        </div>
 
         {isLoading && <LoadingState />}
         {isError && <ErrorState message={error?.message || "Đã xảy ra lỗi"} />}

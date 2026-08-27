@@ -1,4 +1,4 @@
-import api from "./config";
+import api from "../config/config";
 
 const getProducts = (query = "") => {
   return api.get(`/products${query}`);

@@ -1,6 +1,6 @@
 import axios from "axios";
+import { useAuthStore } from "../../store/useAuthStore";
 
-// 1. Tạo một instance của Axios
 const api = axios.create({
   baseURL: "https://fakestoreapi.com",
   headers: {
@@ -47,7 +47,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // --- XỬ LÝ LỖI 401: TOKEN HẾT HẠN ---
+    // --- xử lí lỗi 401: TOKEN HẾT HẠN ---
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -60,16 +60,14 @@ api.interceptors.response.use(
           .catch((err) => Promise.reject(err));
       }
 
-      // Đánh dấu bắt đầu Refresh Token
-      originalRequest._retry = true;
+      originalRequest._retry = true; // đánh dấu đã thử lại
       isRefreshing = true;
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
 
-        // Fake: không tồn tại endpoint
         const res = await axios.post(
-          "https://fakestoreapi.com/auth/refresh-token",
+          "http://localhost:4000/auth/refresh-token",
           { refreshToken },
         );
 
@@ -77,18 +75,15 @@ api.interceptors.response.use(
 
         // Ghi đè token mới vào bộ nhớ
         localStorage.setItem("accessToken", newAccessToken);
-
-        // Phát hành token mới cho toàn bộ các request đang nằm trong hàng đợi
         processQueue(null, newAccessToken);
 
         // Chạy lại chính request hiện tại
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
-        // Nếu Refresh Token cũng hỏng -> Xóa sạch và Logout
+        // Nếu Refresh Token cũng hỏng -> xóa sạch và Logout
         processQueue(refreshError, null);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        useAuthStore.getState().clearAuth();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {
