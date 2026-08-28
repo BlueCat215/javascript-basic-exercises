@@ -1,6 +1,6 @@
 import { ProductCard } from "./ProductCard";
 
-export const ProductGrid = ({ products, onEdit, onDelete }) => {
+export const ProductGrid = ({ products, onEdit, onDelete, isAdmin }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {products.map((product) => (
@@ -9,6 +9,7 @@ export const ProductGrid = ({ products, onEdit, onDelete }) => {
           product={product}
           onEdit={onEdit}
           onDelete={onDelete}
+          isAdmin={isAdmin}
         />
       ))}
     </div>

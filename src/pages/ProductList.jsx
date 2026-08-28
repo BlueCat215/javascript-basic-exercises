@@ -1,7 +1,8 @@
 import { useMemo, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
-import { logout as logoutApi } from "../api/service/authService";
+import { logout as logoutApi } from "../api/services/authService";
 import {
   useProducts,
   useProductDetail,
@@ -22,7 +23,6 @@ import {
 } from "../components/products/StatusState";
 
 import { CartDrawer } from "../components/cart/CartDrawer";
-import api from "../api/config/config";
 
 const initialForm = {
   title: "",
@@ -30,16 +30,6 @@ const initialForm = {
   description: "",
   image: "",
   category: "",
-};
-
-//Test
-const handleTestAuth = async () => {
-  try {
-    const data = await api.get("http://localhost:4000/auth/me");
-    console.log("Thông tin user:", data);
-  } catch (e) {
-    console.log("Lỗi:", e.message);
-  }
 };
 
 export default function ListProduct() {
@@ -78,7 +68,7 @@ export default function ListProduct() {
       const refreshTokenValue = localStorage.getItem("refreshToken");
       await logoutApi(refreshTokenValue);
     } catch (e) {
-      // vẫn clear local dù API lỗi
+      console.log(e);
     } finally {
       clearAuth();
       navigate("/login");
@@ -117,20 +107,20 @@ export default function ListProduct() {
     const payload = { ...form, price: Number(form.price) || 0 };
     addProductMutate(payload, {
       onSuccess: () => {
-        alert("POST thành công");
+        toast.success("POST thành công");
         handleCloseDrawer();
       },
     });
   }, [form, addProductMutate, handleCloseDrawer]);
 
   const handleUpdate = useCallback(() => {
-    if (!selectedId) return alert("Vui lòng chọn sản phẩm để sửa!");
+    if (!selectedId) return toast.error("Vui lòng chọn sản phẩm để sửa!");
     const payload = { ...form, price: Number(form.price) || 0 };
     updateProductMutate(
       { id: selectedId, obj: payload },
       {
         onSuccess: () => {
-          alert("PUT thành công");
+          toast.success("PUT thành công");
           handleCloseDrawer();
         },
       },
@@ -138,12 +128,12 @@ export default function ListProduct() {
   }, [selectedId, form, updateProductMutate, handleCloseDrawer]);
 
   const handlePatchPrice = useCallback(() => {
-    if (!selectedId) return alert("Vui lòng chọn sản phẩm để sửa giá!");
+    if (!selectedId) return toast.error("Vui lòng chọn sản phẩm để sửa giá!");
     patchPriceMutate(
       { id: selectedId, item: { price: Number(form.price) || 0 } },
       {
         onSuccess: () => {
-          alert("PATCH thành công");
+          toast.success("PATCH thành công");
           handleCloseDrawer();
         },
       },
@@ -154,7 +144,7 @@ export default function ListProduct() {
     (id) => {
       if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) return;
       deleteProductMutate(id, {
-        onSuccess: () => alert("DELETE thành công"),
+        onSuccess: () => toast.success("DELETE thành công"),
       });
     },
     [deleteProductMutate],
@@ -165,7 +155,7 @@ export default function ListProduct() {
 
   return (
     <div className="min-h-screen bg-paper">
-      <button onClick={handleTestAuth}>Test Auth</button>
+      <Toaster position="top-center" />
       <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
         <ProductToolbar
           query={query}
@@ -173,9 +163,12 @@ export default function ListProduct() {
           onCreate={handleOpenCreate}
           total={products.length}
           onOpenCart={handleOpenCart}
+          isAdmin={user?.role === "admin"}
         />
         <div className="flex justify-end items-center gap-3 mb-2">
-          <span className="text-sm text-ink/60">Xin chào, {user?.name}</span>
+          <span className="text-sm text-ink/60">
+            Xin chào, {user?.name?.firstname} {user?.name?.lastname}
+          </span>
           <button
             onClick={handleLogout}
             className="text-sm text-rust hover:underline"
@@ -194,10 +187,10 @@ export default function ListProduct() {
             products={filteredProducts}
             onEdit={handleEditWithData}
             onDelete={handleDelete}
+            isAdmin={user?.role === "admin"}
           />
         )}
       </div>
-
       <ProductDrawer
         isOpen={isDrawerOpen}
         selectedId={selectedId}
@@ -212,7 +205,6 @@ export default function ListProduct() {
         isPatching={isPatching}
         productDetail={productDetail}
       />
-
       <CartDrawer isOpen={isCartOpen} onClose={handleCloseCart} />
     </div>
   );

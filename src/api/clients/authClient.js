@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const authApi = axios.create({
+const authClient = axios.create({
   baseURL: "http://localhost:4000",
   headers: { "Content-Type": "application/json" },
 });
 
-authApi.interceptors.response.use(
+authClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
     if (error.response) {
@@ -18,4 +18,5 @@ authApi.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-export default authApi;
+
+export default authClient;

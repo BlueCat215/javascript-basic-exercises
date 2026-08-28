@@ -6,6 +6,7 @@ export const ProductToolbar = ({
   onCreate,
   total,
   onOpenCart,
+  isAdmin,
 }) => {
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-line">
@@ -31,12 +32,14 @@ export const ProductToolbar = ({
 
         {/* Nhóm nút hành động */}
         <div className="flex gap-2 w-full sm:w-auto">
-          <button
-            onClick={onCreate}
-            className="btn-primary flex-1 sm:flex-none whitespace-nowrap"
-          >
-            + Thêm mới
-          </button>
+          {isAdmin && (
+            <button
+              onClick={onCreate}
+              className="btn-primary flex-1 sm:flex-none whitespace-nowrap"
+            >
+              + Thêm mới
+            </button>
+          )}
 
           {/* Nút Giỏ hàng được tích hợp trực tiếp, co giãn chuẩn theo mobile */}
           <div className="shrink-0">

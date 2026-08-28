@@ -1,15 +1,10 @@
 import { useCartStore } from "../../store/useCartStore";
 
-export const ProductCard = ({ product, onEdit, onDelete }) => {
+export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
   const { id, title, price, image, category } = product;
   const addItem = useCartStore((state) => state.addItem);
   return (
     <article className="tag-card relative bg-white border border-line rounded-tag flex flex-col">
-      <span
-        className="absolute top-2.5 left-2.5 w-2 h-2 rounded-full bg-paper border border-line"
-        aria-hidden="true"
-      />
-
       <div className="p-4 flex-1 flex flex-col">
         <span className="font-mono text-[10px] uppercase tracking-widest text-ink/40 pl-4">
           {category || "Chưa phân loại"}
@@ -36,20 +31,22 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
         </div>
       </div>
 
-      <div className="flex border-t border-line divide-x divide-line">
-        <button
-          onClick={() => onEdit(product)}
-          className="flex-1 py-2 text-xs font-medium text-ink hover:bg-paper transition-colors"
-        >
-          Sửa
-        </button>
-        <button
-          onClick={() => onDelete(id)}
-          className="flex-1 py-2 text-xs font-medium text-rust hover:bg-rust/5 transition-colors"
-        >
-          Xóa
-        </button>
-      </div>
+      {isAdmin && (
+        <div className="flex border-t border-line divide-x divide-line">
+          <button
+            onClick={() => onEdit(product)}
+            className="flex-1 py-2 text-xs font-medium text-ink hover:bg-paper transition-colors"
+          >
+            Sửa
+          </button>
+          <button
+            onClick={() => onDelete(id)}
+            className="flex-1 py-2 text-xs font-medium text-rust hover:bg-rust/5 transition-colors"
+          >
+            Xóa
+          </button>
+        </div>
+      )}
 
       <div className="flex border-t border-line divide-x divide-line">
         <button
