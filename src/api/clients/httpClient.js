@@ -3,7 +3,7 @@ import { attachRequestInterceptor } from "../interceptors/requestInterceptor";
 import { attachResponseInterceptor } from "../interceptors/responseInterceptor";
 
 const httpClient = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: import.meta.env.VITE_SERVER_URL,
   headers: {
     "Content-Type": "application/json",
   },
