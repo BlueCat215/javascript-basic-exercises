@@ -5,16 +5,53 @@ const { authenticateToken, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 const products = new JsonCollection("products.json");
 
-// GET /products?limit=5&sort=asc  -> giống fakestoreapi
+// GET
 router.get("/", (req, res) => {
   let items = products.findAll();
 
-  const { limit, sort } = req.query;
-  if (sort === "asc") items = [...items].sort((a, b) => a.id - b.id);
-  if (sort === "desc") items = [...items].sort((a, b) => b.id - a.id);
-  if (limit) items = items.slice(0, Number(limit));
+  const {
+    q,
+    category,
+    minPrice,
+    maxPrice,
+    sort,
+    page = 1,
+    pageSize = 12,
+  } = req.query;
 
-  res.json(items);
+  if (q) {
+    const query = q.toLowerCase();
+    items = items.filter((p) => p.title.toLowerCase().includes(query));
+  }
+  if (category) {
+    items = items.filter((p) => p.category === category);
+  }
+  if (minPrice) {
+    items = items.filter((p) => p.price >= Number(minPrice));
+  }
+  if (maxPrice) {
+    items = items.filter((p) => p.price <= Number(maxPrice));
+  }
+
+  if (sort === "price_asc")
+    items = [...items].sort((a, b) => a.price - b.price);
+  if (sort === "price_desc")
+    items = [...items].sort((a, b) => b.price - a.price);
+  if (sort === "newest") items = [...items].sort((a, b) => b.id - a.id);
+
+  const total = items.length;
+  const pageNum = Number(page);
+  const sizeNum = Number(pageSize);
+  const start = (pageNum - 1) * sizeNum;
+  const paginated = items.slice(start, start + sizeNum);
+
+  res.json({
+    items: paginated,
+    total,
+    page: pageNum,
+    pageSize: sizeNum,
+    totalPages: Math.ceil(total / sizeNum),
+  });
 });
 
 // GET /products/categories
@@ -34,7 +71,8 @@ router.get("/category/:categoryName", (req, res) => {
 // GET /products/:id
 router.get("/:id", (req, res) => {
   const item = products.findById(req.params.id);
-  if (!item) return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+  if (!item)
+    return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
   res.json(item);
 });
 
@@ -57,23 +95,35 @@ router.post("/", authenticateToken, authorizeRoles("admin"), (req, res) => {
 
 // PUT /products/:id (thay toàn bộ, chỉ admin)
 router.put("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
-  const updated = products.updateById(req.params.id, req.body, { replace: true });
-  if (!updated) return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+  const updated = products.updateById(req.params.id, req.body, {
+    replace: true,
+  });
+  if (!updated)
+    return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
   res.json(updated);
 });
 
 // PATCH /products/:id (cập nhật 1 phần, chỉ admin)
 router.patch("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
-  const updated = products.updateById(req.params.id, req.body, { replace: false });
-  if (!updated) return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+  const updated = products.updateById(req.params.id, req.body, {
+    replace: false,
+  });
+  if (!updated)
+    return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
   res.json(updated);
 });
 
 // DELETE /products/:id (chỉ admin)
-router.delete("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
-  const deleted = products.deleteById(req.params.id);
-  if (!deleted) return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
-  res.json(deleted);
-});
+router.delete(
+  "/:id",
+  authenticateToken,
+  authorizeRoles("admin"),
+  (req, res) => {
+    const deleted = products.deleteById(req.params.id);
+    if (!deleted)
+      return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+    res.json(deleted);
+  },
+);
 
 module.exports = router;

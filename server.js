@@ -6,6 +6,7 @@ const authRoutes = require("./src/routes/auth.routes");
 const productsRoutes = require("./src/routes/products.routes");
 const usersRoutes = require("./src/routes/users.routes");
 const cartsRoutes = require("./src/routes/carts.routes");
+const ordersRoutes = require("./src/routes/orders.routes");
 
 const app = express();
 
@@ -16,9 +17,13 @@ app.use("/auth", authRoutes);
 app.use("/products", productsRoutes);
 app.use("/users", usersRoutes);
 app.use("/carts", cartsRoutes);
+app.use("/orders", ordersRoutes);
 
 app.get("/", (req, res) => {
-  res.json({ message: "Mock Store API đang chạy. Xem README.md để biết danh sách endpoint." });
+  res.json({
+    message:
+      "Mock Store API đang chạy. Xem README.md để biết danh sách endpoint.",
+  });
 });
 
 // 404 fallback

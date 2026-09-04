@@ -4,9 +4,18 @@
     "userId": 1,
     "date": "2020-03-02T00:00:00.000Z",
     "products": [
-      { "productId": 1, "quantity": 4 },
-      { "productId": 2, "quantity": 1 },
-      { "productId": 3, "quantity": 6 }
+      {
+        "productId": 1,
+        "quantity": 4
+      },
+      {
+        "productId": 2,
+        "quantity": 1
+      },
+      {
+        "productId": 3,
+        "quantity": 6
+      }
     ],
     "__v": 0
   },
@@ -15,9 +24,18 @@
     "userId": 1,
     "date": "2020-01-02T00:00:00.000Z",
     "products": [
-      { "productId": 2, "quantity": 4 },
-      { "productId": 1, "quantity": 10 },
-      { "productId": 5, "quantity": 2 }
+      {
+        "productId": 2,
+        "quantity": 4
+      },
+      {
+        "productId": 1,
+        "quantity": 10
+      },
+      {
+        "productId": 5,
+        "quantity": 2
+      }
     ],
     "__v": 0
   },
@@ -26,8 +44,14 @@
     "userId": 2,
     "date": "2020-03-01T00:00:00.000Z",
     "products": [
-      { "productId": 1, "quantity": 2 },
-      { "productId": 9, "quantity": 1 }
+      {
+        "productId": 1,
+        "quantity": 2
+      },
+      {
+        "productId": 9,
+        "quantity": 1
+      }
     ],
     "__v": 0
   },
@@ -35,7 +59,12 @@
     "id": 4,
     "userId": 3,
     "date": "2020-01-01T00:00:00.000Z",
-    "products": [{ "productId": 1, "quantity": 4 }],
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 4
+      }
+    ],
     "__v": 0
   },
   {
@@ -43,8 +72,14 @@
     "userId": 3,
     "date": "2020-03-01T00:00:00.000Z",
     "products": [
-      { "productId": 7, "quantity": 1 },
-      { "productId": 8, "quantity": 1 }
+      {
+        "productId": 7,
+        "quantity": 1
+      },
+      {
+        "productId": 8,
+        "quantity": 1
+      }
     ],
     "__v": 0
   },
@@ -53,8 +88,14 @@
     "userId": 4,
     "date": "2020-03-01T00:00:00.000Z",
     "products": [
-      { "productId": 10, "quantity": 2 },
-      { "productId": 12, "quantity": 3 }
+      {
+        "productId": 10,
+        "quantity": 2
+      },
+      {
+        "productId": 12,
+        "quantity": 3
+      }
     ],
     "__v": 0
   },
@@ -62,7 +103,19 @@
     "id": 7,
     "userId": 8,
     "date": "2020-03-01T00:00:00.000Z",
-    "products": [{ "productId": 18, "quantity": 1 }],
+    "products": [
+      {
+        "productId": 18,
+        "quantity": 1
+      }
+    ],
     "__v": 0
+  },
+  {
+    "id": 8,
+    "userId": 1,
+    "status": "active",
+    "products": [],
+    "date": "2026-09-04T11:30:02.010Z"
   }
 ]
