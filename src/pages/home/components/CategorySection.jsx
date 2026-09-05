@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ProductCard } from "../components/ProductCard";
+import { ProductCard } from "../../../components/ProductCard";
 
 export const CategorySection = ({ title, products }) => {
   if (products.length === 0) return null;

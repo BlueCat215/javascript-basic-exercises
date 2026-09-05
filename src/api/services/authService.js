@@ -18,4 +18,8 @@ const getMe = (token) => {
   });
 };
 
-export { login, refreshToken, logout, getMe };
+const register = (data) => {
+  return authClient.post("/user", data);
+};
+
+export { login, refreshToken, logout, getMe, register };

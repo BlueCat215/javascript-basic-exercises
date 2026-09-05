@@ -1,11 +1,10 @@
-// components/cart/CartBadge.jsx
 import { Link } from "react-router-dom";
 import { useActiveCart } from "../../pages/cart/hooks/useCartQueries";
 import { useAuthStore } from "../../store/useAuthStore";
 
 export const CartBadge = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const { data: cart } = useActiveCart({ enabled: isAuthenticated }); // xem lưu ý bên dưới nếu useActiveCart chưa nhận option
+  const { data: cart } = useActiveCart({ enabled: isAuthenticated });
   const totalItems =
     cart?.products?.reduce((sum, p) => sum + p.quantity, 0) || 0;
 
