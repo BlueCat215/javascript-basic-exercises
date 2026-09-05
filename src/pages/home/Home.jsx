@@ -2,10 +2,7 @@ import { useCategories, useProductsByCategories } from "./hooks/useHomeQueries";
 import { HeroBanner } from "./components/HeroBanner";
 import { CategorySection } from "./components/CategorySection";
 import { PartnerSection } from "./components/PartnerSection";
-import {
-  LoadingState,
-  ErrorState,
-} from "../../components/products/StatusState";
+import { LoadingState, ErrorState } from "../../components/StatusState";
 
 export default function Home() {
   const { data: categories = [], isLoading: loadingCategories } =

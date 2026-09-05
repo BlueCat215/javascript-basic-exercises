@@ -24,10 +24,6 @@ export default function ProductListPage() {
   const [searchInput, setSearchInput] = useState(q);
   const debouncedSearch = useDebounce(searchInput, 500);
 
-  useEffect(() => {
-    updateParams({ q: debouncedSearch || null, page: null });
-  }, [debouncedSearch]);
-
   const updateParams = (updates) => {
     const next = new URLSearchParams(searchParams);
     Object.entries(updates).forEach(([key, value]) => {
@@ -36,6 +32,10 @@ export default function ProductListPage() {
     });
     setSearchParams(next);
   };
+
+  useEffect(() => {
+    updateParams({ q: debouncedSearch || null, page: null });
+  }, [debouncedSearch]);
 
   const filters = useMemo(
     () => ({

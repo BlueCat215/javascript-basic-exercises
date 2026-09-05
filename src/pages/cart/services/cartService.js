@@ -1,4 +1,3 @@
-// src/pages/cart/services/cartService.js
 import api from "../../../api/clients/httpClient";
 
 const cartService = {

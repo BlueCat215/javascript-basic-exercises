@@ -1,4 +1,3 @@
-// src/routes/AppRoutes.jsx
 import { Routes, Route } from "react-router-dom";
 
 import PublicLayout from "../layouts/PublicLayout";
