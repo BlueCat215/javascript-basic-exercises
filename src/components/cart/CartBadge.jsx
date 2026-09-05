@@ -1,18 +1,25 @@
-import { useCartStore } from "../../store/useCartStore";
+// components/cart/CartBadge.jsx
+import { Link } from "react-router-dom";
+import { useActiveCart } from "../../pages/cart/hooks/useCartQueries";
+import { useAuthStore } from "../../store/useAuthStore";
 
-export const CartBadge = ({ onClick }) => {
-  const hasHydrated = useCartStore((state) => state._hasHydrated);
-  const totalItems = useCartStore((state) => state.totalItems);
+export const CartBadge = () => {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const { data: cart } = useActiveCart({ enabled: isAuthenticated }); // xem lưu ý bên dưới nếu useActiveCart chưa nhận option
+  const totalItems =
+    cart?.products?.reduce((sum, p) => sum + p.quantity, 0) || 0;
 
   return (
-    <button
-      onClick={onClick}
-      className="group relative flex items-center gap-2 px-4 py-2 border border-line rounded-tag bg-white hover:bg-paper hover:border-ink/20 text-ink text-sm font-medium transition-all duration-200 active:scale-95 shadow-sm"
-      aria-label="Giỏ hàng"
+    <Link
+      to="/cart"
+      className="relative flex items-center gap-2 px-4 py-2 border border-line rounded-tag bg-white hover:bg-paper text-sm font-medium"
     >
       <span>Giỏ hàng</span>
-
-      {hasHydrated && totalItems > 0 && <span>{totalItems}</span>}
-    </button>
+      {isAuthenticated && totalItems > 0 && (
+        <span className="bg-gold text-white text-xs w-5 h-5 rounded-full grid place-items-center">
+          {totalItems}
+        </span>
+      )}
+    </Link>
   );
 };

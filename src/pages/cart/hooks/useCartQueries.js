@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import cartService from "../services/cartService";
 
-export const useActiveCart = () => {
+export const useActiveCart = (options = {}) => {
   return useQuery({
     queryKey: ["cart", "active"],
     queryFn: cartService.getActiveCart,
+    enabled: options.enabled ?? true,
   });
 };
 

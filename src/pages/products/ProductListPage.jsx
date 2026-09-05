@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useCategories } from "../home/hooks/useHomeQueries";
 import { useProductListQuery } from "./hooks/useProductListQuery";
-import { ProductCard } from "./components/ProductCard";
+import { ProductCard } from "../../components/ProductCard";
 import { Pagination } from "../../components/Pagination";
 import {
   LoadingState,
@@ -14,7 +14,6 @@ import {
 export default function ProductListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Đọc filter trực tiếp từ URL — nguồn sự thật duy nhất
   const q = searchParams.get("q") || "";
   const category = searchParams.get("category") || "";
   const minPrice = searchParams.get("minPrice") || "";
@@ -22,13 +21,11 @@ export default function ProductListPage() {
   const sort = searchParams.get("sort") || "";
   const page = Number(searchParams.get("page")) || 1;
 
-  // Ô input search cần state cục bộ riêng để gõ mượt, debounce rồi mới đẩy lên URL
   const [searchInput, setSearchInput] = useState(q);
   const debouncedSearch = useDebounce(searchInput, 500);
 
   useEffect(() => {
-    updateParams({ q: debouncedSearch || null, page: null }); // đổi search -> về lại trang 1
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    updateParams({ q: debouncedSearch || null, page: null });
   }, [debouncedSearch]);
 
   const updateParams = (updates) => {
@@ -58,7 +55,6 @@ export default function ProductListPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-      {/* Sidebar filter */}
       <aside className="space-y-6">
         <div>
           <label className="font-mono text-xs uppercase tracking-widest text-ink/40 block mb-2">
