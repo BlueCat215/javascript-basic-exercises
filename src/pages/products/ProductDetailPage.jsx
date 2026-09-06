@@ -5,6 +5,11 @@ import { useProductDetailQuery } from "./hooks/useProductDetailQuery";
 import { useAddToCart } from "../cart/hooks/useCartQueries";
 import { useAuthStore } from "../../store/useAuthStore";
 import { LoadingState, ErrorState } from "../../components/StatusState";
+import {
+  useIsFavorite,
+  useAddFavorite,
+  useRemoveFavorite,
+} from "../account/hooks/useFavoriteQueries";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -14,7 +19,20 @@ export default function ProductDetailPage() {
 
   const { data: product, isLoading, isError } = useProductDetailQuery(id);
   const { mutate: addToCart, isPending } = useAddToCart();
+  const isFavorite = useIsFavorite(product?.id);
+  const { mutate: addFavorite } = useAddFavorite();
+  const { mutate: removeFavorite } = useRemoveFavorite();
 
+  const handleToggleFavorite = () => {
+    if (!isAuthenticated)
+      return navigate("/login", { state: { from: location } });
+
+    if (isFavorite) {
+      removeFavorite(product.id);
+    } else {
+      addFavorite({ productId: product.id, product });
+    }
+  };
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (delta) => {
@@ -100,6 +118,10 @@ export default function ProductDetailPage() {
           className="btn-primary w-full md:w-auto px-8 disabled:opacity-50"
         >
           {isPending ? "Đang thêm..." : "Thêm vào giỏ hàng"}
+        </button>
+
+        <button onClick={handleToggleFavorite} className="btn-secondary">
+          {isFavorite ? "Đã yêu thích" : "Yêu thích"}
         </button>
       </div>
     </div>
