@@ -8,6 +8,7 @@ const usersRoutes = require("./src/routes/users.routes");
 const cartsRoutes = require("./src/routes/carts.routes");
 const ordersRoutes = require("./src/routes/orders.routes");
 const vouchersRoutes = require("./src/routes/vouchers.routes");
+const favoritesRoutes = require("./src/routes/favorites.routes");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/users", usersRoutes);
 app.use("/carts", cartsRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/vouchers", vouchersRoutes);
+app.use("/favorites", favoritesRoutes);
 
 app.get("/", (req, res) => {
   res.json({

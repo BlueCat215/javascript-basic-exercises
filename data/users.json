@@ -24,22 +24,16 @@
   },
   {
     "address": {
-      "geolocation": {
-        "lat": "-37.3159",
-        "long": "81.1496"
-      },
       "city": "kilcoole",
-      "street": "Lovers Ln",
-      "number": 7267,
-      "zipcode": "12926-3874"
+      "street": "Lovers Ln"
     },
     "id": 2,
-    "email": "morrison@gmail.com",
+    "email": "nguyenhieu@gmail.com",
     "username": "user",
     "password": "1",
     "name": {
-      "firstname": "david",
-      "lastname": "morrison"
+      "firstname": "Hiếu",
+      "lastname": "Nguyễn"
     },
     "phone": "1-570-236-7033",
     "__v": 0,
@@ -227,6 +221,19 @@
     },
     "phone": "1-104-001-4567",
     "__v": 0,
+    "role": "customer"
+  },
+  {
+    "id": 11,
+    "email": "anhhieuk746@gmail.com",
+    "username": "nguyenhieu",
+    "password": "123456",
+    "name": {
+      "firstname": "",
+      "lastname": ""
+    },
+    "address": {},
+    "phone": "",
     "role": "customer"
   }
 ]

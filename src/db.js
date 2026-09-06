@@ -12,8 +12,14 @@ class JsonCollection {
   }
 
   _read() {
-    const raw = fs.readFileSync(this.filePath, "utf-8");
-    return JSON.parse(raw);
+    try {
+      const raw = fs.readFileSync(this.filePath, "utf-8");
+      if (!raw.trim()) return [];
+      return JSON.parse(raw);
+    } catch (err) {
+      if (err.code === "ENOENT") return [];
+      throw err;
+    }
   }
 
   _write(data) {
