@@ -19,7 +19,7 @@ const getMe = (token) => {
 };
 
 const register = (data) => {
-  return authClient.post("/user", data);
+  return authClient.post("/users", data);
 };
 
 export { login, refreshToken, logout, getMe, register };
