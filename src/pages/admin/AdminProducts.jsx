@@ -8,7 +8,7 @@ import {
   useUpdateProduct,
   useDeleteProduct,
 } from "./hooks/useAdminProductQueries";
-import { ProductForm } from "../../components/products/ProductForm";
+import { ProductForm } from "../../components/ProductForm";
 import { Pagination } from "../../components/Pagination";
 import { ExcelImportButton } from "./components/ExcelImportButton";
 
