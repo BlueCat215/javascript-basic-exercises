@@ -1,4 +1,3 @@
-// src/routes/favorites.routes.js
 const express = require("express");
 const JsonCollection = require("../db");
 const { authenticateToken } = require("../middleware/auth");
