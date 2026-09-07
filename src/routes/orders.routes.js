@@ -1,4 +1,3 @@
-// src/routes/orders.routes.js
 const express = require("express");
 const JsonCollection = require("../db");
 const { authenticateToken, authorizeRoles } = require("../middleware/auth");
