@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useActiveCart } from "../../pages/cart/hooks/useCartQueries";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useActiveCart } from "../pages/cart/hooks/useCartQueries";
+import { useAuthStore } from "../store/useAuthStore";
 
 export const CartBadge = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);

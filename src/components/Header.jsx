@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { logout as logoutApi } from "../api/services/authService";
-import { CartBadge } from "./cart/CartBadge";
+import { CartBadge } from "./CartBadge";
 
 export const Header = () => {
   const navigate = useNavigate();
