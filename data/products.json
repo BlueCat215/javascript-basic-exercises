@@ -170,5 +170,77 @@
     "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png",
     "category": "women's clothing",
     "id": 20
+  },
+  {
+    "id": 33,
+    "title": "Tai nghe Bluetooth Sony WH-1000XM5",
+    "price": 8490000,
+    "category": "Thiết bị điện tử",
+    "image": "https://example.com/images/sony-xm5.jpg",
+    "description": "Tai nghe chống ồn chủ động cao cấp, thời lượng pin 30 giờ, âm thanh độ phân giải cao.",
+    "rating": {
+      "rate": 0,
+      "count": 0
+    }
+  },
+  {
+    "id": 34,
+    "title": "Bàn phím cơ Keychron K2 V2",
+    "price": 1950000,
+    "category": "Phụ kiện máy tính",
+    "image": "https://example.com/images/keychron-k2.jpg",
+    "description": "Bàn phím cơ không dây layout 75%, đèn LED RGB, switch Gateron gõ êm ái.",
+    "rating": {
+      "rate": 0,
+      "count": 0
+    }
+  },
+  {
+    "id": 35,
+    "title": "Chuột Logitech MX Master 3S",
+    "price": 2450000,
+    "category": "Phụ kiện máy tính",
+    "image": "https://example.com/images/mx-master-3s.jpg",
+    "description": "Chuột không dây công điện học, con lăn MagSpeed siêu nhanh, cuộn êm tuyệt đối.",
+    "rating": {
+      "rate": 0,
+      "count": 0
+    }
+  },
+  {
+    "id": 36,
+    "title": "Màn hình Dell UltraSharp U2723QE 27 inch 4K",
+    "price": 13200000,
+    "category": "Màn hình",
+    "image": "https://example.com/images/dell-u2723qe.jpg",
+    "description": "Màn hình độ phân giải 4K IPS Black, chuẩn màu DCI-P3 98%, cổng kết nối USB-C Hub 90W.",
+    "rating": {
+      "rate": 0,
+      "count": 0
+    }
+  },
+  {
+    "id": 37,
+    "title": "Đèn bàn thông minh Xiaomi LED Desk Lamp 1S",
+    "price": 790000,
+    "category": "Gia dụng thông minh",
+    "image": "https://example.com/images/xiaomi-lamp.jpg",
+    "description": "Đèn học/làm việc bảo vệ mắt, điều chỉnh độ sáng và nhiệt độ màu qua app Mi Home.",
+    "rating": {
+      "rate": 0,
+      "count": 0
+    }
+  },
+  {
+    "id": 38,
+    "title": "Bình giữ nhiệt Lock&Lock LHC4131BKG 500ml",
+    "price": 350000,
+    "category": "Đồ dùng cá nhân",
+    "image": "https://example.com/images/locklock-flask.jpg",
+    "description": "Chất liệu thép không gỉ 304, giữ nhiệt tối ưu tới 24h, kiểu dáng hiện đại.",
+    "rating": {
+      "rate": 0,
+      "count": 0
+    }
   }
 ]

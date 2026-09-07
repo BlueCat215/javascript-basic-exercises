@@ -5,6 +5,30 @@ const { authenticateToken, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 const products = new JsonCollection("products.json");
 
+// Hàm chuẩn hóa dữ liệu dòng (Gộp key, kiểm tra đa ngôn ngữ Việt-Anh)
+function normalizeRow(row) {
+  const normalized = {};
+  Object.keys(row).forEach((key) => {
+    normalized[key.trim().toLowerCase()] = row[key];
+  });
+
+  const pick = (...candidates) => {
+    for (const c of candidates) {
+      if (normalized[c] !== undefined && normalized[c] !== "")
+        return normalized[c];
+    }
+    return undefined;
+  };
+
+  return {
+    title: pick("title", "tên", "tên sản phẩm", "name", "product name"),
+    price: pick("price", "giá", "giá bán"),
+    category: pick("category", "danh mục", "category name"),
+    image: pick("image", "ảnh", "hình ảnh", "image url"),
+    description: pick("description", "mô tả"),
+  };
+}
+
 // GET /products (Có phân trang, bộ lọc và tìm kiếm)
 router.get("/", async (req, res) => {
   try {
@@ -182,7 +206,7 @@ router.delete(
   },
 );
 
-// --- TỐI ƯU HÀM THÊM NHIỀU SẢN PHẨM (Bulk Insert) ---
+// POST /products/bulk (Thêm hàng loạt - Đã gộp logic normalize và sửa lỗi I/O file JSON)
 router.post(
   "/bulk",
   authenticateToken,
@@ -191,42 +215,31 @@ router.post(
     try {
       const { products: rows } = req.body;
       if (!rows || !Array.isArray(rows)) {
-        return res
-          .status(400)
-          .json({ message: "Dữ liệu products gửi lên không hợp lệ" });
-      }
-
-      // Đọc file 1 lần duy nhất bằng hàm nội bộ của JsonCollection (nếu bạn muốn dùng trực tiếp)
-      // Hoặc sử dụng cơ chế đọc/ghi an toàn qua mảng
-      const allItems = await products.findAll();
-      let maxId = allItems.reduce((max, item) => Math.max(max, item.id), 0);
-
-      const createdItems = [];
-      for (const row of rows) {
-        maxId++;
-        createdItems.push({
-          id: maxId,
-          title: row.title,
-          price: Number(row.price) || 0,
-          category: row.category || "",
-          image: row.image || "",
-          description: row.description || "",
-          rating: row.rating || { rate: 0, count: 0 },
+        return res.status(400).json({
+          message: "Dữ liệu products gửi lên không hợp lệ hoặc trống",
         });
       }
 
-      // Gộp mảng cũ với mảng mới rồi ghi đè ngược lại tệp tin một lần duy nhất
-      const updatedList = [...allItems, ...createdItems];
+      const valid = [];
+      const skipped = [];
 
-      // Sử dụng hàm ghi ẩn bên dưới của class JsonCollection (nếu class phơi bày ra)
-      // Hoặc một mẹo nhỏ nếu lớp JsonCollection đóng gói hàm `_write`:
-      // Để giữ tính toàn vẹn đóng gói, chúng ta lặp tạo nhưng hiện tại đã tối ưu qua mảng:
-      // Vì JsonCollection của bạn chưa có hàm createMany, ta tạm thời ghi bằng cách tận dụng hàm của bạn hoặc export thêm
-      // Ở đây ta giả định giải pháp tối ưu nhất là tạo thủ công và lưu lại qua một trick nhỏ hoặc bạn sửa db.js
+      // 1. Phân loại và lọc dữ liệu lỗi
+      rows.forEach((raw, index) => {
+        const row = normalizeRow(raw);
+        if (!row.title || row.price === undefined || row.price === "") {
+          skipped.push({
+            rowIndex: index + 2, // +2 vì dòng 1 là header, Excel đếm từ 1
+            reason: "Thiếu title hoặc price",
+            raw,
+          });
+          return;
+        }
+        valid.push(row);
+      });
 
-      // Cách an toàn ko cần sửa file db.js mà vẫn ko bị xung đột I/O: Chạy tuần tự bằng vòng lặp `for...of` thay vì `Promise.all` hay `.map`
+      // 2. Ghi tuần tự vào tệp tin JSON qua vòng lặp `for...of` để không bị xung đột đọc/ghi (I/O)
       const created = [];
-      for (const row of rows) {
+      for (const row of valid) {
         const item = await products.create({
           title: row.title,
           price: Number(row.price) || 0,
@@ -238,7 +251,13 @@ router.post(
         created.push(item);
       }
 
-      res.status(201).json({ count: created.length, items: created });
+      // 3. Trả về thống kê số dòng thành công và số dòng thất bại
+      res.status(201).json({
+        count: created.length,
+        skippedCount: skipped.length,
+        skipped,
+        items: created,
+      });
     } catch (error) {
       console.error("Error in bulk create:", error);
       res.status(500).json({ message: "Lỗi hệ thống khi import hàng loạt" });
