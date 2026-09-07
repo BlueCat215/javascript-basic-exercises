@@ -76,7 +76,7 @@ router.get("/:id", (req, res) => {
   res.json(item);
 });
 
-// POST /products (chỉ admin)
+// POST /products (admin)
 router.post("/", authenticateToken, authorizeRoles("admin"), (req, res) => {
   const { title, price, description, category, image } = req.body;
   if (!title || price === undefined || !category) {
@@ -93,7 +93,7 @@ router.post("/", authenticateToken, authorizeRoles("admin"), (req, res) => {
   res.status(201).json(newProduct);
 });
 
-// PUT /products/:id (thay toàn bộ, chỉ admin)
+// PUT /products/:id (thay toàn bộ, admin)
 router.put("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
   const updated = products.updateById(req.params.id, req.body, {
     replace: true,
@@ -103,7 +103,7 @@ router.put("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
   res.json(updated);
 });
 
-// PATCH /products/:id (cập nhật 1 phần, chỉ admin)
+// PATCH /products/:id (cập nhật 1 phần, admin)
 router.patch("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
   const updated = products.updateById(req.params.id, req.body, {
     replace: false,
@@ -113,7 +113,7 @@ router.patch("/:id", authenticateToken, authorizeRoles("admin"), (req, res) => {
   res.json(updated);
 });
 
-// DELETE /products/:id (chỉ admin)
+// DELETE /products/:id (admin)
 router.delete(
   "/:id",
   authenticateToken,
@@ -125,5 +125,20 @@ router.delete(
     res.json(deleted);
   },
 );
+
+// products.routes.js (admin)
+router.post("/bulk", authenticateToken, authorizeRoles("admin"), (req, res) => {
+  const { products: rows } = req.body;
+  const created = rows.map((row) =>
+    products.create({
+      title: row.title,
+      price: Number(row.price) || 0,
+      category: row.category || "",
+      image: row.image || "",
+      description: row.description || "",
+    }),
+  );
+  res.status(201).json({ count: created.length, items: created });
+});
 
 module.exports = router;

@@ -37,6 +37,10 @@ router.post("/login", (req, res) => {
     return res.status(400).json({ message: "Sai tài khoản hoặc mật khẩu" });
   }
 
+  if (user.isLocked) {
+    return res.status(403).json({ message: "Tài khoản đã bị khoá" });
+  }
+
   const { password: _, ...userSafe } = user; // không trả password về client
   const { accessToken, refreshToken } = signTokens(userSafe);
   validRefreshTokens.push(refreshToken);
