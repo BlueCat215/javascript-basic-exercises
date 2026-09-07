@@ -10,13 +10,15 @@ function authenticateToken(req, res, next) {
     return res.status(401).json({ message: "Chưa đăng nhập" });
   }
 
-  jwt.verify(token, ACCESS_SECRET, (err, payload) => {
-    if (err) {
-      return res.status(401).json({ message: "Token hết hạn hoặc không hợp lệ" });
-    }
+  try {
+    // Thực thi jwt.verify đồng bộ giúp code phẳng hơn, không bị lồng hàm callback
+    const payload = jwt.verify(token, ACCESS_SECRET);
+
     req.user = payload; // { id, username, email, role, ... }
     next();
-  });
+  } catch (err) {
+    return res.status(401).json({ message: "Token hết hạn hoặc không hợp lệ" });
+  }
 }
 
 /** Dùng sau authenticateToken. Ví dụ: authorizeRoles("admin") */

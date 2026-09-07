@@ -1,3 +1,4 @@
+// src/routes/auth.routes.js
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const JsonCollection = require("../db");
@@ -12,7 +13,7 @@ const { authenticateToken } = require("../middleware/auth");
 const router = express.Router();
 const usersCollection = new JsonCollection("users.json");
 
-// Lưu refresh token hợp lệ trong bộ nhớ (đủ dùng cho học tập, thực tế nên lưu DB)
+// Lưu refresh token hợp lệ trong bộ nhớ
 let validRefreshTokens = [];
 
 function signTokens(userSafe) {
@@ -26,63 +27,86 @@ function signTokens(userSafe) {
 }
 
 // ===== LOGIN =====
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const users = usersCollection.findAll();
-  const user = users.find(
-    (u) => u.username === username && u.password === password,
-  );
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-  if (!user) {
-    return res.status(400).json({ message: "Sai tài khoản hoặc mật khẩu" });
+    // Chờ đọc dữ liệu từ file users.json
+    const users = await usersCollection.findAll();
+    const user = users.find(
+      (u) => u.username === username && u.password === password,
+    );
+
+    if (!user) {
+      return res.status(400).json({ message: "Sai tài khoản hoặc mật khẩu" });
+    }
+
+    if (user.isLocked) {
+      return res.status(403).json({ message: "Tài khoản đã bị khoá" });
+    }
+
+    const { password: _, ...userSafe } = user; // Không trả password về client
+    const { accessToken, refreshToken } = signTokens(userSafe);
+    validRefreshTokens.push(refreshToken);
+
+    res.json({ accessToken, refreshToken, user: userSafe });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Lỗi hệ thống khi đăng nhập" });
   }
-
-  if (user.isLocked) {
-    return res.status(403).json({ message: "Tài khoản đã bị khoá" });
-  }
-
-  const { password: _, ...userSafe } = user; // không trả password về client
-  const { accessToken, refreshToken } = signTokens(userSafe);
-  validRefreshTokens.push(refreshToken);
-
-  res.json({ accessToken, refreshToken, user: userSafe });
 });
 
 // ===== REFRESH TOKEN =====
 router.post("/refresh-token", (req, res) => {
-  const { refreshToken } = req.body;
+  try {
+    const { refreshToken } = req.body;
 
-  if (!refreshToken || !validRefreshTokens.includes(refreshToken)) {
-    return res.status(401).json({ message: "Refresh token không hợp lệ" });
-  }
-
-  jwt.verify(refreshToken, REFRESH_SECRET, (err, payload) => {
-    if (err) {
-      // refresh token hết hạn/không hợp lệ -> loại khỏi danh sách luôn
-      validRefreshTokens = validRefreshTokens.filter((t) => t !== refreshToken);
-      return res.status(401).json({ message: "Refresh token hết hạn" });
+    if (!refreshToken || !validRefreshTokens.includes(refreshToken)) {
+      return res.status(401).json({ message: "Refresh token không hợp lệ" });
     }
 
-    const { iat, exp, ...userSafe } = payload;
-    const newAccessToken = jwt.sign(userSafe, ACCESS_SECRET, {
-      expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-    });
+    try {
+      // Dùng jwt.verify đồng bộ bên trong try/catch để code phẳng và sạch hơn
+      const payload = jwt.verify(refreshToken, REFRESH_SECRET);
 
-    res.json({ newAccessToken }); // đúng tên field config.js đang destructure
-  });
+      const { iat, exp, ...userSafe } = payload;
+      const newAccessToken = jwt.sign(userSafe, ACCESS_SECRET, {
+        expiresIn: ACCESS_TOKEN_EXPIRES_IN,
+      });
+
+      res.json({ newAccessToken });
+    } catch (err) {
+      // Nếu token hết hạn hoặc sai chữ ký, lọc bỏ khỏi mảng bộ nhớ
+      validRefreshTokens = validRefreshTokens.filter((t) => t !== refreshToken);
+      return res
+        .status(401)
+        .json({ message: "Refresh token hết hạn hoặc không hợp lệ" });
+    }
+  } catch (error) {
+    console.error("Error during token refresh:", error);
+    res.status(500).json({ message: "Lỗi hệ thống khi làm mới token" });
+  }
 });
 
 // ===== LOGOUT =====
 router.post("/logout", (req, res) => {
-  const { refreshToken } = req.body;
-  validRefreshTokens = validRefreshTokens.filter((t) => t !== refreshToken);
-  res.json({ message: "Đăng xuất thành công" });
+  try {
+    const { refreshToken } = req.body;
+    validRefreshTokens = validRefreshTokens.filter((t) => t !== refreshToken);
+    res.json({ message: "Đăng xuất thành công" });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi hệ thống khi đăng xuất" });
+  }
 });
 
 // ===== ME (protected) =====
 router.get("/me", authenticateToken, (req, res) => {
-  const { iat, exp, ...userSafe } = req.user;
-  res.json(userSafe);
+  try {
+    const { iat, exp, ...userSafe } = req.user;
+    res.json(userSafe);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi hệ thống khi lấy thông tin cá nhân" });
+  }
 });
 
 module.exports = router;
