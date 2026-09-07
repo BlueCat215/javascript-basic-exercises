@@ -1,4 +1,4 @@
-const fs = require("fs").promises;
+const fs = require("fs").promises; // Dùng fs.promises thay vì đồng bộ
 const path = require("path");
 
 class JsonCollection {
@@ -6,6 +6,7 @@ class JsonCollection {
     this.filePath = path.join(__dirname, "..", "data", filename);
   }
 
+  // Chuyển thành phương thức async
   async _read() {
     try {
       const raw = await fs.readFile(this.filePath, "utf-8");
@@ -17,6 +18,7 @@ class JsonCollection {
     }
   }
 
+  // Chuyển thành phương thức async
   async _write(data) {
     await fs.writeFile(this.filePath, JSON.stringify(data, null, 2), "utf-8");
   }
@@ -39,6 +41,7 @@ class JsonCollection {
     return newItem;
   }
 
+  /** replace: nếu true thì thay toàn bộ object (PUT), false thì merge (PATCH) */
   async updateById(id, patch, { replace = false } = {}) {
     const items = await this._read();
     const index = items.findIndex((item) => item.id === Number(id));
