@@ -13,10 +13,11 @@ const vouchersRoutes = require("./src/routes/vouchers.routes");
 const favoritesRoutes = require("./src/routes/favorites.routes");
 
 // --- TỰ ĐỘNG TẠO THƯ MỤC DATA NẾU CHƯA CÓ ---
-const dataDir = path.join(__dirname, "src", "data");
+const dataDir = path.join(__dirname, "data");
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
+
 // ---------------------------------------------
 
 const app = express();
