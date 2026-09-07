@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { AdminSidebar } from "../components/AdminSidebar";
+import { AdminSidebar } from "../pages/admin/components/AdminSidebar";
 
 export default function AdminLayout() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
