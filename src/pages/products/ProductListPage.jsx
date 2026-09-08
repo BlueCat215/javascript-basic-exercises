@@ -55,29 +55,29 @@ export default function ProductListPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-      <aside className="space-y-6">
-        <div>
-          <label className="font-mono text-xs uppercase tracking-widest text-ink/40 block mb-2">
+      <aside className="space-y-4">
+        <div className="bg-white border border-line rounded-lg p-4">
+          <p className="text-xs font-bold uppercase tracking-wider text-ink mb-3">
             Tìm kiếm
-          </label>
+          </p>
           <input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Tên sản phẩm..."
-            className="w-full border border-line rounded-tag px-3 py-2 text-sm"
+            className="w-full border border-line rounded-full px-4 py-2 text-sm"
           />
         </div>
 
-        <div>
-          <label className="font-mono text-xs uppercase tracking-widest text-ink/40 block mb-2">
+        <div className="bg-white border border-line rounded-lg p-4">
+          <p className="text-xs font-bold uppercase tracking-wider text-ink mb-3">
             Danh mục
-          </label>
+          </p>
           <select
             value={category}
             onChange={(e) =>
               updateParams({ category: e.target.value || null, page: null })
             }
-            className="w-full border border-line rounded-tag px-3 py-2 text-sm capitalize"
+            className="w-full border border-line rounded-lg px-3 py-2 text-sm capitalize"
           >
             <option value="">Tất cả</option>
             {categories.map((c) => (
@@ -88,10 +88,10 @@ export default function ProductListPage() {
           </select>
         </div>
 
-        <div>
-          <label className="font-mono text-xs uppercase tracking-widest text-ink/40 block mb-2">
+        <div className="bg-white border border-line rounded-lg p-4">
+          <p className="text-xs font-bold uppercase tracking-wider text-ink mb-3">
             Khoảng giá
-          </label>
+          </p>
           <div className="flex gap-2">
             <input
               type="number"
@@ -100,7 +100,7 @@ export default function ProductListPage() {
               onChange={(e) =>
                 updateParams({ minPrice: e.target.value || null, page: null })
               }
-              className="w-full border border-line rounded-tag px-3 py-2 text-sm"
+              className="w-full border border-line rounded-lg px-3 py-2 text-sm"
             />
             <input
               type="number"
@@ -109,7 +109,7 @@ export default function ProductListPage() {
               onChange={(e) =>
                 updateParams({ maxPrice: e.target.value || null, page: null })
               }
-              className="w-full border border-line rounded-tag px-3 py-2 text-sm"
+              className="w-full border border-line rounded-lg px-3 py-2 text-sm"
             />
           </div>
         </div>

@@ -1,30 +1,27 @@
-export const HeroBanner = () => {
-  return (
-    <section className="bg-gradient-to-r from-ink to-ink/80 text-white">
-      <div className="max-w-6xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-8">
-        <div className="flex-1 space-y-4 text-center md:text-left">
-          <p className="font-mono text-xs uppercase tracking-widest text-gold">
-            Khuyến mãi mùa hè
-          </p>
-          <h1 className="text-3xl md:text-5xl font-display font-bold leading-tight">
-            Giảm giá đến 50%
-            <br />
-            cho mọi đơn hàng
-          </h1>
-          <p className="text-white/70 max-w-md mx-auto md:mx-0">
-            Khám phá hàng ngàn sản phẩm chất lượng với mức giá tốt nhất.
-          </p>
-          <a
-            href="/products"
-            className="inline-block bg-gold text-ink px-6 py-3 rounded-tag font-semibold mt-2"
-          >
-            Mua sắm ngay
-          </a>
-        </div>
-        <div className="flex-1">
-          <div className="aspect-video bg-white/10 rounded-tag" />
-        </div>
+import { Link } from "react-router-dom";
+
+export const HeroBanner = () => (
+  <section className="bg-paper border-b border-line">
+    <div className="max-w-6xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-10">
+      <div className="flex-1 space-y-5 text-center md:text-left">
+        <span className="inline-block bg-gold text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+          Ưu đãi mùa này
+        </span>
+        <h1 className="font-display text-4xl md:text-6xl font-bold text-ink leading-tight">
+          Mua sắm tinh tế,
+          <br />
+          <span className="text-green">giá cả hợp lý</span>
+        </h1>
+        <p className="text-ink/60 max-w-md mx-auto md:mx-0">
+          Khám phá hàng ngàn sản phẩm chất lượng, cập nhật mỗi ngày.
+        </p>
+        <Link to="/products" className="btn-primary inline-block">
+          Mua sắm ngay
+        </Link>
       </div>
-    </section>
-  );
-};
+      <div className="flex-1 w-full">
+        <div className="aspect-video bg-green/5 border border-line rounded-lg" />
+      </div>
+    </div>
+  </section>
+);

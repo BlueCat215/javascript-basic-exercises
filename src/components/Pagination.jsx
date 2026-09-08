@@ -1,3 +1,4 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "./icons";
 export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
@@ -8,9 +9,9 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-1.5 border border-line rounded-tag text-sm disabled:opacity-40"
+        className="w-9 h-9 grid place-items-center border border-line rounded-full disabled:opacity-40"
       >
-        ← Trước
+        <ChevronLeftIcon size={16} />
       </button>
 
       {pages.map((p) => (
@@ -30,9 +31,9 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1.5 border border-line rounded-tag text-sm disabled:opacity-40"
+        className="w-9 h-9 grid place-items-center border border-line rounded-full disabled:opacity-40"
       >
-        Sau →
+        <ChevronRightIcon size={16} />
       </button>
     </div>
   );
