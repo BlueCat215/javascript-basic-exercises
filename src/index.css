@@ -1,23 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 @theme {
-  --color-paper: #eef1ee;
+  --color-paper: #fcfbf8;
   --color-surface: #ffffff;
-  --color-ink: #1c2430;
-  --color-line: #d9dcd4;
-  --color-gold: #d9a441;
-  --color-rust: #b94b32;
-  --color-green: #3f7d58;
+  --color-ink: #1a1a1a;
+  --color-line: #e2e8f0;
+  --color-gold: #c5a059;
+  --color-gold-light: #dfc288;
+  --color-rust: #b83b3b;
+  --color-green: #0c3b2e;
+  --color-green-light: #145241;
 
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  --radius-tag: 2px;
+  --radius-tag: 10px;
 }
 
 body {
   font-family: var(--font-sans);
+  background-color: var(--color-paper);
 }
 
 .tag-card {
@@ -26,24 +29,23 @@ body {
     box-shadow 0.18s ease,
     border-color 0.18s ease;
 }
-
 .tag-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px -14px rgba(28, 36, 48, 0.28);
+  box-shadow: 0 14px 32px -16px rgba(12, 59, 46, 0.25);
   border-color: var(--color-gold);
 }
 
 .btn-primary {
-  background: var(--color-ink);
+  background: var(--color-green);
   color: #fff;
   font-weight: 600;
   font-size: 0.875rem;
-  padding: 0.625rem 1.1rem;
-  border-radius: var(--radius-tag);
+  padding: 0.65rem 1.4rem;
+  border-radius: 9999px;
   transition: background 0.15s ease;
 }
 .btn-primary:hover {
-  background: #0f1620;
+  background: var(--color-green-light);
 }
 .btn-primary:disabled {
   opacity: 0.5;
@@ -51,17 +53,17 @@ body {
 }
 
 .btn-secondary {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: #fff;
+  color: var(--color-green);
   font-weight: 600;
   font-size: 0.875rem;
-  padding: 0.625rem 1.1rem;
-  border-radius: var(--radius-tag);
-  border: 1px solid var(--color-line);
+  padding: 0.6rem 1.35rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--color-green);
   transition: background 0.15s ease;
 }
 .btn-secondary:hover {
-  background: #e2e6dc;
+  background: rgba(12, 59, 46, 0.06);
 }
 .btn-secondary:disabled {
   opacity: 0.5;
