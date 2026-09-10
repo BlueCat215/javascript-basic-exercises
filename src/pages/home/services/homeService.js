@@ -3,6 +3,7 @@ const homeService = {
   getCategories: () => api.get("/products/categories"),
   getProductsByCategory: (category, limit = 8) =>
     api.get(`/products/category/${category}?limit=${limit}`),
+  getProducts: (params) => api.get("/products", { params }),
 };
 
 export default homeService;

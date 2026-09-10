@@ -1,6 +1,9 @@
 import { useCategories, useProductsByCategories } from "./hooks/useHomeQueries";
 import { HeroBanner } from "./components/HeroBanner";
+import { PopularCategoriesGrid } from "./components/PopularCategoriesGrid";
+import { DualPromoBanners } from "./components/DualPromoBanners";
 import { CategorySection } from "./components/CategorySection";
+import { TrustBadgesBar } from "./components/TrustBadgesBar";
 import { PartnerSection } from "./components/PartnerSection";
 import { LoadingState, ErrorState } from "../../components/StatusState";
 
@@ -16,11 +19,12 @@ export default function Home() {
   return (
     <div>
       <HeroBanner />
+      <PopularCategoriesGrid />
+      <DualPromoBanners />
 
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-12">
         {isLoading && <LoadingState />}
         {isError && <ErrorState message="Không tải được sản phẩm" />}
-
         {!isLoading &&
           !isError &&
           categories.map((category, index) => (
@@ -32,6 +36,7 @@ export default function Home() {
           ))}
       </div>
 
+      <TrustBadgesBar />
       <PartnerSection />
     </div>
   );

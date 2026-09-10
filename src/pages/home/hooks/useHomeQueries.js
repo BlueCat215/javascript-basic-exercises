@@ -20,6 +20,14 @@ export const useProductsByCategories = (categories) => {
   });
 };
 
+export const usePromoProducts = () => {
+  return useQuery({
+    queryKey: ["products", "promo"],
+    queryFn: () => homeService.getProducts({ sort: "price_asc", pageSize: 1 }),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
 // dùng useQueries (số nhiều) thay vì gọi useQuery trong vòng lặp?
 // Hook không được gọi trong loop/điều kiện (vi phạm Rules of Hooks)
 // — useQueries là API chính thức của TanStack Query
