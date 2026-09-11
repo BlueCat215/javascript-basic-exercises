@@ -15,35 +15,46 @@ export const attachResponseInterceptor = (client) => {
     async (error) => {
       const originalRequest = error.config;
 
-      // --- xử lí lỗi 401: TOKEN HẾT HẠN ---
+      if (originalRequest.url?.includes("/auth/refresh-token")) {
+        useAuthStore.getState().clearAuth();
+        localStorage.removeItem("accessToken");
+
+        if (window.location.pathname !== "/login") {
+          window.location.replace("/login");
+        }
+        return Promise.reject(error);
+      }
+
+      // --- xử lí lỗi 401 cho các API thông thường ---
       if (error.response?.status === 401 && !originalRequest._retry) {
         if (isRefreshing()) {
           return enqueueFailedRequest()
             .then((token) => {
               originalRequest.headers.Authorization = `Bearer ${token}`;
-              return client(originalRequest); // Chạy lại request cũ với token mới
+              return client(originalRequest);
             })
             .catch((err) => Promise.reject(err));
         }
 
-        originalRequest._retry = true; // đánh dấu đã thử lại
+        originalRequest._retry = true;
         setIsRefreshing(true);
 
         try {
           const newAccessToken = await refreshAccessToken();
 
-          // Ghi đè token mới vào bộ nhớ
           localStorage.setItem("accessToken", newAccessToken);
           processQueue(null, newAccessToken);
 
-          // Chạy lại chính request hiện tại
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return client(originalRequest);
         } catch (refreshError) {
-          // Nếu Refresh Token cũng hỏng -> xóa sạch và Logout
           processQueue(refreshError, null);
           useAuthStore.getState().clearAuth();
-          window.location.href = "/login";
+          localStorage.removeItem("accessToken");
+
+          if (window.location.pathname !== "/login") {
+            window.location.replace("/login");
+          }
           return Promise.reject(refreshError);
         } finally {
           setIsRefreshing(false);
@@ -53,6 +64,8 @@ export const attachResponseInterceptor = (client) => {
       // --- QUẢN LÝ CÁC LỖI TOÀN CỤC KHÁC ---
       if (error.response) {
         switch (error.response.status) {
+          case 401:
+            break;
           case 403:
             toast.error("Bạn không có quyền truy cập vào tài nguyên này!");
             break;
