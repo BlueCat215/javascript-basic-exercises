@@ -9,3 +9,11 @@ export const useProductListQuery = (filters) => {
     placeholderData: (prev) => prev, // giữ data trang cũ khi chuyển trang
   });
 };
+
+export const useBrandsQuery = () => {
+  return useQuery({
+    queryKey: ["products", "brands"],
+    queryFn: productListService.getBrands,
+    staleTime: 1000 * 60 * 30,
+  });
+};
