@@ -1,10 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import favoriteService from "../services/favoriteService";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 export const useFavoritesQuery = () => {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
   return useQuery({
     queryKey: ["favorites"],
     queryFn: favoriteService.getAll,
+    enabled: isAuthenticated,
   });
 };
 

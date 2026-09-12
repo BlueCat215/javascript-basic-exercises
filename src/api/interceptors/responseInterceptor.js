@@ -27,6 +27,13 @@ export const attachResponseInterceptor = (client) => {
 
       // --- xử lí lỗi 401 cho các API thông thường ---
       if (error.response?.status === 401 && !originalRequest._retry) {
+        const hasToken =
+          !!localStorage.getItem("accessToken") ||
+          !!localStorage.getItem("refreshToken");
+        if (!hasToken) {
+          return Promise.reject(error);
+        }
+
         if (isRefreshing()) {
           return enqueueFailedRequest()
             .then((token) => {
