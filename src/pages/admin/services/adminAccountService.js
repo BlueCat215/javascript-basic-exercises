@@ -2,6 +2,7 @@ import api from "../../../api/clients/httpClient";
 
 const adminAccountService = {
   getAll: () => api.get("/users"),
+  create: (data) => api.post("/users/admin-create", data),
   update: (id, data) => api.patch(`/users/${id}`, data),
   remove: (id) => api.delete(`/users/${id}`),
 };
