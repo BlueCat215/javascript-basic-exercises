@@ -243,6 +243,12 @@ export const Header = () => {
             <Link to="/products" className="py-3.5 hover:text-gold transition">
               Sản phẩm
             </Link>
+            <Link to="/contact" className="py-3.5 hover:text-gold transition">
+              Liên hệ
+            </Link>
+            <Link to="/about" className="py-3.5 hover:text-gold transition">
+              Giới thiệu
+            </Link>
             <Link
               to="/account/orders"
               className="py-3.5 hover:text-gold transition"

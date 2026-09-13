@@ -28,6 +28,24 @@ export const usePromoProducts = () => {
   });
 };
 
+// pages/home/hooks/useHomeQueries.js — thêm
+export const usePublicStats = () => {
+  return useQuery({
+    queryKey: ["public-stats"],
+    queryFn: async () => {
+      const [productsRes, categories] = await Promise.all([
+        homeService.getProducts({ page: 1, pageSize: 1 }),
+        homeService.getCategories(),
+      ]);
+      return {
+        productCount: productsRes.total,
+        categoryCount: categories.length,
+      };
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+};
+
 // dùng useQueries (số nhiều) thay vì gọi useQuery trong vòng lặp?
 // Hook không được gọi trong loop/điều kiện (vi phạm Rules of Hooks)
 // — useQueries là API chính thức của TanStack Query

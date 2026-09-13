@@ -9,6 +9,8 @@ import ProductListPage from "../pages/products/ProductListPage";
 import ProductDetailPage from "../pages/products/ProductDetailPage";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import ContactPage from "../pages/contact/ContactPage";
+import AboutPage from "../pages/about/AboutPage";
 
 import CartPage from "../pages/cart/CartPage";
 import CheckoutPage from "../pages/checkout/CheckoutPage";
@@ -31,6 +33,8 @@ export default function AppRoutes() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Route>
 
       {/* Private */}
