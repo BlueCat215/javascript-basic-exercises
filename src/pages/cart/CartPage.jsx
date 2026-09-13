@@ -10,6 +10,14 @@ import {
 } from "./hooks/useCartQueries";
 import { useApplyVoucher } from "./hooks/useVoucher";
 import { LoadingState } from "../../components/StatusState";
+import { Breadcrumb } from "../../components/Breadcrumb";
+import {
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
+  CheckCircleIcon,
+  TruckIcon,
+} from "../../components/icons";
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -58,119 +66,161 @@ export default function CartPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10 space-y-6">
-      <h1 className="text-2xl font-display font-bold text-ink">
-        Giỏ hàng của bạn
-      </h1>
+    <div className="max-w-6xl mx-auto px-6 py-6">
+      <Breadcrumb items={[{ label: "Giỏ hàng" }]} />
 
       {items.length === 0 ? (
-        <p className="text-ink/50 text-center py-16">Giỏ hàng trống.</p>
+        <div className="bg-white border border-line rounded-lg py-20 text-center">
+          <p className="text-ink/50 mb-4">Giỏ hàng của bạn đang trống.</p>
+          <button onClick={() => navigate("/products")} className="btn-primary">
+            Tiếp tục mua sắm
+          </button>
+        </div>
       ) : (
-        <>
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Cột trái */}
+          <section className="lg:col-span-8 space-y-4">
             {items.map((item) => (
-              <div
+              <article
                 key={item.productId}
-                className="flex gap-4 border border-line rounded-tag p-4"
+                className="bg-white rounded-lg border border-line p-5 shadow-sm flex flex-col sm:flex-row gap-5 items-center hover:border-green/40 transition"
               >
-                <img
-                  src={item.product?.image}
-                  alt={item.product?.title}
-                  className="w-16 h-16 object-contain"
-                />
-                <div className="flex-1">
-                  <p className="font-medium text-ink line-clamp-1">
-                    {item.product?.title}
-                  </p>
-                  <p className="font-mono text-sm text-ink/60">
-                    ${item.product?.price}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <button
-                      onClick={() =>
-                        updateQty({
-                          productId: item.productId,
-                          quantity: item.quantity - 1,
-                        })
-                      }
-                      className="w-7 h-7 border border-line rounded"
+                <div className="w-full sm:w-32 h-32 shrink-0 bg-paper rounded-md border border-line overflow-hidden flex items-center justify-center p-3">
+                  <img
+                    src={item.product?.image}
+                    alt={item.product?.title}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                <div className="flex-grow flex flex-col justify-between w-full h-full">
+                  <div>
+                    <h3
+                      className="text-sm font-bold text-ink hover:text-green transition cursor-pointer line-clamp-2"
+                      onClick={() => navigate(`/products/${item.productId}`)}
                     >
-                      −
-                    </button>
-                    <span className="w-8 text-center font-mono">
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() =>
-                        updateQty({
-                          productId: item.productId,
-                          quantity: item.quantity + 1,
-                        })
-                      }
-                      className="w-7 h-7 border border-line rounded"
-                    >
-                      +
-                    </button>
+                      {item.product?.title}
+                    </h3>
+                    <div className="text-lg font-display font-extrabold text-green mt-1.5">
+                      ${item.product?.price}
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap items-center gap-3">
+                    <div className="flex items-center border border-line rounded-md bg-white">
+                      <button
+                        onClick={() =>
+                          updateQty({
+                            productId: item.productId,
+                            quantity: item.quantity - 1,
+                          })
+                        }
+                        className="px-3 py-1.5 text-ink/50 hover:text-green transition"
+                      >
+                        <MinusIcon size={13} />
+                      </button>
+                      <span className="px-3 py-1.5 text-xs font-bold text-ink min-w-[28px] text-center">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() =>
+                          updateQty({
+                            productId: item.productId,
+                            quantity: item.quantity + 1,
+                          })
+                        }
+                        className="px-3 py-1.5 text-ink/50 hover:text-green transition"
+                      >
+                        <PlusIcon size={13} />
+                      </button>
+                    </div>
+
                     <button
                       onClick={() => removeItem(item.productId)}
-                      className="ml-auto text-xs text-rust hover:underline"
+                      className="flex items-center gap-1 text-xs text-rust hover:underline ml-auto"
                     >
-                      Xóa
+                      <TrashIcon size={14} /> Xóa
                     </button>
                   </div>
+
+                  <div className="mt-3 flex items-center gap-1.5 text-xs font-medium text-green">
+                    <CheckCircleIcon size={14} className="fill-green/20" /> Còn
+                    hàng
+                  </div>
                 </div>
-              </div>
+              </article>
             ))}
-          </div>
 
-          <div className="flex gap-2">
-            <input
-              value={voucherCode}
-              onChange={(e) => setVoucherCode(e.target.value)}
-              placeholder="Nhập mã giảm giá"
-              className="flex-1 border border-line rounded-tag px-3 py-2 text-sm"
-            />
-            <button
-              onClick={handleApplyVoucher}
-              disabled={isApplying || !voucherCode}
-              className="btn-secondary disabled:opacity-50"
-            >
-              Áp dụng
-            </button>
-          </div>
-
-          <div className="border-t border-line pt-4 space-y-2 font-mono text-sm">
-            <div className="flex justify-between">
-              <span>Tạm tính</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-            {voucher && (
-              <div className="flex justify-between text-gold">
-                <span>Giảm giá ({voucher.discountPercent}%)</span>
-                <span>-${discount.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between font-bold text-base pt-2 border-t border-line">
-              <span>Tổng cộng</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
-          </div>
-
-          <div className="flex gap-2">
             <button
               onClick={() => clearCart()}
-              className="btn-secondary flex-1"
+              className="text-xs text-rust hover:underline"
             >
-              Xóa hết
+              Xóa toàn bộ giỏ hàng
             </button>
-            <button
-              onClick={() => navigate("/checkout", { state: { voucher } })}
-              className="btn-primary flex-1"
-            >
-              Tiến hành thanh toán
-            </button>
-          </div>
-        </>
+          </section>
+
+          {/* CỘT PHẢI */}
+          <aside className="lg:col-span-4 lg:sticky lg:top-24">
+            <div className="bg-white rounded-lg border-2 border-green/80 p-6 shadow-sm space-y-5">
+              <h2 className="text-lg font-display font-bold text-ink pb-4 border-b border-line">
+                Tóm tắt đơn hàng
+              </h2>
+
+              <div className="flex gap-2">
+                <input
+                  value={voucherCode}
+                  onChange={(e) => setVoucherCode(e.target.value)}
+                  placeholder="Nhập mã giảm giá"
+                  className="flex-1 border border-line rounded-full px-4 py-2 text-sm"
+                />
+                <button
+                  onClick={handleApplyVoucher}
+                  disabled={isApplying || !voucherCode}
+                  className="btn-secondary text-xs px-4 disabled:opacity-50"
+                >
+                  Áp dụng
+                </button>
+              </div>
+
+              <div className="space-y-3 py-4 border-y border-line text-sm">
+                <div className="flex justify-between text-ink/60">
+                  <span>Tạm tính</span>
+                  <span className="font-bold text-ink">
+                    ${subtotal.toFixed(2)}
+                  </span>
+                </div>
+                {voucher && (
+                  <div className="flex justify-between text-green">
+                    <span>
+                      Giảm giá ({voucher.discountPercent}% — {voucher.code})
+                    </span>
+                    <span className="font-bold">-${discount.toFixed(2)}</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-between items-baseline">
+                <span className="text-sm font-extrabold uppercase tracking-wider text-ink">
+                  Tổng cộng
+                </span>
+                <span className="text-2xl font-display font-black text-ink">
+                  ${total.toFixed(2)}
+                </span>
+              </div>
+
+              <button
+                onClick={() => navigate("/checkout", { state: { voucher } })}
+                className="btn-primary w-full"
+              >
+                Tiến hành thanh toán
+              </button>
+
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-ink/40 pt-2">
+                <TruckIcon size={13} /> Miễn phí vận chuyển đơn từ $199
+              </div>
+            </div>
+          </aside>
+        </div>
       )}
     </div>
   );

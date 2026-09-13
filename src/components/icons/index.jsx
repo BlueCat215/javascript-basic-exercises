@@ -27,6 +27,7 @@ import {
   Cpu,
   Watch,
   Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 import {
   FaFacebookF,
@@ -78,6 +79,7 @@ export const ShirtIcon = withDefaults(Shirt);
 export const ElectronicsIcon = withDefaults(Cpu);
 export const WatchIcon = withDefaults(Watch);
 export const SparklesIcon = withDefaults(Sparkles);
+export const CheckCircleIcon = withDefaults(CheckCircle2);
 export const FacebookIcon = withSocialDefaults(FaFacebookF);
 export const InstagramIcon = withSocialDefaults(FaInstagram);
 export const YoutubeIcon = withSocialDefaults(FaYoutube);
