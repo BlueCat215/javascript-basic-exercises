@@ -25,3 +25,9 @@ export const useUpdateProfile = (userId) => {
     },
   });
 };
+
+export const useChangePassword = (userId) => {
+  return useMutation({
+    mutationFn: (data) => profileService.changePassword(userId, data),
+  });
+};
