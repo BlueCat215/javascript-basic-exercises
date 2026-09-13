@@ -103,6 +103,30 @@ router.put("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   }
 });
 
+// users.routes.js — thêm
+router.patch(
+  "/:id/password",
+  authenticateToken,
+  isSelfOrAdmin,
+  async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+    const user = await users.findById(req.params.id);
+
+    if (!user)
+      return res.status(404).json({ message: "Không tìm thấy tài khoản" });
+    if (user.password !== currentPassword) {
+      return res.status(400).json({ message: "Mật khẩu hiện tại không đúng" });
+    }
+
+    await users.updateById(
+      req.params.id,
+      { password: newPassword },
+      { replace: false },
+    );
+    res.json({ message: "Đổi mật khẩu thành công" });
+  },
+);
+
 // PATCH /users/:id (chính chủ hoặc admin, cập nhật 1 phần)
 router.patch("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   try {
