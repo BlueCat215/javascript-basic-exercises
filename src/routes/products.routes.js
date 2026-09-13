@@ -31,60 +31,51 @@ function normalizeRow(row) {
 
 // GET /products (Có phân trang, bộ lọc và tìm kiếm)
 router.get("/", async (req, res) => {
-  try {
-    let items = await products.findAll();
+  let items = await products.findAll();
+  const {
+    q,
+    category,
+    minPrice,
+    maxPrice,
+    brand,
+    minRating,
+    sort,
+    page = 1,
+    pageSize = 12,
+  } = req.query;
 
-    const {
-      q,
-      category,
-      minPrice,
-      maxPrice,
-      sort,
-      page = 1,
-      pageSize = 12,
-    } = req.query;
-
-    if (q) {
-      const query = q.toLowerCase();
-      items = items.filter(
-        (p) => p.title && p.title.toLowerCase().includes(query),
-      );
-    }
-    if (category) {
-      items = items.filter((p) => p.category === category);
-    }
-    if (minPrice) {
-      items = items.filter((p) => p.price >= Number(minPrice));
-    }
-    if (maxPrice) {
-      items = items.filter((p) => p.price <= Number(maxPrice));
-    }
-
-    if (sort === "price_asc")
-      items = [...items].sort((a, b) => a.price - b.price);
-    if (sort === "price_desc")
-      items = [...items].sort((a, b) => b.price - a.price);
-    if (sort === "newest") items = [...items].sort((a, b) => b.id - a.id);
-
-    const total = items.length;
-    const pageNum = Number(page);
-    const sizeNum = Number(pageSize);
-    const start = (pageNum - 1) * sizeNum;
-    const paginated = items.slice(start, start + sizeNum);
-
-    res.json({
-      items: paginated,
-      total,
-      page: pageNum,
-      pageSize: sizeNum,
-      totalPages: Math.ceil(total / sizeNum),
-    });
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res
-      .status(500)
-      .json({ message: "Lỗi hệ thống khi lấy danh sách sản phẩm" });
+  if (q)
+    items = items.filter((p) =>
+      p.title.toLowerCase().includes(q.toLowerCase()),
+    );
+  if (category) items = items.filter((p) => p.category === category);
+  if (minPrice) items = items.filter((p) => p.price >= Number(minPrice));
+  if (maxPrice) items = items.filter((p) => p.price <= Number(maxPrice));
+  if (brand) {
+    const brandList = brand.split(",");
+    items = items.filter((p) => brandList.includes(p.brand));
   }
+  if (minRating)
+    items = items.filter((p) => (p.rating?.rate || 0) >= Number(minRating));
+
+  if (sort === "price_asc")
+    items = [...items].sort((a, b) => a.price - b.price);
+  if (sort === "price_desc")
+    items = [...items].sort((a, b) => b.price - a.price);
+  if (sort === "newest") items = [...items].sort((a, b) => b.id - a.id);
+
+  const total = items.length;
+  const pageNum = Number(page),
+    sizeNum = Number(pageSize);
+  const paginated = items.slice((pageNum - 1) * sizeNum, pageNum * sizeNum);
+
+  res.json({
+    items: paginated,
+    total,
+    page: pageNum,
+    pageSize: sizeNum,
+    totalPages: Math.ceil(total / sizeNum),
+  });
 });
 
 // GET /products/categories
@@ -111,6 +102,15 @@ router.get("/category/:categoryName", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Lỗi hệ thống khi lọc theo danh mục" });
   }
+});
+
+router.get("/brands", async (req, res) => {
+  const items = await products.findAll();
+  const counts = {};
+  items.forEach((p) => {
+    if (p.brand) counts[p.brand] = (counts[p.brand] || 0) + 1;
+  });
+  res.json(Object.entries(counts).map(([name, count]) => ({ name, count })));
 });
 
 // GET /products/:id
