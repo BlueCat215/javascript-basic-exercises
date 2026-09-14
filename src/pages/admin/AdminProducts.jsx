@@ -81,25 +81,6 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <div className="flex gap-3">
-        <input
-          placeholder="Lọc theo tên..."
-          value={filters.q}
-          onChange={(e) =>
-            setFilters((f) => ({ ...f, q: e.target.value, page: 1 }))
-          }
-          className="border border-line rounded-tag px-3 py-2 text-sm"
-        />
-        <input
-          placeholder="Lọc theo danh mục..."
-          value={filters.category}
-          onChange={(e) =>
-            setFilters((f) => ({ ...f, category: e.target.value, page: 1 }))
-          }
-          className="border border-line rounded-tag px-3 py-2 text-sm"
-        />
-      </div>
-
       <table className="w-full text-sm border border-line">
         <thead className="bg-paper">
           <tr className="text-left">
@@ -108,6 +89,35 @@ export default function AdminProducts() {
             <th className="p-3">Danh mục</th>
             <th className="p-3">Giá</th>
             <th className="p-3">Hành động</th>
+          </tr>
+          <tr className="bg-white border-t border-line">
+            <th className="p-2" />
+            <th className="p-2">
+              <input
+                value={filters.q}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, q: e.target.value, page: 1 }))
+                }
+                placeholder="Lọc theo tên..."
+                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+              />
+            </th>
+            <th className="p-2">
+              <input
+                value={filters.category}
+                onChange={(e) =>
+                  setFilters((f) => ({
+                    ...f,
+                    category: e.target.value,
+                    page: 1,
+                  }))
+                }
+                placeholder="Lọc theo danh mục..."
+                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+              />
+            </th>
+            <th className="p-2" />
+            <th className="p-2" />
           </tr>
         </thead>
         <tbody>
