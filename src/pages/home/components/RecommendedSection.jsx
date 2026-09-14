@@ -8,8 +8,8 @@ export const RecommendedSection = () => {
   const [tab, setTab] = useState("best-seller");
 
   const tabs = [
-    { key: "best-seller", label: "Best Seller" },
-    { key: "top-rated", label: "Top Rated" },
+    { key: "best-seller", label: "Bán chạy" },
+    { key: "top-rated", label: "Đánh giá cao" },
     ...categories.map((c) => ({ key: c, label: c })),
   ];
 

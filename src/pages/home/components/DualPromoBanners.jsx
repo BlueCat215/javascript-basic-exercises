@@ -27,7 +27,7 @@ export const DualPromoBanners = () => {
         <img
           src={cheapest.image}
           alt={cheapest.title}
-          className="w-32 h-32 object-contain bg-white/10 rounded-lg p-2"
+          className="w-40 h-40 object-contain  p-2"
         />
       </div>
 
@@ -43,7 +43,7 @@ export const DualPromoBanners = () => {
             Đặt hàng ngay hôm nay để nhận ưu đãi.
           </p>
           <Link
-            to="/products"
+            to="/products?minPrice=199"
             className="inline-block bg-green text-white font-semibold text-xs px-5 py-2.5 rounded hover:bg-green-light transition"
           >
             Khám phá

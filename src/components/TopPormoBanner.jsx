@@ -34,20 +34,17 @@ export const TopPromoBanner = () => {
       <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <h2 className="text-3xl md:text-4xl font-display font-black text-black leading-tight">
-            {" "}
-            Mua sắm ngay hôm nay{" "}
+            Mua sắm ngay hôm nay
           </h2>
           <p className="text-[15px] text-black mt-1">
-            {" "}
-            Giảm giá cho đơn hàng đầu tiên{" "}
+            Giảm giá cho đơn hàng đầu tiên
           </p>
         </div>
 
         <div className="flex items-center bg-white rounded-sm px-5 py-2.5 shadow-sm shrink-0 animate-bounce">
           <div className="flex items-center gap-2">
             <span className="text-4xl font-display font-black text-[#E84C3D] leading-none tracking-tighter">
-              {" "}
-              10%{" "}
+              10%
             </span>
             <div className="text-[12px] font-bold text-black leading-tight flex flex-col justify-center">
               <span>SALE</span> <span>OFF</span>
@@ -56,12 +53,10 @@ export const TopPromoBanner = () => {
           <div className="w-px h-10 bg-gray-300 mx-5"></div>
           <div className="text-left flex flex-col justify-center">
             <span className="text-[11px] text-gray-500 mb-0.5">
-              {" "}
-              Nhập mã khuyến mãi{" "}
+              Nhập mã khuyến mãi
             </span>
             <span className="text-lg font-black text-black tracking-wide leading-none">
-              {" "}
-              SALE10{" "}
+              SALE10
             </span>
           </div>
         </div>
