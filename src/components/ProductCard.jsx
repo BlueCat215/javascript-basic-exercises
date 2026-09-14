@@ -91,7 +91,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
         <div className="relative w-full h-44 rounded-md overflow-hidden mb-3 flex items-center justify-center shrink-0">
           {(isNew || inStock === false) && (
             <span className="absolute top-2 left-2 z-10 text-[10px] font-bold uppercase px-2 py-1 rounded bg-ink text-white">
-              {inStock === false ? "Hết hàng" : "New"}
+              {inStock === false ? "Hết hàng" : "Mới"}
             </span>
           )}
           <img
@@ -116,13 +116,13 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
                 ${originalPrice}
               </span>
               <span className="bg-rust text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase">
-                {discountPercent}% off
+                Giảm {discountPercent}%
               </span>
             </>
           )}
         </div>
         {purchases ? (
-          <p className="text-[10px] text-ink/40 mt-1">{purchases} Purchases</p>
+          <p className="text-[10px] text-ink/40 mt-1">Đã mua: {purchases}</p>
         ) : null}
       </Link>
 

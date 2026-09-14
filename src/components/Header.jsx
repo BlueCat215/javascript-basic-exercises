@@ -60,9 +60,9 @@ export const Header = () => {
               M
             </div>
             <span className="text-white font-display text-lg font-bold leading-tight">
-              MiniShop
+              Mini Shop
               <br />
-              Hiu
+              Hieu
             </span>
           </Link>
 

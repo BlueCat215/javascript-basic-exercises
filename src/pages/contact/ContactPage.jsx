@@ -194,10 +194,7 @@ export default function ContactPage() {
               </div>
               <div className="flex items-start gap-2">
                 <MapPinIcon size={14} className="text-green mt-0.5" />
-                <span>
-                  123 Đường ABC, Quận XYZ, Hà Nội, Việt Nam{" "}
-                  <span className="text-ink">(địa chỉ mẫu, cần cập nhật)</span>
-                </span>
+                <span>218 Lĩnh Nam, Hoàng Mai, Hà Nội, Việt Nam</span>
               </div>
               <a
                 href="mailto:support@minishop.example"
@@ -233,7 +230,7 @@ export default function ContactPage() {
             title="Bản đồ vị trí MiniShop"
             className="w-full h-full"
             loading="lazy"
-            src="https://maps.google.com/maps?q=Hanoi,Vietnam&z=14&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.275018167857!2d105.87438479640961!3d20.981610150630242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135afd765487289%3A0x21bd5839ba683d5f!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBLaW5oIFThur8gS-G7uSBUaHXhuq10IEPDtG5nIE5naGnhu4dw!5e0!3m2!1svi!2s!4v1789394641186!5m2!1svi!2s"
           />
         </div>
       </section>

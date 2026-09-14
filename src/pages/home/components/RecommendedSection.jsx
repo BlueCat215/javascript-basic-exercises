@@ -19,7 +19,7 @@ export const RecommendedSection = () => {
     <section>
       <div className="text-center mb-6">
         <h2 className="text-xl md:text-2xl font-display font-bold text-ink">
-          <span className="text-green">Recommended</span> by Swatbabymall
+          <span className="text-green-light">Đề xuất</span> bởi MiniShop
         </h2>
       </div>
 

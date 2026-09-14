@@ -14,12 +14,7 @@ import {
   ErrorState,
   EmptyState,
 } from "../../components/StatusState";
-import {
-  SearchIcon,
-  StarIcon,
-  MenuIcon,
-  ChevronRightIcon,
-} from "../../components/icons";
+import { SearchIcon, StarIcon, ChevronRightIcon } from "../../components/icons";
 
 const RATING_OPTIONS = [4, 3, 2, 1];
 
