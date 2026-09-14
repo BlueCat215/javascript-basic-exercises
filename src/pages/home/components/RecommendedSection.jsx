@@ -1,7 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCategories, useRecommendedProducts } from "../hooks/useHomeQueries";
 import { ProductCard } from "../../../components/ProductCard";
 import { LoadingState, EmptyState } from "../../../components/StatusState";
+
+// Ứng với mỗi tab, trỏ "Xem tất cả" sang ProductListPage với đúng bộ lọc tương ứng
+// (isBestSeller / sort=rating_desc / category) thay vì trang /products/recommended không tồn tại
+const buildViewAllLink = (tab) => {
+  if (tab === "best-seller") return "/products?isBestSeller=true";
+  if (tab === "top-rated") return "/products?sort=rating_desc";
+  return `/products?category=${encodeURIComponent(tab)}`;
+};
 
 export const RecommendedSection = () => {
   const { data: categories = [] } = useCategories();
@@ -17,10 +26,16 @@ export const RecommendedSection = () => {
 
   return (
     <section>
-      <div className="text-center mb-6">
+      <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl md:text-2xl font-display font-bold text-ink">
           <span className="text-green-light">Đề xuất</span> bởi MiniShop
         </h2>
+        <Link
+          to={buildViewAllLink(tab)}
+          className="text-xs text-ink hover:underline"
+        >
+          Xem tất cả
+        </Link>
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-2 mb-6">

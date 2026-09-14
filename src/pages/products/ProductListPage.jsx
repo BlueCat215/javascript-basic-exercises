@@ -18,6 +18,13 @@ import { SearchIcon, StarIcon, ChevronRightIcon } from "../../components/icons";
 
 const RATING_OPTIONS = [4, 3, 2, 1];
 
+//dùng chung param với GET /products (isNew, isBestSeller, onSale)
+const QUICK_FILTERS = [
+  { key: "isNew", label: "Sản phẩm mới" },
+  { key: "isBestSeller", label: "Bán chạy" },
+  { key: "onSale", label: "Đang giảm giá" },
+];
+
 export default function ProductListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -27,6 +34,9 @@ export default function ProductListPage() {
   const maxPrice = searchParams.get("maxPrice") || "";
   const brand = searchParams.get("brand") || "";
   const minRating = searchParams.get("minRating") || "";
+  const isNew = searchParams.get("isNew") === "true";
+  const isBestSeller = searchParams.get("isBestSeller") === "true";
+  const onSale = searchParams.get("onSale") === "true";
   const sort = searchParams.get("sort") || "";
   const page = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 12;
@@ -59,11 +69,27 @@ export default function ProductListPage() {
       maxPrice: maxPrice || undefined,
       brand: brand || undefined,
       minRating: minRating || undefined,
+      isNew: isNew || undefined,
+      isBestSeller: isBestSeller || undefined,
+      onSale: onSale || undefined,
       sort: sort || undefined,
       page,
       pageSize,
     }),
-    [q, category, minPrice, maxPrice, brand, minRating, sort, page, pageSize],
+    [
+      q,
+      category,
+      minPrice,
+      maxPrice,
+      brand,
+      minRating,
+      isNew,
+      isBestSeller,
+      onSale,
+      sort,
+      page,
+      pageSize,
+    ],
   );
 
   const { data, isLoading, isError } = useProductListQuery(filters);
@@ -78,14 +104,34 @@ export default function ProductListPage() {
     updateParams({ brand: next.length ? next.join(",") : null, page: null });
   };
 
+  const quickFilterState = { isNew, isBestSeller, onSale };
+  const toggleQuickFilter = (key) => {
+    updateParams({
+      [key]: quickFilterState[key] ? null : "true",
+      page: null,
+    });
+  };
+
   const activeFilterTags = [
     q && { key: "q", label: `Tìm: "${q}"` },
     category && { key: "category", label: category },
     minPrice && { key: "minPrice", label: `Từ $${minPrice}` },
     maxPrice && { key: "maxPrice", label: `Đến $${maxPrice}` },
     minRating && { key: "minRating", label: `${minRating}★ trở lên` },
+    ...QUICK_FILTERS.filter((f) => quickFilterState[f.key]).map((f) => ({
+      key: f.key,
+      label: f.label,
+    })),
     ...selectedBrands.map((b) => ({ key: "brand", label: b, value: b })),
   ].filter(Boolean);
+
+  const pageTitle = isNew
+    ? "Sản phẩm mới"
+    : onSale
+      ? "Sản phẩm đang giảm giá"
+      : isBestSeller
+        ? "Sản phẩm bán chạy"
+        : "Tất cả sản phẩm";
 
   const removeTag = (tag) => {
     if (tag.key === "brand") return toggleBrand(tag.value);
@@ -102,7 +148,7 @@ export default function ProductListPage() {
       <Breadcrumb items={[{ to: "/products", label: "Sản phẩm" }]} />
       <div className="mb-6">
         <h1 className="text-2xl lg:text-3xl font-display font-bold text-ink">
-          Tất cả sản phẩm
+          {pageTitle}
         </h1>
         <p className="text-xs text-ink/50 mt-1">
           Khám phá đầy đủ danh mục sản phẩm của MiniShop
@@ -122,6 +168,28 @@ export default function ProductListPage() {
               placeholder="Tên sản phẩm..."
               className="w-full border border-line rounded-full px-4 py-2 text-sm"
             />
+          </div>
+
+          <div className="bg-white border border-line rounded-lg p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-ink mb-3">
+              Bộ lọc nhanh
+            </p>
+            <div className="space-y-2 text-xs text-ink/70">
+              {QUICK_FILTERS.map((f) => (
+                <label
+                  key={f.key}
+                  className="flex items-center gap-2 cursor-pointer hover:text-green"
+                >
+                  <input
+                    type="checkbox"
+                    checked={quickFilterState[f.key]}
+                    onChange={() => toggleQuickFilter(f.key)}
+                    className="rounded border-line text-green"
+                  />
+                  {f.label}
+                </label>
+              ))}
+            </div>
           </div>
 
           <div className="bg-white border border-line rounded-lg p-4">
@@ -300,12 +368,18 @@ export default function ProductListPage() {
               Giảm giá đến 30%
             </h5>
             <p className="text-xs text-white/70 mb-4">Cho đơn hàng đầu tiên</p>
-            <a
-              href="/products?sort=price_asc"
-              className="block text-center bg-gold hover:bg-gold-light text-green text-xs font-bold uppercase py-2.5 rounded transition"
+            <button
+              onClick={() =>
+                updateParams({
+                  onSale: "true",
+                  sort: "discount_desc",
+                  page: null,
+                })
+              }
+              className="block w-full text-center bg-gold hover:bg-gold-light text-green text-xs font-bold uppercase py-2.5 rounded transition"
             >
               Xem ngay
-            </a>
+            </button>
           </div>
         </aside>
 
@@ -352,6 +426,8 @@ export default function ProductListPage() {
                 <option value="newest">Mới nhất</option>
                 <option value="price_asc">Giá tăng dần</option>
                 <option value="price_desc">Giá giảm dần</option>
+                <option value="discount_desc">Giảm giá nhiều nhất</option>
+                <option value="rating_desc">Đánh giá cao nhất</option>
               </select>
             </div>
           </div>

@@ -18,7 +18,7 @@ export const ClearanceSaleSection = () => {
           </span>
         </h2>
         <Link
-          to="/products?sort=price_asc"
+          to="/products?onSale=true&sort=discount_desc"
           className="text-xs text-ink hover:underline"
         >
           Xem tất cả

@@ -22,7 +22,7 @@ export const NewArrivalSection = () => {
           Mặt hàng <span className="text-green uppercase">mới</span>
         </h2>
         <Link
-          to="/products?sort=newest"
+          to="/products?isNew=true&sort=newest"
           className="text-xs text-ink hover:underline"
         >
           Xem tất cả
