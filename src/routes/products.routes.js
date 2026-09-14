@@ -5,7 +5,6 @@ const { authenticateToken, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 const products = new JsonCollection("products.json");
 
-// Hàm chuẩn hóa dữ liệu dòng (Gộp key, kiểm tra đa ngôn ngữ Việt-Anh)
 function normalizeRow(row) {
   const normalized = {};
   Object.keys(row).forEach((key) => {
@@ -39,6 +38,9 @@ router.get("/", async (req, res) => {
     maxPrice,
     brand,
     minRating,
+    isNew,
+    isBestSeller,
+    onSale,
     sort,
     page = 1,
     pageSize = 12,
@@ -57,12 +59,29 @@ router.get("/", async (req, res) => {
   }
   if (minRating)
     items = items.filter((p) => (p.rating?.rate || 0) >= Number(minRating));
+  if (isNew === "true") items = items.filter((p) => p.isNew);
+  if (isBestSeller === "true") items = items.filter((p) => p.isBestSeller);
+  if (onSale === "true")
+    items = items.filter((p) => p.originalPrice && p.originalPrice > p.price);
+
+  const getDiscountPercent = (p) =>
+    p.originalPrice && p.originalPrice > p.price
+      ? (p.originalPrice - p.price) / p.originalPrice
+      : 0;
 
   if (sort === "price_asc")
     items = [...items].sort((a, b) => a.price - b.price);
   if (sort === "price_desc")
     items = [...items].sort((a, b) => b.price - a.price);
   if (sort === "newest") items = [...items].sort((a, b) => b.id - a.id);
+  if (sort === "discount_desc")
+    items = [...items].sort(
+      (a, b) => getDiscountPercent(b) - getDiscountPercent(a),
+    );
+  if (sort === "rating_desc")
+    items = [...items].sort(
+      (a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0),
+    );
 
   const total = items.length;
   const pageNum = Number(page),
@@ -149,9 +168,7 @@ router.get("/clearance", async (req, res) => {
 
     res.json(items.slice(0, Number(limit)));
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Lỗi hệ thống khi lấy sản phẩm thanh lý" });
+    res.status(500).json({ message: "Lỗi hệ thống khi lấy sản phẩm thanh lý" });
   }
 });
 
@@ -170,9 +187,7 @@ router.get("/new-arrival", async (req, res) => {
 
     res.json(items.slice(0, Number(limit)));
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Lỗi hệ thống khi lấy sản phẩm mới về" });
+    res.status(500).json({ message: "Lỗi hệ thống khi lấy sản phẩm mới về" });
   }
 });
 

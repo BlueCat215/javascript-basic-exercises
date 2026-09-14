@@ -68,5 +68,30 @@
     "paymentMethod": "cod",
     "status": "shipped",
     "createdAt": "2026-09-13T01:02:33.229Z"
+  },
+  {
+    "id": 4,
+    "userId": 1,
+    "products": [
+      {
+        "productId": 8,
+        "quantity": 2
+      }
+    ],
+    "total": 11.96,
+    "shippingInfo": {
+      "fullName": "Hiếu Nguyễn",
+      "country": "VN",
+      "street": "hihihihihihi",
+      "city": "Hà Nội",
+      "state": "Hà Nội",
+      "zipCode": "45243",
+      "phone": "4534765436",
+      "email": "anhhieuk746@gmail.com",
+      "notes": "gédhbrfhjerthbfdbndfbn"
+    },
+    "paymentMethod": "cod",
+    "status": "pending",
+    "createdAt": "2026-09-14T17:23:56.391Z"
   }
 ]

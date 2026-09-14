@@ -114,8 +114,13 @@
   {
     "id": 8,
     "userId": 1,
-    "status": "active",
-    "products": [],
+    "status": "ordered",
+    "products": [
+      {
+        "productId": 8,
+        "quantity": 2
+      }
+    ],
     "date": "2026-09-04T11:30:02.010Z"
   },
   {
@@ -150,6 +155,10 @@
       {
         "productId": 2,
         "quantity": 3
+      },
+      {
+        "productId": 11,
+        "quantity": 1
       }
     ],
     "date": "2026-09-06T11:44:30.879Z"
@@ -185,5 +194,12 @@
       }
     ],
     "date": "2026-09-13T01:02:33.236Z"
+  },
+  {
+    "id": 14,
+    "userId": 1,
+    "status": "active",
+    "products": [],
+    "date": "2026-09-14T17:23:56.392Z"
   }
 ]
