@@ -84,6 +84,38 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post(
+  "/admin-create",
+  authenticateToken,
+  authorizeRoles("admin"),
+  async (req, res) => {
+    try {
+      const { email, username, password, name, role } = req.body;
+      if (!email || !username || !password) {
+        return res
+          .status(400)
+          .json({ message: "Thiếu email/username/password" });
+      }
+      const allUsers = await users.findAll();
+      if (allUsers.some((u) => u.username === username)) {
+        return res.status(409).json({ message: "Username đã tồn tại" });
+      }
+      const newUser = await users.create({
+        email,
+        username,
+        password,
+        name: name || { firstname: "", lastname: "" },
+        address: {},
+        phone: "",
+        role: role || "customer", // admin được phép chọn role bất kỳ
+      });
+      res.status(201).json(stripPassword(newUser));
+    } catch (error) {
+      res.status(500).json({ message: "Lỗi hệ thống khi tạo tài khoản" });
+    }
+  },
+);
+
 // PUT /users/:id (chính chủ hoặc admin, thay toàn bộ)
 router.put("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   try {
@@ -103,7 +135,6 @@ router.put("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   }
 });
 
-// users.routes.js — thêm
 router.patch(
   "/:id/password",
   authenticateToken,

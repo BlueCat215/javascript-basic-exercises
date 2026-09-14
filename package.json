@@ -4,8 +4,13 @@
   "description": "Mock server",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon --ignore data/ server.js",
+    "dev": "nodemon server.js",
     "start": "node server.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "data/*"
+    ]
   },
   "dependencies": {
     "cors": "^2.8.5",

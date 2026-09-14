@@ -16,5 +16,57 @@
     "paymentMethod": "cod",
     "status": "pending",
     "createdAt": "2026-09-06T11:40:43.149Z"
+  },
+  {
+    "id": 2,
+    "userId": 2,
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 1
+      }
+    ],
+    "total": 21.3,
+    "shippingInfo": {
+      "fullName": "Hiếu Nguyễn",
+      "phone": "1-570-236-7033",
+      "address": "fsdfsjgkdjtd"
+    },
+    "paymentMethod": "bank_transfer",
+    "status": "cancelled",
+    "createdAt": "2026-09-08T07:25:38.321Z"
+  },
+  {
+    "id": 3,
+    "userId": 2,
+    "products": [
+      {
+        "productId": 8,
+        "quantity": 4
+      },
+      {
+        "productId": 3,
+        "quantity": 1
+      },
+      {
+        "productId": 4,
+        "quantity": 3
+      }
+    ],
+    "total": 132.88,
+    "shippingInfo": {
+      "fullName": "Hiếu Nguyễn",
+      "country": "US",
+      "street": "hihihihihihi",
+      "city": "Hà Nội",
+      "state": "Hà Nội",
+      "zipCode": "213125",
+      "phone": "4534765436",
+      "email": "anhhieuk746@gmail.com",
+      "notes": "fsdxbhrsxdj"
+    },
+    "paymentMethod": "cod",
+    "status": "shipped",
+    "createdAt": "2026-09-13T01:02:33.229Z"
   }
 ]

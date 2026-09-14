@@ -5,7 +5,13 @@
     "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
     "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
     "category": "men's clothing",
-    "id": 1
+    "id": 1,
+    "brand": "Nova",
+    "purchases": 606,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": false,
+    "originalPrice": null
   },
   {
     "title": "Mens Casual Premium Slim Fit T-Shirts ",
@@ -13,7 +19,13 @@
     "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
     "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png",
     "category": "men's clothing",
-    "id": 2
+    "id": 2,
+    "brand": "Urban Craft",
+    "purchases": 2317,
+    "isBestSeller": false,
+    "isNew": true,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "Mens Cotton Jacket",
@@ -21,7 +33,13 @@
     "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
     "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_t.png",
     "category": "men's clothing",
-    "id": 3
+    "id": 3,
+    "brand": "Zenith",
+    "purchases": 1263,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "Mens Casual Slim Fit",
@@ -29,7 +47,13 @@
     "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
     "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_t.png",
     "category": "men's clothing",
-    "id": 4
+    "id": 4,
+    "brand": "Meadow & Co.",
+    "purchases": 1542,
+    "isBestSeller": false,
+    "isNew": true,
+    "inStock": true,
+    "originalPrice": 21.16
   },
   {
     "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
@@ -37,7 +61,13 @@
     "description": "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png",
     "category": "jewelery",
-    "id": 5
+    "id": 5,
+    "brand": "Kaira",
+    "purchases": 388,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "Solid Gold Petite Micropave ",
@@ -45,7 +75,13 @@
     "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
     "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png",
     "category": "jewelery",
-    "id": 6
+    "id": 6,
+    "brand": "Nova",
+    "purchases": 31,
+    "isBestSeller": false,
+    "isNew": true,
+    "inStock": false,
+    "originalPrice": 307.27
   },
   {
     "title": "White Gold Plated Princess",
@@ -53,7 +89,13 @@
     "description": "Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day...",
     "image": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_t.png",
     "category": "jewelery",
-    "id": 7
+    "id": 7,
+    "brand": "Urban Craft",
+    "purchases": 859,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 14.09
   },
   {
     "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
@@ -61,7 +103,13 @@
     "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
     "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_t.png",
     "category": "jewelery",
-    "id": 8
+    "id": 8,
+    "brand": "Zenith",
+    "purchases": 2121,
+    "isBestSeller": false,
+    "isNew": true,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0 ",
@@ -69,7 +117,13 @@
     "description": "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system",
     "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_t.png",
     "category": "electronics",
-    "id": 9
+    "id": 9,
+    "brand": "Meadow & Co.",
+    "purchases": 47,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 213.33
   },
   {
     "title": "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
@@ -77,15 +131,27 @@
     "description": "Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
     "image": "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_t.png",
     "category": "electronics",
-    "id": 10
+    "id": 10,
+    "brand": "Kaira",
+    "purchases": 63,
+    "isBestSeller": true,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 140.0
   },
   {
+    "id": 11,
     "title": "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5",
     "price": 112,
     "description": "3D NAND flash are applied to deliver high transfer speeds Remarkable transfer speeds that enable faster bootup and improved overall system performance. The advanced SLC Cache Technology allows performance boost and longer lifespan 7mm slim design suitable for Ultrabooks and Ultra-slim notebooks. Supports TRIM command, Garbage Collection technology, RAID, and ECC (Error Checking & Correction) to provide the optimized performance and enhanced reliability.",
     "image": "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_t.png",
     "category": "electronics",
-    "id": 11
+    "brand": "Nova",
+    "purchases": 195,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "id": 12,
@@ -97,7 +163,13 @@
     "rating": {
       "rate": 4.8,
       "count": 400
-    }
+    },
+    "brand": "Urban Craft",
+    "purchases": 822,
+    "isBestSeller": true,
+    "isNew": true,
+    "inStock": false,
+    "originalPrice": null
   },
   {
     "title": "Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin",
@@ -105,7 +177,13 @@
     "description": "21. 5 inches Full HD (1920 x 1080) widescreen IPS display And Radeon free Sync technology. No compatibility for VESA Mount Refresh Rate: 75Hz - Using HDMI port Zero-frame design | ultra-thin | 4ms response time | IPS panel Aspect ratio - 16: 9. Color Supported - 16. 7 million colors. Brightness - 250 nit Tilt angle -5 degree to 15 degree. Horizontal viewing angle-178 degree. Vertical viewing angle-178 degree 75 hertz",
     "image": "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_t.png",
     "category": "electronics",
-    "id": 13
+    "id": 13,
+    "brand": "Zenith",
+    "purchases": 90,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED ",
@@ -113,7 +191,13 @@
     "description": "49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag",
     "image": "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_t.png",
     "category": "electronics",
-    "id": 14
+    "id": 14,
+    "brand": "Meadow & Co.",
+    "purchases": 1622,
+    "isBestSeller": false,
+    "isNew": true,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
@@ -121,7 +205,13 @@
     "description": "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather. Zippered Pockets: 2 Zippered Hand Pockets, 2 Zippered Pockets on Chest (enough to keep cards or keys)and 1 Hidden Pocket Inside.Zippered Hand Pockets and Hidden Pocket keep your things secure. Humanized Design: Adjustable and Detachable Hood and Adjustable cuff to prevent the wind and water,for a comfortable fit. 3 in 1 Detachable Design provide more convenience, you can separate the coat and inner as needed, or wear it together. It is suitable for different season and help you adapt to different climates",
     "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_t.png",
     "category": "women's clothing",
-    "id": 15
+    "id": 15,
+    "brand": "Kaira",
+    "purchases": 29,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 67.05
   },
   {
     "id": 16,
@@ -133,7 +223,13 @@
     "rating": {
       "rate": 2.9,
       "count": 340
-    }
+    },
+    "brand": "Nova",
+    "purchases": 68,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 99.83
   },
   {
     "title": "Rain Jacket Women Windbreaker Striped Climbing Raincoats",
@@ -141,7 +237,13 @@
     "description": "Lightweight perfet for trip or casual wear---Long sleeve with hooded, adjustable drawstring waist design. Button and zipper front closure raincoat, fully stripes Lined and The Raincoat has 2 side pockets are a good size to hold all kinds of things, it covers the hips, and the hood is generous but doesn't overdo it.Attached Cotton Lined Hood with Adjustable Drawstrings give it a real styled look.",
     "image": "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2t.png",
     "category": "women's clothing",
-    "id": 17
+    "id": 17,
+    "brand": "Urban Craft",
+    "purchases": 690,
+    "isBestSeller": true,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "id": 18,
@@ -153,7 +255,13 @@
     "rating": {
       "rate": 4.7,
       "count": 130
-    }
+    },
+    "brand": "Zenith",
+    "purchases": 704,
+    "isBestSeller": true,
+    "isNew": true,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "Opna Women's Short Sleeve Moisture",
@@ -161,7 +269,13 @@
     "description": "100% Polyester, Machine wash, 100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight, roomy and highly breathable with moisture wicking fabric which helps to keep moisture away, Soft Lightweight Fabric with comfortable V-neck collar and a slimmer fit, delivers a sleek, more feminine silhouette and Added Comfort",
     "image": "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_t.png",
     "category": "women's clothing",
-    "id": 19
+    "id": 19,
+    "brand": "Meadow & Co.",
+    "purchases": 46,
+    "isBestSeller": true,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "title": "DANVOUY Womens T Shirt Casual Cotton Shor",
@@ -169,7 +283,13 @@
     "description": "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion:Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.",
     "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png",
     "category": "women's clothing",
-    "id": 20
+    "id": 20,
+    "brand": "Kaira",
+    "purchases": 675,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "id": 33,
@@ -181,19 +301,31 @@
     "rating": {
       "rate": 0,
       "count": 0
-    }
+    },
+    "brand": "Nova",
+    "purchases": 56,
+    "isBestSeller": true,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 11320000.0
   },
   {
     "id": 34,
     "title": "Bàn phím cơ Keychron K2 V2",
     "price": 1950000,
     "category": "Phụ kiện máy tính",
-    "image": "https://example.com/images/keychron-k2.jpg",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSRqhv_SfakfdD0eCf1uRcoG0TSgSlqW52v8vRBqQj2GHAw5h7Q4tGmtI&s=10",
     "description": "Bàn phím cơ không dây layout 75%, đèn LED RGB, switch Gateron gõ êm ái.",
     "rating": {
       "rate": 0,
       "count": 0
-    }
+    },
+    "brand": "Urban Craft",
+    "purchases": 2247,
+    "isBestSeller": false,
+    "isNew": true,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "id": 35,
@@ -205,7 +337,13 @@
     "rating": {
       "rate": 0,
       "count": 0
-    }
+    },
+    "brand": "Zenith",
+    "purchases": 59,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "id": 36,
@@ -217,7 +355,13 @@
     "rating": {
       "rate": 0,
       "count": 0
-    }
+    },
+    "brand": "Meadow & Co.",
+    "purchases": 2101,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": null
   },
   {
     "id": 37,
@@ -229,18 +373,12 @@
     "rating": {
       "rate": 0,
       "count": 0
-    }
-  },
-  {
-    "id": 38,
-    "title": "Bình giữ nhiệt Lock&Lock LHC4131BKG 500ml",
-    "price": 350000,
-    "category": "Đồ dùng cá nhân",
-    "image": "https://example.com/images/locklock-flask.jpg",
-    "description": "Chất liệu thép không gỉ 304, giữ nhiệt tối ưu tới 24h, kiểu dáng hiện đại.",
-    "rating": {
-      "rate": 0,
-      "count": 0
-    }
+    },
+    "brand": "Kaira",
+    "purchases": 29,
+    "isBestSeller": false,
+    "isNew": false,
+    "inStock": true,
+    "originalPrice": 929411.76
   }
 ]

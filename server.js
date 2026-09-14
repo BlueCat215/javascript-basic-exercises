@@ -11,21 +11,19 @@ const cartsRoutes = require("./src/routes/carts.routes");
 const ordersRoutes = require("./src/routes/orders.routes");
 const vouchersRoutes = require("./src/routes/vouchers.routes");
 const favoritesRoutes = require("./src/routes/favorites.routes");
+const contactRoutes = require("./src/routes/contact.routes");
+const articlesRoutes = require("./src/routes/articles.routes");
 
-// --- TỰ ĐỘNG TẠO THƯ MỤC DATA NẾU CHƯA CÓ ---
 const dataDir = path.join(__dirname, "data");
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
-
-// ---------------------------------------------
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Khai báo các cổng định tuyến API
 app.use("/auth", authRoutes);
 app.use("/products", productsRoutes);
 app.use("/users", usersRoutes);
@@ -33,6 +31,8 @@ app.use("/carts", cartsRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/vouchers", vouchersRoutes);
 app.use("/favorites", favoritesRoutes);
+app.use("/contact-messages", contactRoutes);
+app.use("/articles", articlesRoutes);
 
 app.get("/", (req, res) => {
   res.json({

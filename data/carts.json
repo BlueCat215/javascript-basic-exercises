@@ -133,15 +133,57 @@
   {
     "id": 10,
     "userId": 2,
-    "status": "active",
-    "products": [],
+    "status": "ordered",
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 1
+      }
+    ],
     "date": "2026-09-06T11:40:43.151Z"
   },
   {
     "id": 11,
     "userId": 11,
     "status": "active",
-    "products": [],
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 3
+      }
+    ],
     "date": "2026-09-06T11:44:30.879Z"
+  },
+  {
+    "id": 12,
+    "userId": 2,
+    "status": "ordered",
+    "products": [
+      {
+        "productId": 8,
+        "quantity": 4
+      },
+      {
+        "productId": 3,
+        "quantity": 1
+      },
+      {
+        "productId": 4,
+        "quantity": 3
+      }
+    ],
+    "date": "2026-09-08T07:25:38.323Z"
+  },
+  {
+    "id": 13,
+    "userId": 2,
+    "status": "active",
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 4
+      }
+    ],
+    "date": "2026-09-13T01:02:33.236Z"
   }
 ]

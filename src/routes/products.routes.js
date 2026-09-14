@@ -104,6 +104,78 @@ router.get("/category/:categoryName", async (req, res) => {
   }
 });
 
+// GET /products/recommended?tab=best-seller|top-rated|<category>&limit=5
+// Dùng cho khối "Recommended" ở trang chủ (có tab lọc)
+router.get("/recommended", async (req, res) => {
+  try {
+    const { tab = "best-seller", limit = 5 } = req.query;
+    let items = await products.findAll();
+
+    if (tab === "best-seller") {
+      items = items
+        .filter((p) => p.isBestSeller)
+        .sort((a, b) => (b.purchases || 0) - (a.purchases || 0));
+    } else if (tab === "top-rated") {
+      items = items
+        .filter((p) => (p.rating?.rate || 0) > 0)
+        .sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
+    } else {
+      // tab = tên danh mục cụ thể
+      items = items.filter((p) => p.category === tab);
+    }
+
+    res.json(items.slice(0, Number(limit)));
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi hệ thống khi lấy sản phẩm đề xuất" });
+  }
+});
+
+// GET /products/clearance?limit=5
+// Dùng cho khối "Clearance Sale" - chỉ lấy sản phẩm đang giảm giá, sắp theo % giảm nhiều nhất
+router.get("/clearance", async (req, res) => {
+  try {
+    const { limit = 5 } = req.query;
+    let items = await products.findAll();
+
+    items = items
+      .filter((p) => p.originalPrice && p.originalPrice > p.price)
+      .map((p) => ({
+        ...p,
+        discountPercent: Math.round(
+          ((p.originalPrice - p.price) / p.originalPrice) * 100,
+        ),
+      }))
+      .sort((a, b) => b.discountPercent - a.discountPercent);
+
+    res.json(items.slice(0, Number(limit)));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Lỗi hệ thống khi lấy sản phẩm thanh lý" });
+  }
+});
+
+// GET /products/new-arrival?tab=featured|<category>&limit=8
+// Dùng cho khối "New Arrival" ở trang chủ (có tab lọc)
+router.get("/new-arrival", async (req, res) => {
+  try {
+    const { tab = "featured", limit = 8 } = req.query;
+    let items = await products.findAll();
+
+    items = items.filter((p) => p.isNew);
+    if (tab !== "featured") {
+      items = items.filter((p) => p.category === tab);
+    }
+    items = [...items].sort((a, b) => b.id - a.id);
+
+    res.json(items.slice(0, Number(limit)));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Lỗi hệ thống khi lấy sản phẩm mới về" });
+  }
+});
+
 router.get("/brands", async (req, res) => {
   const items = await products.findAll();
   const counts = {};
@@ -132,7 +204,17 @@ router.post(
   authorizeRoles("admin"),
   async (req, res) => {
     try {
-      const { title, price, description, category, image } = req.body;
+      const {
+        title,
+        price,
+        description,
+        category,
+        image,
+        originalPrice,
+        isNew,
+        isBestSeller,
+        inStock,
+      } = req.body;
       if (!title || price === undefined || !category) {
         return res.status(400).json({ message: "Thiếu title/price/category" });
       }
@@ -143,6 +225,11 @@ router.post(
         category,
         image: image || "",
         rating: { rate: 0, count: 0 },
+        purchases: 0,
+        originalPrice: originalPrice ? Number(originalPrice) : null,
+        isNew: Boolean(isNew),
+        isBestSeller: Boolean(isBestSeller),
+        inStock: inStock === undefined ? true : Boolean(inStock),
       });
       res.status(201).json(newProduct);
     } catch (error) {
