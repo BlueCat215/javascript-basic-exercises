@@ -28,19 +28,19 @@ export default function AboutPage() {
     <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
       <Breadcrumb items={[{ label: "Giới thiệu" }]} />
       <section className="bg-white rounded-xl border border-line p-6 lg:p-10">
-        <div className="bg-paper rounded-xl p-8 lg:p-12">
+        <div className="bg-paper rounded-xl p-8 lg:p-12 uppercase">
           <h1 className="text-3xl lg:text-5xl font-display font-bold text-ink leading-tight mb-3">
             Mua sắm đơn giản, <br />
             <span className="text-green italic">trải nghiệm mượt mà</span>
           </h1>
-          <p className="text-xs text-ink/50 tracking-wide font-medium">
+          <p className="text-[15px] text-ink tracking-wide font-medium">
             MiniShop — Dự án website thương mại điện tử
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-10 px-2">
           <div className="lg:border-r border-line pr-4">
-            <h3 className="text-xs font-bold uppercase text-ink leading-snug">
+            <h3 className="text-xl font-bold uppercase text-ink leading-snug">
               Mục tiêu của chúng tôi là mang lại{" "}
               <span className="text-green font-extrabold">
                 trải nghiệm mua sắm mượt mà
@@ -52,7 +52,7 @@ export default function AboutPage() {
             <div className="text-3xl font-display font-extrabold text-ink">
               {stats?.productCount ?? "—"}
             </div>
-            <p className="text-[11px] font-semibold text-ink/40 uppercase mt-1">
+            <p className="text-[15px] font-semibold text-ink uppercase mt-1">
               Sản phẩm đang kinh doanh
             </p>
           </div>
@@ -60,7 +60,7 @@ export default function AboutPage() {
             <div className="text-3xl font-display font-extrabold text-ink">
               {stats?.categoryCount ?? "—"}
             </div>
-            <p className="text-[11px] font-semibold text-ink/40 uppercase mt-1">
+            <p className="text-[15px] font-semibold text-ink uppercase mt-1">
               Danh mục sản phẩm
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function AboutPage() {
           <h2 className="text-xl lg:text-2xl font-display font-bold text-ink leading-snug mb-4">
             Về dự án này
           </h2>
-          <p className="text-xs text-ink/60 leading-relaxed mb-6">
+          <p className="text-[15px] text-ink leading-relaxed mb-6">
             MiniShop là một website thương mại điện tử được xây dựng nhằm áp
             dụng các kiến thức về ReactJS, TanStack Query, Zustand, React Hook
             Form và các kỹ thuật xử lý thực tế trong phát triển ứng dụng web
@@ -109,7 +109,7 @@ export default function AboutPage() {
                 <Icon size={18} />
               </div>
             </div>
-            <p className="text-xs text-ink/50 leading-relaxed">{desc}</p>
+            <p className="text-[15px] text-ink leading-relaxed">{desc}</p>
           </div>
         ))}
       </section>

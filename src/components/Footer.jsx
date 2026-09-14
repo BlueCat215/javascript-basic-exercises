@@ -1,154 +1,252 @@
 import { Link } from "react-router-dom";
 import { useCategories } from "../pages/home/hooks/useHomeQueries";
-import {
-  PhoneIcon,
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-  TwitterIcon,
-} from "./icons";
+import { FacebookIcon, InstagramIcon, YoutubeIcon, TwitterIcon } from "./icons";
 
 export const Footer = () => {
   const { data: categories = [] } = useCategories();
 
   return (
-    <footer className="bg-white text-ink/70 pt-12 pb-6 border-t border-line text-xs mt-auto">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 pb-10 border-b border-line">
-        <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-green flex items-center justify-center text-gold font-display font-bold text-xl">
-              M
-            </div>
-            <div>
-              <span className="font-display text-xl font-bold tracking-widest text-green block leading-none">
-                MINISHOP
-              </span>
-              <span className="text-[8px] uppercase tracking-[0.25em] text-ink/40 font-semibold">
-                Mua sắm trực tuyến
-              </span>
-            </div>
+    <footer className="bg-white text-[#1a1a1a] pt-14 pb-4 border-t border-gray-100 text-[13px] mt-auto font-sans">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-8 pb-12 border-b border-gray-100">
+          <div className="lg:col-span-3">
+            <h4 className="font-bold text-[#1a1a1a] text-[14px] mb-4">
+              Phân Loại
+            </h4>
+            <ul className="space-y-2.5 text-gray-500">
+              {categories.map((c) => (
+                <li key={c}>
+                  <Link
+                    to={`/products?category=${encodeURIComponent(c)}`}
+                    className="hover:text-[#00a79d] transition capitalize block"
+                  >
+                    {c}
+                  </Link>
+                </li>
+              ))}
+              {categories.length === 0 && (
+                <>
+                  <li>
+                    <Link to="/products" className="hover:text-[#00a79d]">
+                      Infant
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/products" className="hover:text-[#00a79d]">
+                      Baby Fashion
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/products" className="hover:text-[#00a79d]">
+                      Toys & Study
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
           </div>
-          <p className="text-ink/50 leading-relaxed text-[11px]">
-            Website thương mại điện tử mini — bài tập tổng hợp React, TanStack
-            Query, Zustand.
-          </p>
-          <div className="text-[11px] space-y-1 text-ink/60">
-            <div className="flex items-center gap-1.5">
-              <PhoneIcon size={12} className="text-green" /> Hotline:{" "}
-              <strong className="text-green">1900 1234</strong>
-            </div>
-            <div>
-              Mail:{" "}
-              <a className="text-green" href="mailto:support@minishop.example">
-                support@minishop.example
-              </a>
-            </div>
-          </div>
-          <div className="flex gap-3 pt-1">
-            {[FacebookIcon, InstagramIcon, YoutubeIcon, TwitterIcon].map(
-              (Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-7 h-7 rounded-full bg-paper hover:bg-green hover:text-white flex items-center justify-center transition text-ink/50"
-                >
-                  <Icon size={14} />
-                </a>
-              ),
-            )}
-          </div>
-        </div>
 
-        <div>
-          <h4 className="font-bold text-ink uppercase text-[11px] tracking-wider mb-3">
-            Danh mục
-          </h4>
-          <ul className="space-y-2 text-ink/50 text-[11px]">
-            {categories.map((c) => (
-              <li key={c}>
-                <Link
-                  to={`/products?category=${encodeURIComponent(c)}`}
-                  className="hover:text-green transition capitalize"
-                >
-                  {c}
+          <div className="lg:col-span-2">
+            <h4 className="font-bold text-[#1a1a1a] text-[14px] mb-4">
+              Company
+            </h4>
+            <ul className="space-y-2.5 text-gray-500">
+              <li>
+                <Link to="/about" className="hover:text-[#00a79d]">
+                  About Swatbabymall
                 </Link>
               </li>
-            ))}
-          </ul>
-        </div>
+              <li>
+                <Link to="/contact" className="hover:text-[#00a79d]">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/career" className="hover:text-[#00a79d]">
+                  Career
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="hover:text-[#00a79d]">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="/sitemap" className="hover:text-[#00a79d]">
+                  Sitemap
+                </Link>
+              </li>
+              <li>
+                <Link to="/locations" className="hover:text-[#00a79d]">
+                  Store Locations
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        <div>
-          <h4 className="font-bold text-ink uppercase text-[11px] tracking-wider mb-3">
-            Tài khoản
-          </h4>
-          <ul className="space-y-2 text-ink/50 text-[11px]">
-            <li>
-              <Link to="/account" className="hover:text-green">
-                Tài khoản của tôi
-              </Link>
-            </li>
-            <li>
-              <Link to="/account/orders" className="hover:text-green">
-                Đơn hàng
-              </Link>
-            </li>
-            <li>
-              <Link to="/account/favorites" className="hover:text-green">
-                Yêu thích
-              </Link>
-            </li>
-            <li>
-              <Link to="/cart" className="hover:text-green">
-                Giỏ hàng
-              </Link>
-            </li>
-          </ul>
-        </div>
+          <div className="lg:col-span-2">
+            <h4 className="font-bold text-[#1a1a1a] text-[14px] mb-4">
+              Help Center
+            </h4>
+            <ul className="space-y-2.5 text-gray-500">
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Customer Service
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Terms & Conditions
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Track Order
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  FAQs
+                </a>
+              </li>
+              <li>
+                <a href="/account" className="hover:text-[#00a79d]">
+                  My Account
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        <div>
-          <h4 className="font-bold text-ink uppercase text-[11px] tracking-wider mb-3">
-            Hỗ trợ
-          </h4>
-          <ul className="space-y-2 text-ink/50 text-[11px]">
-            <li>
-              <a href="#" className="hover:text-green">
-                Câu hỏi thường gặp
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-green">
-                Chính sách đổi trả
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-green">
-                Chính sách vận chuyển
-              </a>
-            </li>
-          </ul>
-        </div>
+          <div className="lg:col-span-1">
+            <h4 className="font-bold text-[#1a1a1a] text-[14px] mb-4">
+              Partner
+            </h4>
+            <ul className="space-y-2.5 text-gray-500">
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Become Seller
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Affiliate
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Advertise
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#00a79d]">
+                  Partnership
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        <div>
-          <h4 className="font-bold text-ink uppercase text-[11px] tracking-wider mb-3">
-            Đăng ký nhận tin
-          </h4>
-          <p className="text-ink/50 text-[11px] mb-3">
-            Nhận ưu đãi mới nhất qua email.
-          </p>
-          <div className="flex border border-line rounded-full overflow-hidden">
-            <input
-              placeholder="Email của bạn"
-              className="flex-1 px-3 py-2 text-[11px] outline-none min-w-0"
-            />
-            <button className="bg-green text-white px-3 text-[11px] font-semibold shrink-0">
-              Gửi
-            </button>
+          <div className="lg:col-span-4 space-y-4 lg:pl-6">
+            <h4 className="font-bold text-[#1a1a1a] text-[15px]">
+              Subscribe & Get{" "}
+              <span className="text-red-500 font-semibold">10% OFF</span>
+            </h4>
+
+            <div className="flex rounded-md overflow-hidden bg-[#f0f2f5] p-0.5 border border-transparent focus-within:border-gray-300 max-w-md">
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="flex-1 px-3 py-2.5 text-[13px] bg-transparent outline-none min-w-0 text-gray-700 placeholder-gray-400"
+              />
+              <button className="bg-[#00a79d] hover:bg-[#008c84] text-white px-5 text-[11px] font-bold tracking-wider uppercase rounded-sm transition shrink-0">
+                SUBSCRIBE
+              </button>
+            </div>
+
+            <p className="text-[12px] text-gray-400">
+              By subscribing, you accept the{" "}
+              <a href="#" className="underline hover:text-gray-600">
+                Privacy Policy
+              </a>
+            </p>
+
+            <div className="text-[13px] text-gray-600 space-y-1.5 pt-2">
+              <p>
+                Hotline 24/7:{" "}
+                <span className="text-[#00a79d] font-semibold">
+                  (+325) 3686 25 16
+                </span>
+              </p>
+              <p>
+                <span className="font-medium text-gray-700">Work Hours:</span>{" "}
+                Monday-Saturday: 9.00am - 5.00pm
+              </p>
+              <p>
+                <span className="font-medium text-gray-700">Mail:</span>{" "}
+                contact@swatbabymall.com
+              </p>
+            </div>
+
+            <div className="flex gap-2.5 pt-2">
+              {[TwitterIcon, FacebookIcon, InstagramIcon, YoutubeIcon].map(
+                (Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="w-8 h-8 rounded-full bg-[#f4f6f8] hover:bg-[#00a79d] hover:text-white flex items-center justify-center transition text-gray-700"
+                  >
+                    <Icon size={13} />
+                  </a>
+                ),
+              )}
+            </div>
           </div>
         </div>
+
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-5 border-b border-gray-100 text-gray-500 text-[12px]">
+          <div className="flex gap-2">
+            <select className="border border-gray-200 rounded px-3 py-1 bg-white outline-none cursor-pointer hover:border-gray-300">
+              <option>USD</option>
+            </select>
+            <select className="border border-gray-200 rounded px-3 py-1 bg-white outline-none cursor-pointer hover:border-gray-300">
+              <option>Eng</option>
+            </select>
+          </div>
+
+          <div className="flex items-center gap-4 text-[14px] font-sans font-bold tracking-tight select-none opacity-80">
+            <span className="text-[#003087] italic">PayPal</span>
+            <span className="text-[#eb001b]">mastercard</span>
+            <span className="text-[#00579f]">VISA</span>
+            <span className="text-[#635bff] lowercase">stripe</span>
+            <span className="text-[#ffb3c7] lowercase">klarna.</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="text-gray-400 text-[12px]">Download App</span>
+            <a
+              href="#"
+              className="bg-black hover:bg-gray-900 text-white px-3 py-1.5 rounded-md flex items-center gap-1.5 text-[11px] font-medium transition"
+            >
+              <span className="font-bold">App Store</span>
+            </a>
+            <a
+              href="#"
+              className="bg-black hover:bg-gray-900 text-white px-3 py-1.5 rounded-md flex items-center gap-1.5 text-[11px] font-medium transition"
+            >
+              <span className="font-bold">Google Play</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="text-center text-gray-400 text-[12px] pt-4">
+          © 2024 <span className="font-semibold text-gray-700">Shawonetc3</span>
+          . All Rights Reserved
+        </div>
       </div>
-      <p className="text-center text-[11px] text-ink/40 pt-6">
-        © {new Date().getFullYear()} MiniShop
-      </p>
     </footer>
   );
 };

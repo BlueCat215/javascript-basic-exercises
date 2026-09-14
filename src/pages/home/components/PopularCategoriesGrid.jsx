@@ -1,42 +1,76 @@
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 import { useCategories } from "../hooks/useHomeQueries";
 import {
   getCategoryIcon,
   categoryBadgeColors,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "../../../components/icons";
 
 export const PopularCategoriesGrid = () => {
   const { data: categories = [] } = useCategories();
+  const scrollRef = useRef(null);
+
   if (categories.length === 0) return null;
 
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === "left" ? -250 : 250;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="max-w-6xl mx-auto px-4 mt-14">
+    <section className="max-w-6xl mx-auto px-4 mt-14 relative">
       <div className="text-center mb-8">
         <h2 className="text-xl md:text-2xl font-display font-bold text-ink">
           Danh mục phổ biến
         </h2>
         <div className="w-12 h-0.5 bg-green mx-auto mt-2" />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-        {categories.map((c, i) => {
-          const Icon = getCategoryIcon(c);
-          return (
-            <Link
-              key={c}
-              to={`/products?category=${encodeURIComponent(c)}`}
-              className="group flex flex-col items-center"
-            >
-              <div
-                className={`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-lg group-hover:scale-105 transition-transform ${categoryBadgeColors[i % categoryBadgeColors.length]}`}
+
+      <div className="relative group flex items-center">
+        <button
+          onClick={() => scroll("left")}
+          className="absolute -left-5 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 hover:bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          aria-label="Cuộn trái"
+        >
+          <ChevronLeftIcon size={24} className="text-ink" />
+        </button>
+
+        <div
+          ref={scrollRef}
+          className="flex gap-4 md:gap-8 overflow-x-auto snap-x snap-mandatory w-full pb-4 scroll-smooth [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {categories.map((c, i) => {
+            const Icon = getCategoryIcon(c);
+            return (
+              <Link
+                key={c}
+                to={`/products?category=${encodeURIComponent(c)}`}
+                className="group flex flex-col items-center shrink-0 snap-start w-20 md:w-24"
               >
-                <Icon size={24} />
-              </div>
-              <span className="text-[11px] font-medium text-ink/70 mt-2 group-hover:text-green capitalize">
-                {c}
-              </span>
-            </Link>
-          );
-        })}
+                <div
+                  className={`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-lg group-hover:scale-105 transition-transform ${categoryBadgeColors[i % categoryBadgeColors.length]}`}
+                >
+                  <Icon size={24} />
+                </div>
+                <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green capitalize uppercase text-center break-words w-full">
+                  {c}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+        <button
+          onClick={() => scroll("right")}
+          className="absolute -right-5 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 hover:bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          aria-label="Cuộn phải"
+        >
+          <ChevronRightIcon size={24} className="text-ink" />
+        </button>
       </div>
     </section>
   );

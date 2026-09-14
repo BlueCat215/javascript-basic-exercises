@@ -16,7 +16,7 @@ export const DualPromoBanners = () => {
           <div className="text-3xl md:text-4xl font-display font-bold text-gold-light">
             ${cheapest.price}
           </div>
-          <p className="text-xs text-white/80 line-clamp-2">{cheapest.title}</p>
+          <p className="text-xl text-white line-clamp-2">{cheapest.title}</p>
           <Link
             to={`/products/${cheapest.id}`}
             className="inline-block bg-white text-ink font-semibold text-xs px-5 py-2.5 rounded hover:bg-paper transition"
@@ -31,7 +31,7 @@ export const DualPromoBanners = () => {
         />
       </div>
 
-      <div className="bg-gradient-to-r from-paper to-gold-light/40 rounded-xl p-6 md:p-8 text-ink flex items-center justify-between border border-line">
+      <div className="bg-gradient-to-r from-paper to-gold-light rounded-xl p-6 md:p-8 text-ink flex items-center justify-between border border-line">
         <div className="space-y-3 max-w-[60%]">
           <span className="bg-green text-white px-2.5 py-1 rounded text-[10px] uppercase font-bold">
             Ưu đãi
@@ -39,7 +39,7 @@ export const DualPromoBanners = () => {
           <div className="text-2xl md:text-3xl font-display font-bold text-green leading-tight">
             Miễn phí vận chuyển đơn từ $199
           </div>
-          <p className="text-xs text-ink/60">
+          <p className="text-xl text-ink">
             Đặt hàng ngay hôm nay để nhận ưu đãi.
           </p>
           <Link

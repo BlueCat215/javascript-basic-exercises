@@ -59,7 +59,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                  <label className="block text-xs font-semibold text-ink mb-1.5">
                     Họ <span className="text-rust">*</span>
                   </label>
                   <input {...register("firstName")} className={inputClass} />
@@ -70,7 +70,7 @@ export default function ContactPage() {
                   )}
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                  <label className="block text-xs font-semibold text-ink mb-1.5">
                     Tên <span className="text-rust">*</span>
                   </label>
                   <input {...register("lastName")} className={inputClass} />
@@ -83,7 +83,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                <label className="block text-xs font-semibold text-ink mb-1.5">
                   Email <span className="text-rust">*</span>
                 </label>
                 <input {...register("email")} className={inputClass} />
@@ -95,7 +95,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                <label className="block text-xs font-semibold text-ink mb-1.5">
                   Số điện thoại{" "}
                   <span className="text-ink/40 font-normal">
                     (Không bắt buộc)
@@ -105,7 +105,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                <label className="block text-xs font-semibold text-ink mb-1.5">
                   Quốc gia <span className="text-rust">*</span>
                 </label>
                 <select
@@ -130,7 +130,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                <label className="block text-xs font-semibold text-ink mb-1.5">
                   Chủ đề{" "}
                   <span className="text-ink/40 font-normal">
                     (Không bắt buộc)
@@ -140,7 +140,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+                <label className="block text-xs font-semibold text-ink mb-1.5">
                   Nội dung <span className="text-rust">*</span>
                 </label>
                 <textarea
@@ -184,8 +184,8 @@ export default function ContactPage() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="bg-paper rounded-xl p-6 md:p-8 border border-line text-xs text-ink/70 space-y-4">
-              <h3 className="text-[11px] font-bold tracking-widest text-ink/40 uppercase">
+            <div className="bg-paper rounded-xl p-6 md:p-8 border border-line text-xs text-ink space-y-4">
+              <h3 className="text-[15px] font-bold tracking-widest text-ink uppercase">
                 Thông tin liên hệ
               </h3>
               <div className="flex items-center gap-2">
@@ -196,9 +196,7 @@ export default function ContactPage() {
                 <MapPinIcon size={14} className="text-green mt-0.5" />
                 <span>
                   123 Đường ABC, Quận XYZ, Hà Nội, Việt Nam{" "}
-                  <span className="text-ink/30">
-                    (địa chỉ mẫu, cần cập nhật)
-                  </span>
+                  <span className="text-ink">(địa chỉ mẫu, cần cập nhật)</span>
                 </span>
               </div>
               <a
@@ -214,7 +212,7 @@ export default function ContactPage() {
                     <a
                       key={i}
                       href="#"
-                      className="w-8 h-8 rounded-full bg-white border border-line flex items-center justify-center text-ink/50 hover:text-green hover:border-green transition"
+                      className="w-8 h-8 rounded-full bg-white border border-line flex items-center justify-center text-ink hover:text-green hover:border-green transition"
                     >
                       <Icon size={13} />
                     </a>
@@ -238,9 +236,6 @@ export default function ContactPage() {
             src="https://maps.google.com/maps?q=Hanoi,Vietnam&z=14&output=embed"
           />
         </div>
-        <p className="text-xs text-ink/40 mt-2">
-          Địa chỉ mẫu — cập nhật đúng địa chỉ thật khi có thông tin chính thức.
-        </p>
       </section>
     </div>
   );

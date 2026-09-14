@@ -220,7 +220,7 @@ export default function ProductDetailPage() {
       </section>
 
       <section className="bg-white rounded-lg border border-line p-6">
-        <div className="flex items-center gap-8 border-b border-line pb-3 text-xs font-bold uppercase tracking-wider">
+        <div className="flex items-center gap-8 border-b border-line pb-3 text-[15px] font-bold uppercase tracking-wider">
           {[
             { key: "description", label: "Mô tả" },
             {
@@ -239,7 +239,7 @@ export default function ProductDetailPage() {
           ))}
         </div>
 
-        <div className="pt-6 text-xs text-ink/70 leading-relaxed">
+        <div className="pt-6 text-[16px] text-ink leading-relaxed">
           {activeTab === "description" && <p>{product.description}</p>}
 
           {activeTab === "reviews" &&

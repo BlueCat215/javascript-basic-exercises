@@ -28,7 +28,40 @@ export const usePromoProducts = () => {
   });
 };
 
-// pages/home/hooks/useHomeQueries.js — thêm
+export const useRecommendedProducts = (tab) => {
+  return useQuery({
+    queryKey: ["products", "recommended", tab],
+    queryFn: () => homeService.getRecommended(tab, 5),
+    enabled: !!tab,
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useClearanceProducts = () => {
+  return useQuery({
+    queryKey: ["products", "clearance"],
+    queryFn: () => homeService.getClearance(5),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useNewArrivalProducts = (tab) => {
+  return useQuery({
+    queryKey: ["products", "new-arrival", tab],
+    queryFn: () => homeService.getNewArrival(tab, 8),
+    enabled: !!tab,
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useArticles = () => {
+  return useQuery({
+    queryKey: ["articles", "home"],
+    queryFn: () => homeService.getArticles(5),
+    staleTime: 1000 * 60 * 10,
+  });
+};
+
 export const usePublicStats = () => {
   return useQuery({
     queryKey: ["public-stats"],

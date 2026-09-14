@@ -29,6 +29,7 @@ import {
   Sparkles,
   CheckCircle2,
 } from "lucide-react";
+
 import {
   FaFacebookF,
   FaInstagram,

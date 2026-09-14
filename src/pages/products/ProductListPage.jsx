@@ -217,7 +217,7 @@ export default function ProductListPage() {
               Khoảng giá
             </p>
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-ink/40">$</span>
+              <span className="text-ink">$</span>
               <input
                 type="number"
                 value={priceInputs.min}
@@ -226,8 +226,8 @@ export default function ProductListPage() {
                 }
                 className="w-16 text-center border border-line rounded py-1 px-1"
               />
-              <span className="text-ink/40">—</span>
-              <span className="text-ink/40">$</span>
+              <span className="text-ink">—</span>
+              <span className="text-ink">$</span>
               <input
                 type="number"
                 value={priceInputs.max}
@@ -279,13 +279,13 @@ export default function ProductListPage() {
                       />
                     ))}
                   </span>
-                  <span className="text-ink/30 text-[11px]">trở lên</span>
+                  <span className="text-ink/40 text-[11px]">trở lên</span>
                 </label>
               ))}
               {minRating && (
                 <button
                   onClick={() => updateParams({ minRating: null })}
-                  className="text-[11px] text-rust hover:underline"
+                  className="text-[11px]  text-rust hover:underline"
                 >
                   Bỏ chọn
                 </button>
