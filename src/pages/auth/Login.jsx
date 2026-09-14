@@ -51,7 +51,7 @@ export default function Login() {
             <img
               src="/login.svg"
               alt="Login Illustration"
-              className="w-full max-h-[400px] object-contain"
+              className="w-full max-h-100 object-contain"
             />
           </div>
 
@@ -60,14 +60,14 @@ export default function Login() {
               <h1 className="text-2xl sm:text-3xl font-display font-bold text-green">
                 Đăng nhập
               </h1>
-              <p className="text-xs font-bold uppercase tracking-widest text-ink/40 mt-1.5">
+              <p className="text-xs font-bold uppercase tracking-widest text-ink/50 mt-1.5">
                 Tiếp tục để mua sắm
               </p>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-ink/70">
+                <label className="block text-xs font-semibold text-ink">
                   Tên đăng nhập
                 </label>
                 <input
@@ -83,7 +83,7 @@ export default function Login() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-ink/70">
+                <label className="block text-xs font-semibold text-ink">
                   Mật khẩu
                 </label>
                 <div className="relative">
@@ -127,18 +127,18 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="btn-primary w-full mt-1 disabled:opacity-50"
+                className="btn-primary  mt-1 disabled:opacity-50"
               >
                 {isPending ? "Đang xử lý..." : "Đăng nhập"}
               </button>
 
-              <div className="text-center pt-2">
+              <div className="text-left pt-2">
                 <span className="text-xs font-semibold text-ink/50 uppercase tracking-wider">
-                  Chưa có tài khoản?{" "}
+                  Chưa có tài khoản ?
                 </span>
                 <Link
                   to="/register"
-                  className="text-xs font-bold text-green hover:underline uppercase tracking-wide ml-1"
+                  className="text-xs font-bold text-green uppercase tracking-wide ml-1"
                 >
                   Đăng ký
                 </Link>

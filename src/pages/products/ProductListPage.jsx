@@ -206,31 +206,36 @@ export default function ProductListPage() {
               ))}
             </div>
           </div>
-
-          <div className="bg-white border border-line rounded-lg p-4">
+          <div className="bg-white border border-line rounded-lg p-4 min-w-0">
             <p className="text-xs font-bold uppercase tracking-wider text-ink mb-3">
               Khoảng giá
             </p>
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-ink">$</span>
-              <input
-                type="number"
-                value={priceInputs.min}
-                onChange={(e) =>
-                  setPriceInputs((s) => ({ ...s, min: e.target.value }))
-                }
-                className="w-16 text-center border border-line rounded py-1 px-1"
-              />
-              <span className="text-ink">—</span>
-              <span className="text-ink">$</span>
-              <input
-                type="number"
-                value={priceInputs.max}
-                onChange={(e) =>
-                  setPriceInputs((s) => ({ ...s, max: e.target.value }))
-                }
-                className="w-16 text-center border border-line rounded py-1 px-1"
-              />
+            <div className="space-y-3 text-xs">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <div className="flex items-center flex-1 min-w-0 border border-line rounded px-2">
+                  <span className="text-ink/50 shrink-0">$</span>
+                  <input
+                    type="number"
+                    value={priceInputs.min}
+                    onChange={(e) =>
+                      setPriceInputs((s) => ({ ...s, min: e.target.value }))
+                    }
+                    className="w-full min-w-0 text-center py-1.5 px-1 outline-none"
+                  />
+                </div>
+                <span className="text-ink/40 shrink-0">—</span>
+                <div className="flex items-center flex-1 min-w-0 border border-line rounded px-2">
+                  <span className="text-ink/50 shrink-0">$</span>
+                  <input
+                    type="number"
+                    value={priceInputs.max}
+                    onChange={(e) =>
+                      setPriceInputs((s) => ({ ...s, max: e.target.value }))
+                    }
+                    className="w-full min-w-0 text-center py-1.5 px-1 outline-none"
+                  />
+                </div>
+              </div>
               <button
                 onClick={() =>
                   updateParams({
@@ -239,7 +244,7 @@ export default function ProductListPage() {
                     page: null,
                   })
                 }
-                className="bg-green hover:bg-green-light text-white text-xs px-3 py-1 rounded font-semibold shrink-0"
+                className="w-full bg-green hover:bg-green-light text-white text-xs px-3 py-2 rounded font-semibold"
               >
                 Áp dụng
               </button>
@@ -274,7 +279,6 @@ export default function ProductListPage() {
                       />
                     ))}
                   </span>
-                  <span className="text-ink/40 text-[11px]">trở lên</span>
                 </label>
               ))}
               {minRating && (
@@ -288,7 +292,7 @@ export default function ProductListPage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-b from-green to-black rounded-lg p-5 text-white">
+          <div className="bg-linear-to-b from-green to-black rounded-lg p-5 text-white">
             <div className="text-[10px] uppercase font-bold tracking-widest text-gold mb-1">
               Ưu đãi
             </div>

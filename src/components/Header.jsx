@@ -12,6 +12,7 @@ import {
   CartIcon,
   MenuIcon,
   ChevronRightIcon,
+  LogOutIcon,
 } from "./icons";
 import { TopPromoBanner } from "./TopPormoBanner";
 
@@ -19,7 +20,6 @@ export const Header = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [showCollections, setShowCollections] = useState(false);
-
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const clearAuth = useAuthStore((s) => s.clearAuth);
 
@@ -60,9 +60,7 @@ export const Header = () => {
               M
             </div>
             <span className="text-white font-display text-lg font-bold leading-tight">
-              Mini Shop
-              <br />
-              Hieu
+              Mini Shop <br /> Hieu
             </span>
           </Link>
 
@@ -89,7 +87,7 @@ export const Header = () => {
           <div className="flex items-center gap-4 ml-auto">
             <Link
               to="/account/favorites"
-              className="relative w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition"
+              className="relative w-9 h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors"
             >
               <HeartIcon size={16} />
               {favorites.length > 0 && (
@@ -102,16 +100,19 @@ export const Header = () => {
             {isAuthenticated ? (
               <Link
                 to="/account"
-                className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition"
+                className="relative w-9 h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors"
               >
                 <UserIcon size={16} />
               </Link>
             ) : (
               <div className="hidden lg:flex flex-col text-left text-white">
-                <span className="text-[10px] uppercase tracking-wider text-white">
+                <span className="text-[10px] uppercase tracking-wider text-white/70">
                   Chào Mừng
                 </span>
-                <Link to="/login" className="text-xs font-bold hover:underline">
+                <Link
+                  to="/login"
+                  className="text-xs font-bold hover:underline uppercase"
+                >
                   Đăng nhập / Đăng ký
                 </Link>
               </div>
@@ -119,43 +120,45 @@ export const Header = () => {
 
             <Link
               to="/cart"
-              className="flex items-center gap-2.5 pl-4 border-l border-white/20"
+              className="flex items-center gap-3 pl-4 border-l border-white/20 hover:opacity-90 group transition"
             >
-              <div className="relative w-9 h-9 rounded-full bg-white flex items-center justify-center text-green">
+              <div className="relative w-9 h-9 rounded-full bg-white group-hover:bg-amber-100 flex items-center justify-center text-green transition-colors">
                 <CartIcon size={16} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[10px] font-bold h-4 min-w-4 px-1 rounded-full flex items-center justify-center shadow-sm">
                     {cartCount}
                   </span>
                 )}
               </div>
               <div className="hidden sm:block text-left text-white text-xs leading-tight">
-                <span className="block text-[10px] uppercase text-white/60">
-                  Cart
+                <span className="block text-[10px] uppercase text-white/70 tracking-wider">
+                  Giỏ hàng
                 </span>
-                <span className="font-bold">${cartTotal.toFixed(2)}</span>
+                <span className="font-bold text-sm">
+                  ${cartTotal.toFixed(2)}
+                </span>
               </div>
             </Link>
 
             {isAuthenticated && (
               <button
                 onClick={handleLogout}
-                className="text-xs text-white/70 hover:text-white hover:underline"
+                title="Đăng xuất"
+                className="w-9 h-9 rounded-full bg-red-500/10 hover:bg-red-500 flex items-center justify-center text-white/80 hover:text-white border border-white/10 hover:border-red-500/30 transition-all ml-1"
               >
-                Đăng xuất
+                <LogOutIcon size={16} />
               </button>
             )}
           </div>
         </div>
       </header>
 
-      {/* Nav bar */}
       <nav className="bg-green-light/90">
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
           <div className="relative">
             <button
               onClick={() => setShowCollections((v) => !v)}
-              className="bg-green text-white text-xs font-bold px-5 py-3.5 flex items-center gap-2.5 uppercase tracking-wide"
+              className="bg-green-light/90 text-white rounded hover:bg-[#F1DC67] hover:text-green transition text-xs font-bold px-5 py-3.5 flex items-center gap-2.5 uppercase tracking-wide"
             >
               <MenuIcon size={14} /> Danh mục
             </button>
@@ -180,16 +183,22 @@ export const Header = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-7 text-xs font-semibold text-white/90 uppercase tracking-wide">
-            <Link to="/" className="py-3.5 font-bold hover:text-white">
+            <Link to="/" className="py-3.5 font-bold hover:text-[#F1DC67]">
               Trang chủ
             </Link>
-            <Link to="/products" className="py-3.5 font-bold hover:text-white">
+            <Link
+              to="/products"
+              className="py-3.5 font-bold hover:text-[#F1DC67]"
+            >
               Sản phẩm
             </Link>
-            <Link to="/about" className="py-3.5 font-bold hover:text-white">
+            <Link to="/about" className="py-3.5 font-bold hover:text-[#F1DC67]">
               Giới thiệu
             </Link>
-            <Link to="/contact" className="py-3.5 font-bold hover:text-white">
+            <Link
+              to="/contact"
+              className="py-3.5 font-bold hover:text-[#F1DC67]"
+            >
               Liên hệ
             </Link>
           </div>
@@ -198,8 +207,23 @@ export const Header = () => {
             <div className="border border-white rounded-full px-4 py-1.5 text-[12px] text-white/80">
               Hotline 24/7 <strong className="text-white">1900 1234</strong>
             </div>
-            <span className="text-white text-xs font-bold">USD ▾</span>
-            <span className="text-white text-xs font-bold">Eng ▾</span>
+            <select className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer">
+              <option value="VND" className="text-ink">
+                VIE
+              </option>
+              <option value="USD" className="text-ink">
+                ENG
+              </option>
+            </select>
+            <span className="text-white">|</span>
+            <select className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer">
+              <option value="VND" className="text-ink">
+                VND
+              </option>
+              <option value="USD" className="text-ink">
+                USD
+              </option>
+            </select>
           </div>
         </div>
       </nav>

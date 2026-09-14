@@ -152,7 +152,7 @@ export const Footer = () => {
           <div className="lg:col-span-4 space-y-4 lg:pl-6">
             <h4 className="font-bold text-green text-[15px]">
               Đăng Ký Nhận Tin & Nhận{" "}
-              <span className="text-red-500 font-semibold">GIẢM 10%</span>
+              <span className="text-[#E84C3D] font-bold">GIẢM 10%</span>
             </h4>
             <div className="flex rounded-md overflow-hidden bg-[#f0f2f5] p-0.5 border border-transparent focus-within:border-gray-300 max-w-md">
               <input

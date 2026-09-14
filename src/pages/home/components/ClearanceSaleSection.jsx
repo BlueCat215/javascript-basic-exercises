@@ -12,8 +12,10 @@ export const ClearanceSaleSection = () => {
     <section>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-display font-bold text-ink">
-          <span className="text-green">Clearance</span> Sale{" "}
-          <span className="text-ink/40 font-normal">| Up to 70% OFF</span>
+          <span className="text-green">Xả hàng</span>
+          <span className="text-ink/40 font-normal">
+            | Giảm giá lên đến 70%
+          </span>
         </h2>
         <Link
           to="/products?sort=price_asc"

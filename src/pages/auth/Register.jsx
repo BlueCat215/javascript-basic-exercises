@@ -65,7 +65,7 @@ export default function Register() {
             <img
               src="/login.svg"
               alt="Login Illustration"
-              className="w-full max-h-[400px] object-contain"
+              className="w-full max-h-100 object-contain"
             />
           </div>
 
@@ -81,7 +81,7 @@ export default function Register() {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-ink/70">
+                <label className="block text-xs font-semibold text-ink">
                   Tên đăng nhập
                 </label>
                 <input
@@ -97,7 +97,7 @@ export default function Register() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-ink/70">
+                <label className="block text-xs font-semibold text-ink">
                   Email
                 </label>
                 <input
@@ -113,7 +113,7 @@ export default function Register() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-ink/70">
+                <label className="block text-xs font-semibold text-ink">
                   Mật khẩu
                 </label>
                 <PasswordInput
@@ -125,7 +125,7 @@ export default function Register() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-ink/70">
+                <label className="block text-xs font-semibold text-ink">
                   Nhập lại mật khẩu
                 </label>
                 <PasswordInput
@@ -139,14 +139,14 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="btn-primary w-full mt-1 disabled:opacity-50"
+                className="btn-primary mt-1 disabled:opacity-50"
               >
                 {isPending ? "Đang xử lý..." : "Đăng ký"}
               </button>
 
-              <div className="text-center pt-2">
+              <div className="text-left pt-2">
                 <span className="text-xs font-semibold text-ink/50 uppercase tracking-wider">
-                  Đã có tài khoản?{" "}
+                  Đã có tài khoản ?
                 </span>
                 <Link
                   to="/login"

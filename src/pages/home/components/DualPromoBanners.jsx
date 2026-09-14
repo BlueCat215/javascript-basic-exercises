@@ -8,7 +8,7 @@ export const DualPromoBanners = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="bg-gradient-to-r from-green to-green-light rounded-xl p-6 md:p-8 text-white flex items-center justify-between">
+      <div className="bg-linear-to-r from-green to-green-light rounded-xl p-6 md:p-8 text-white flex items-center justify-between">
         <div className="space-y-3 max-w-[60%]">
           <span className="bg-gold text-green px-2.5 py-1 rounded text-[10px] uppercase font-bold">
             Giá tốt nhất
@@ -31,7 +31,7 @@ export const DualPromoBanners = () => {
         />
       </div>
 
-      <div className="bg-gradient-to-r from-paper to-gold-light rounded-xl p-6 md:p-8 text-ink flex items-center justify-between border border-line">
+      <div className="bg-linear-to-r from-paper to-gold-light rounded-xl p-6 md:p-8 text-ink flex items-center justify-between border border-line">
         <div className="space-y-3 max-w-[60%]">
           <span className="bg-green text-white px-2.5 py-1 rounded text-[10px] uppercase font-bold">
             Ưu đãi

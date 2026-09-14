@@ -225,7 +225,7 @@ export default function ContactPage() {
         <h2 className="text-xl font-display font-bold text-ink uppercase mb-6">
           Tìm chúng tôi trên bản đồ
         </h2>
-        <div className="rounded-lg overflow-hidden border border-line h-[400px]">
+        <div className="rounded-lg overflow-hidden border border-line h-100">
           <iframe
             title="Bản đồ vị trí MiniShop"
             className="w-full h-full"

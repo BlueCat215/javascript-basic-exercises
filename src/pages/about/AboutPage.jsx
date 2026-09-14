@@ -68,7 +68,7 @@ export default function AboutPage() {
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-green to-green-light rounded-xl min-h-[300px] flex items-center justify-center p-8">
+        <div className="bg-linear-to-br from-green to-green-light rounded-xl min-h-75 flex items-center justify-center p-8">
           <div className="text-center text-white space-y-3">
             <div className="w-20 h-20 mx-auto rounded-full bg-white/10 border-2 border-gold/30 flex items-center justify-center text-gold font-display font-bold text-3xl">
               M
@@ -114,7 +114,7 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="bg-gradient-to-r from-green to-green-light rounded-xl p-4 text-white text-center flex items-center justify-center gap-2 text-xs md:text-sm font-medium">
+      <section className="bg-linear-to-r from-green to-green-light rounded-xl p-4 text-white text-center flex items-center justify-center gap-2 text-xs md:text-sm font-medium">
         <span>
           Miễn phí vận chuyển cho đơn hàng từ{" "}
           <strong className="font-bold">$199</strong> trở lên

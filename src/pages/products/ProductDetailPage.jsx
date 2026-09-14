@@ -71,7 +71,7 @@ export default function ProductDetailPage() {
     return <ErrorState message="Không tìm thấy sản phẩm" />;
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
       <Breadcrumb
         items={[
           { to: "/products", label: "Sản phẩm" },
@@ -83,28 +83,28 @@ export default function ProductDetailPage() {
         ]}
       />
 
-      <section className="bg-white rounded-lg border border-line p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Cột 1 */}
+      <section className="bg-white rounded-2xl border border-line shadow-sm p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 transition-all">
+        {/* Cột 1: Hình ảnh */}
         <div className="lg:col-span-5 flex flex-col items-center">
-          <div className="relative w-full aspect-square max-h-[420px] bg-paper rounded-lg border border-line flex items-center justify-center p-6">
+          <div className="relative w-full aspect-square max-h-115 bg-paper rounded-2xl border border-line flex items-center justify-center p-8 group overflow-hidden">
             <img
               src={product.image}
               alt={product.title}
-              className="object-contain h-full w-full"
+              className="object-contain h-full w-full transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         </div>
 
-        {/* Cột 2 */}
-        <div className="lg:col-span-4 flex flex-col justify-between space-y-4">
-          <div>
+        {/* Cột 2: Thông tin sản phẩm */}
+        <div className="lg:col-span-4 flex flex-col justify-between py-2">
+          <div className="space-y-4">
             {product.rating && (
               <div className="flex items-center gap-2">
                 <div className="flex text-gold">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <StarIcon
                       key={i}
-                      size={13}
+                      size={14}
                       className={
                         i < Math.round(product.rating.rate)
                           ? "fill-gold text-gold"
@@ -113,147 +113,166 @@ export default function ProductDetailPage() {
                     />
                   ))}
                 </div>
-                <span className="text-xs text-ink/50 font-medium">
+                <span className="text-sm text-ink/50 font-medium">
                   ({product.rating.count} đánh giá)
                 </span>
               </div>
             )}
 
-            <h1 className="text-xl font-display font-bold text-ink mt-2 leading-snug">
+            <h1 className="text-2xl lg:text-3xl font-display font-bold text-ink leading-tight">
               {product.title}
             </h1>
 
-            <div className="mt-3">
-              <span className="text-2xl font-display font-bold text-green">
+            <div className="pt-2">
+              <span className="text-3xl font-display font-extrabold text-green tracking-tight">
                 ${product.price}
               </span>
             </div>
 
-            <div className="flex gap-2 mt-3 text-[10px] font-semibold tracking-wider uppercase">
-              <span className="bg-green/10 text-green px-2 py-0.5 rounded">
+            <div className="flex flex-wrap gap-2 pt-1 text-[11px] font-bold tracking-wider uppercase">
+              <span className="bg-green/10 text-green px-2.5 py-1 rounded-md">
                 Miễn phí vận chuyển
               </span>
-              <span className="bg-amber-50 text-gold px-2 py-0.5 rounded">
+              <span className="bg-amber-50 text-gold px-2.5 py-1 rounded-md">
                 Đổi trả 30 ngày
               </span>
             </div>
           </div>
 
-          <div className="pt-3 border-t border-line text-[11px] text-ink/50 space-y-1">
-            <div>
-              <span className="font-semibold text-ink/70">ID:</span> #
-              {product.id}
+          <div className="pt-6 mt-6 border-t border-line text-sm text-ink/60 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-ink/80">ID Sản phẩm:</span>
+              <span>#{product.id}</span>
             </div>
-            <div className="capitalize">
-              <span className="font-semibold text-ink/70">Danh mục:</span>{" "}
-              {product.category}
+            <div className="flex items-center justify-between capitalize">
+              <span className="font-semibold text-ink/80">Danh mục:</span>{" "}
+              <span>{product.category}</span>
             </div>
             {product.brand && (
-              <div>
-                <span className="font-semibold text-ink/70">Thương hiệu:</span>{" "}
-                {product.brand}
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-ink/80">Thương hiệu:</span>{" "}
+                <span className="font-medium text-ink">{product.brand}</span>
               </div>
             )}
           </div>
         </div>
 
-        {/* Cột 3 */}
+        {/* Cột 3: Khối mua hàng (Action Box) */}
         <div className="lg:col-span-3">
-          <div className="bg-paper border border-line rounded-lg p-5 space-y-4">
+          <div className="bg-paper border border-line rounded-2xl p-6 space-y-5 lg:sticky lg:top-6 shadow-sm">
             <div>
-              <span className="text-[11px] font-semibold text-ink/40 uppercase tracking-wider block">
+              <span className="text-xs font-bold text-ink/40 uppercase tracking-widest block mb-1">
                 Tổng tiền dự kiến
               </span>
-              <div className="text-2xl font-display font-bold text-ink mt-1">
+              <div className="text-3xl font-display font-extrabold text-ink">
                 ${(product.price * quantity).toFixed(2)}
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-green">
-              <ShieldIcon size={14} /> <span>Còn hàng, sẵn sàng giao</span>
+            <div className="flex items-center gap-2 text-sm font-semibold text-green bg-green/5 p-3 rounded-lg border border-green/10">
+              <ShieldIcon size={16} /> <span>Còn hàng, sẵn sàng giao</span>
             </div>
 
-            <div className="flex items-center border border-line rounded bg-white overflow-hidden h-9">
+            <div className="flex items-center border-2 border-line rounded-lg bg-white overflow-hidden h-11 transition-colors focus-within:border-green/30">
               <button
                 onClick={() => handleQuantityChange(-1)}
-                className="w-9 h-full flex items-center justify-center text-ink/50 hover:bg-paper"
+                className="w-11 h-full flex items-center justify-center text-ink/60 hover:bg-paper hover:text-ink transition-colors"
               >
-                <MinusIcon size={14} />
+                <MinusIcon size={16} />
               </button>
-              <span className="w-full text-center text-xs font-bold text-ink">
+              <span className="w-full text-center text-sm font-bold text-ink">
                 {quantity}
               </span>
               <button
                 onClick={() => handleQuantityChange(1)}
-                className="w-9 h-full flex items-center justify-center text-ink/50 hover:bg-paper"
+                className="w-11 h-full flex items-center justify-center text-ink/60 hover:bg-paper hover:text-ink transition-colors"
               >
-                <PlusIcon size={14} />
+                <PlusIcon size={16} />
               </button>
             </div>
 
             <button
               onClick={handleAddToCart}
               disabled={isPending}
-              className="btn-primary w-full disabled:opacity-50"
+              className="btn-primary w-full h-11 text-base shadow-sm disabled:opacity-50"
             >
-              {isPending ? "Đang thêm..." : "Thêm vào giỏ hàng"}
+              {isPending ? "Đang xử lý..." : "Thêm vào giỏ hàng"}
             </button>
 
             <button
               onClick={handleToggleFavorite}
-              className="w-full flex items-center justify-center gap-2 text-xs text-ink/60 hover:text-rust pt-2 border-t border-line"
+              className="w-full flex items-center justify-center gap-2 text-sm font-medium text-ink/60 hover:text-rust transition-colors pt-4 border-t border-line"
             >
               <HeartIcon
-                size={16}
-                className={isFavorite ? "fill-rust text-rust" : ""}
+                size={18}
+                className={`transition-colors ${isFavorite ? "fill-rust text-rust" : ""}`}
               />
-              {isFavorite ? "Đã thích" : "Lưu vào yêu thích"}
+              {isFavorite ? "Đã lưu yêu thích" : "Lưu vào yêu thích"}
             </button>
 
-            <div className="pt-3 border-t border-line flex items-center justify-center gap-4 text-ink/40">
-              <TruckIcon size={16} />
-              <ShieldIcon size={16} />
-              <ReturnIcon size={16} />
+            <div className="pt-4 flex items-center justify-center gap-5 text-ink/30">
+              <TruckIcon
+                size={20}
+                className="hover:text-ink/60 transition-colors"
+              />
+              <ShieldIcon
+                size={20}
+                className="hover:text-ink/60 transition-colors"
+              />
+              <ReturnIcon
+                size={20}
+                className="hover:text-ink/60 transition-colors"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white rounded-lg border border-line p-6">
-        <div className="flex items-center gap-8 border-b border-line pb-3 text-[15px] font-bold uppercase tracking-wider">
+      {/* Tabs Section */}
+      <section className="bg-white rounded-2xl border border-line shadow-sm p-6 lg:p-8">
+        <div className="flex items-center gap-8 border-b border-line mb-6 text-sm font-bold uppercase tracking-wider overflow-x-auto hide-scrollbar">
           {[
-            { key: "description", label: "Mô tả" },
+            { key: "description", label: "Mô tả chi tiết" },
             {
               key: "reviews",
               label: `Đánh giá (${product.rating?.count || 0})`,
             },
-            { key: "specs", label: "Thông số" },
+            { key: "specs", label: "Thông số sản phẩm" },
           ].map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`pb-3 -mb-3 transition-colors ${activeTab === tab.key ? "text-green border-b-2 border-green" : "text-ink/40 hover:text-ink"}`}
+              className={`pb-4 relative transition-colors whitespace-nowrap ${
+                activeTab === tab.key
+                  ? "text-green"
+                  : "text-ink/40 hover:text-ink/80"
+              }`}
             >
               {tab.label}
+              {activeTab === tab.key && (
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green rounded-t-full"></span>
+              )}
             </button>
           ))}
         </div>
 
-        <div className="pt-6 text-[16px] text-ink leading-relaxed">
-          {activeTab === "description" && <p>{product.description}</p>}
+        <div className="text-base text-ink/80 leading-relaxed min-h-[150px]">
+          {activeTab === "description" && (
+            <p className="max-w-4xl">{product.description}</p>
+          )}
 
           {activeTab === "reviews" &&
             (product.rating ? (
-              <div className="flex items-center gap-4">
-                <div className="text-3xl font-display font-bold text-ink">
+              <div className="flex items-center gap-6 p-6 bg-paper rounded-xl border border-line/50 max-w-sm">
+                <div className="text-5xl font-display font-extrabold text-ink">
                   {product.rating.rate}
                 </div>
                 <div>
-                  <div className="flex text-gold">
+                  <div className="flex text-gold mb-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <StarIcon
                         key={i}
-                        size={14}
+                        size={18}
                         className={
                           i < Math.round(product.rating.rate)
                             ? "fill-gold text-gold"
@@ -262,42 +281,50 @@ export default function ProductDetailPage() {
                       />
                     ))}
                   </div>
-                  <p className="text-ink/50 mt-1">
+                  <p className="text-sm text-ink/50 font-medium">
                     Dựa trên {product.rating.count} đánh giá
                   </p>
                 </div>
               </div>
             ) : (
-              <p>Sản phẩm chưa có đánh giá nào.</p>
+              <p className="italic text-ink/50">
+                Sản phẩm chưa có đánh giá nào.
+              </p>
             ))}
 
           {activeTab === "specs" && (
-            <table className="w-full text-xs">
-              <tbody className="divide-y divide-line">
-                <tr>
-                  <td className="py-2 font-semibold text-ink w-40">
-                    Mã sản phẩm
-                  </td>
-                  <td className="py-2">#{product.id}</td>
-                </tr>
-                <tr>
-                  <td className="py-2 font-semibold text-ink capitalize">
-                    Danh mục
-                  </td>
-                  <td className="py-2 capitalize">{product.category}</td>
-                </tr>
-                {product.brand && (
-                  <tr>
-                    <td className="py-2 font-semibold text-ink">Thương hiệu</td>
-                    <td className="py-2">{product.brand}</td>
+            <div className="max-w-2xl border border-line rounded-xl overflow-hidden">
+              <table className="w-full text-sm text-left">
+                <tbody className="divide-y divide-line">
+                  <tr className="bg-paper/50">
+                    <th className="py-3 px-4 font-semibold text-ink w-1/3">
+                      Mã sản phẩm
+                    </th>
+                    <td className="py-3 px-4">#{product.id}</td>
                   </tr>
-                )}
-                <tr>
-                  <td className="py-2 font-semibold text-ink">Giá</td>
-                  <td className="py-2">${product.price}</td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr>
+                    <th className="py-3 px-4 font-semibold text-ink capitalize">
+                      Danh mục
+                    </th>
+                    <td className="py-3 px-4 capitalize">{product.category}</td>
+                  </tr>
+                  {product.brand && (
+                    <tr className="bg-paper/50">
+                      <th className="py-3 px-4 font-semibold text-ink">
+                        Thương hiệu
+                      </th>
+                      <td className="py-3 px-4 font-medium">{product.brand}</td>
+                    </tr>
+                  )}
+                  <tr>
+                    <th className="py-3 px-4 font-semibold text-ink">
+                      Giá niêm yết
+                    </th>
+                    <td className="py-3 px-4">${product.price}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </section>

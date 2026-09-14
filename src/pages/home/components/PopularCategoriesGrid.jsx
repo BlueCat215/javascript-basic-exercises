@@ -57,7 +57,7 @@ export const PopularCategoriesGrid = () => {
                 >
                   <Icon size={24} />
                 </div>
-                <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green capitalize uppercase text-center break-words w-full">
+                <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center wrap-break-words w-full">
                   {c}
                 </span>
               </Link>

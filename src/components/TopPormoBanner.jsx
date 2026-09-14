@@ -43,7 +43,7 @@ export const TopPromoBanner = () => {
           </p>
         </div>
 
-        <div className="flex items-center bg-white rounded-[4px] px-5 py-2.5 shadow-sm shrink-0 animate-bounce">
+        <div className="flex items-center bg-white rounded-sm px-5 py-2.5 shadow-sm shrink-0 animate-bounce">
           <div className="flex items-center gap-2">
             <span className="text-4xl font-display font-black text-[#E84C3D] leading-none tracking-tighter">
               {" "}
@@ -53,7 +53,7 @@ export const TopPromoBanner = () => {
               <span>SALE</span> <span>OFF</span>
             </div>
           </div>
-          <div className="w-[1px] h-10 bg-gray-300 mx-5"></div>
+          <div className="w-px h-10 bg-gray-300 mx-5"></div>
           <div className="text-left flex flex-col justify-center">
             <span className="text-[11px] text-gray-500 mb-0.5">
               {" "}
@@ -79,7 +79,7 @@ export const TopPromoBanner = () => {
 
         <Link
           to={product ? `/products/${product.id}` : "/products"}
-          className="bg-green hover:bg-green-light/90 text-white text-[13px] font-bold uppercase tracking-wider px-8 py-3.5 rounded-[4px] transition shrink-0"
+          className="bg-green hover:bg-green-light/90 text-white text-[13px] font-bold uppercase tracking-wider px-8 py-3.5 rounded-sm transition shrink-0"
         >
           Mua ngay
         </Link>

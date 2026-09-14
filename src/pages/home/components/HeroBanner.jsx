@@ -54,8 +54,8 @@ export const HeroBanner = () => {
   const goNext = () => setActiveIndex((prev) => (prev + 1) % slides.length);
 
   return (
-    <section className="relative w-full bg-gradient-to-r from-[#f2ebdf] via-[#f2ebdf] to-[#ece2d2] overflow-hidden">
-      <div className="relative flex items-center justify-center min-h-[420px] max-w-[1920px] mx-auto">
+    <section className="relative w-full bg-linear-to-r from-[#f2ebdf] via-[#f2ebdf] to-[#ece2d2] overflow-hidden">
+      <div className="relative flex items-center justify-center min-h-105 max-w-[1920px] mx-auto">
         {slides.length > 1 && (
           <button
             onClick={goPrev}
@@ -85,17 +85,17 @@ export const HeroBanner = () => {
 
             <Link
               to={`/products/${product.id}`}
-              className="inline-block bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold tracking-widest uppercase px-6 py-3 transition-colors"
+              className="inline-block bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold rounded tracking-widest uppercase px-6 py-3 transition-colors"
             >
-              Shop Now
+              Mua ngay
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center justify-center h-[340px] flex-shrink-0">
+          <div className="hidden md:flex items-center justify-center h-85 shrink-0">
             <img
               src={product.image}
               alt={product.title}
-              className="max-h-full max-w-[380px] object-contain drop-shadow-xl"
+              className="max-h-full max-w-95 object-contain drop-shadow-xl"
             />
           </div>
         </div>

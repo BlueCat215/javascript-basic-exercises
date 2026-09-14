@@ -93,7 +93,7 @@ export default function CartPage() {
                   />
                 </div>
 
-                <div className="flex-grow flex flex-col justify-between w-full h-full">
+                <div className="grow flex flex-col justify-between w-full h-full">
                   <div>
                     <h3
                       className="text-sm font-bold text-ink hover:text-green transition cursor-pointer line-clamp-2"
@@ -119,7 +119,7 @@ export default function CartPage() {
                       >
                         <MinusIcon size={13} />
                       </button>
-                      <span className="px-3 py-1.5 text-xs font-bold text-ink min-w-[28px] text-center">
+                      <span className="px-3 py-1.5 text-xs font-bold text-ink min-w-7 text-center">
                         {item.quantity}
                       </span>
                       <button
@@ -171,12 +171,12 @@ export default function CartPage() {
                   value={voucherCode}
                   onChange={(e) => setVoucherCode(e.target.value)}
                   placeholder="Nhập mã giảm giá"
-                  className="flex-1 border border-line rounded-full px-4 py-2 text-sm"
+                  className="flex-1 border border-line rounded px-4 py-2 text-sm"
                 />
                 <button
                   onClick={handleApplyVoucher}
                   disabled={isApplying || !voucherCode}
-                  className="btn-secondary text-xs px-4 disabled:opacity-50"
+                  className=" flex-1 border border-line rounded text-xs px-4 disabled:opacity-50"
                 >
                   Áp dụng
                 </button>

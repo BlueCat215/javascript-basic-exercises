@@ -28,13 +28,13 @@ export const WhatsNewArticlesSection = () => {
       {isLoading && <LoadingState />}
       {!isLoading && featured && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="group relative rounded-lg overflow-hidden h-64 md:h-full min-h-[260px] cursor-default">
+          <div className="group relative rounded-lg overflow-hidden h-64 md:h-full min-h-65 cursor-default">
             <img
               src={featured.image}
               alt={featured.title}
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5 text-white">
               <p className="font-display text-lg font-bold leading-snug mb-1">
                 {featured.title}

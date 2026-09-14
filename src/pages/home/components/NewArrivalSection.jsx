@@ -9,7 +9,7 @@ export const NewArrivalSection = () => {
   const [tab, setTab] = useState("featured");
 
   const tabs = [
-    { key: "featured", label: "Featured" },
+    { key: "featured", label: "Nổi bật" },
     ...categories.map((c) => ({ key: c, label: c })),
   ];
 
@@ -19,7 +19,7 @@ export const NewArrivalSection = () => {
     <section>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-display font-bold text-ink">
-          <span className="text-green">New</span> Arrival
+          Mặt hàng <span className="text-green uppercase">mới</span>
         </h2>
         <Link
           to="/products?sort=newest"
@@ -34,7 +34,7 @@ export const NewArrivalSection = () => {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`px-4 py-2 rounded-full text-xs font-semibold capitalize transition ${
+            className={`px-4 py-2 rounded text-xs font-semibold capitalize transition ${
               tab === key
                 ? "bg-green text-white"
                 : "bg-paper text-ink/70 hover:bg-line"
