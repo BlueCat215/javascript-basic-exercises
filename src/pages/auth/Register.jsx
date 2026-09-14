@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { register as registerApi } from "../../api/services/authService";
 import { registerSchema } from "../../schemas/registerSchema";
 import { Breadcrumb } from "../../components/Breadcrumb";
-import { AuthSidePanel } from "../../components/AuthSidePanel";
 
 const PasswordInput = ({ register, name, placeholder, error }) => {
   const [show, setShow] = useState(false);
@@ -62,10 +61,11 @@ export default function Register() {
 
       <div className="bg-white rounded-2xl border border-line p-8 sm:p-14 md:p-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <div className="lg:col-span-6">
-            <AuthSidePanel
-              title="Chào mừng đến MiniShop"
-              subtitle="Tạo tài khoản để trải nghiệm mua sắm trọn vẹn hơn"
+          <div className="lg:col-span-6 flex justify-center items-center">
+            <img
+              src="/login.svg"
+              alt="Login Illustration"
+              className="w-full max-h-[400px] object-contain"
             />
           </div>
 
