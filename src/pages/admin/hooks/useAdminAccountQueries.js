@@ -28,6 +28,31 @@ export const useToggleLockAccount = () => {
   });
 };
 
+export const useCreateAccount = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: adminAccountService.create,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin", "accounts"] });
+      toast.success("Đã tạo tài khoản");
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Tạo tài khoản thất bại");
+    },
+  });
+};
+
+export const useUpdateAccount = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }) => adminAccountService.update(id, data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin", "accounts"] });
+      toast.success("Đã cập nhật tài khoản");
+    },
+  });
+};
+
 export const useDeleteAccount = () => {
   const qc = useQueryClient();
   return useMutation({
