@@ -1,4 +1,4 @@
-import { StarIcon } from "../../../../components/icons";
+import { StarIcon } from "../../../../../components/icons";
 
 export function RatingFilterBox({ options, selected, onSelect, onClear }) {
   return (

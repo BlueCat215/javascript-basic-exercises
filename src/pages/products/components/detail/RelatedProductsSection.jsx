@@ -1,5 +1,5 @@
-import { ProductCard } from "../../../components/ProductCard";
-import { useRelatedProducts } from "../hooks/useRelatedProducts";
+import { ProductCard } from "../../../../components/ProductCard";
+import { useRelatedProducts } from "../../hooks/useRelatedProducts";
 
 export const RelatedProductsSection = ({ category, excludeId }) => {
   const { data: related = [] } = useRelatedProducts(category, excludeId);

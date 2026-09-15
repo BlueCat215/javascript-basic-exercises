@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRecentlyViewed } from "../hooks/useRecentlyViewed";
+import { useRecentlyViewed } from "../../hooks/useRecentlyViewed";
 
 export const RecentlyViewedSection = ({ excludeId }) => {
   const items = useRecentlyViewed(excludeId);

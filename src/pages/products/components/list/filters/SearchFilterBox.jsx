@@ -1,4 +1,4 @@
-import { SearchIcon } from "../../../../components/icons";
+import { SearchIcon } from "../../../../../components/icons";
 
 export function SearchFilterBox({ value, onChange }) {
   return (

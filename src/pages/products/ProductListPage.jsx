@@ -7,10 +7,10 @@ import {
   useBrandsQuery,
 } from "./hooks/useProductListQuery";
 import { Breadcrumb } from "../../components/Breadcrumb";
-import { ProductFilterSidebar } from "./components/filters/ProductFilterSidebar";
-import { MobileFilterDrawer } from "./components/MobileFilterDrawer";
-import { ProductListToolbar } from "./components/ProductListToolbar";
-import { ProductGrid } from "./components/ProductGrid";
+import { ProductFilterSidebar } from "./components/list/filters/ProductFilterSidebar";
+import { MobileFilterDrawer } from "./components/list/MobileFilterDrawer";
+import { ProductListToolbar } from "./components/list/ProductListToolbar";
+import { ProductGrid } from "./components/list/ProductGrid";
 
 const RATING_OPTIONS = [4, 3, 2, 1];
 

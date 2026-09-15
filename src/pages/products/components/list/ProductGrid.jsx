@@ -1,7 +1,7 @@
-import { ProductCard } from "../../../components/ProductCard";
-import { Pagination } from "../../../components/Pagination";
-import { ErrorState, EmptyState } from "../../../components/StatusState";
-import { ProductGridSkeleton } from "../../../components/Skeleton";
+import { ProductCard } from "../../../../components/ProductCard";
+import { Pagination } from "../../../../components/Pagination";
+import { ErrorState, EmptyState } from "../../../../components/StatusState";
+import { ProductGridSkeleton } from "../../../../components/Skeleton";
 
 export function ProductGrid({
   isLoading,
