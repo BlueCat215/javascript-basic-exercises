@@ -5,16 +5,19 @@ const { authenticateToken, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 const products = new JsonCollection("products.json");
 
+// Chuẩn hóa dữ liệu sản phẩm từ nhiều cách đặt tên khác nhau.
 function normalizeRow(row) {
   const normalized = {};
+
   Object.keys(row).forEach((key) => {
     normalized[key.trim().toLowerCase()] = row[key];
   });
 
   const pick = (...candidates) => {
     for (const c of candidates) {
-      if (normalized[c] !== undefined && normalized[c] !== "")
+      if (normalized[c] !== undefined && normalized[c] !== "") {
         return normalized[c];
+      }
     }
     return undefined;
   };
@@ -28,9 +31,10 @@ function normalizeRow(row) {
   };
 }
 
-// GET /products (Có phân trang, bộ lọc và tìm kiếm)
+// Lấy danh sách sản phẩm, hỗ trợ tìm kiếm, lọc, sắp xếp và phân trang.
 router.get("/", async (req, res) => {
   let items = await products.findAll();
+
   const {
     q,
     category,
@@ -46,46 +50,73 @@ router.get("/", async (req, res) => {
     pageSize = 12,
   } = req.query;
 
-  if (q)
+  // Tìm kiếm theo tên sản phẩm.
+  if (q) {
     items = items.filter((p) =>
       p.title.toLowerCase().includes(q.toLowerCase()),
     );
+  }
+
+  // Lọc theo danh mục và khoảng giá.
   if (category) items = items.filter((p) => p.category === category);
   if (minPrice) items = items.filter((p) => p.price >= Number(minPrice));
   if (maxPrice) items = items.filter((p) => p.price <= Number(maxPrice));
+
+  // Lọc theo nhiều thương hiệu.
   if (brand) {
     const brandList = brand.split(",");
     items = items.filter((p) => brandList.includes(p.brand));
   }
-  if (minRating)
+
+  // Lọc theo đánh giá và trạng thái sản phẩm.
+  if (minRating) {
     items = items.filter((p) => (p.rating?.rate || 0) >= Number(minRating));
+  }
+
   if (isNew === "true") items = items.filter((p) => p.isNew);
   if (isBestSeller === "true") items = items.filter((p) => p.isBestSeller);
-  if (onSale === "true")
-    items = items.filter((p) => p.originalPrice && p.originalPrice > p.price);
 
+  // Lọc sản phẩm đang giảm giá.
+  if (onSale === "true") {
+    items = items.filter((p) => p.originalPrice && p.originalPrice > p.price);
+  }
+
+  // Tính tỷ lệ giảm giá.
   const getDiscountPercent = (p) =>
     p.originalPrice && p.originalPrice > p.price
       ? (p.originalPrice - p.price) / p.originalPrice
       : 0;
 
-  if (sort === "price_asc")
+  // Sắp xếp sản phẩm.
+  if (sort === "price_asc") {
     items = [...items].sort((a, b) => a.price - b.price);
-  if (sort === "price_desc")
+  }
+
+  if (sort === "price_desc") {
     items = [...items].sort((a, b) => b.price - a.price);
-  if (sort === "newest") items = [...items].sort((a, b) => b.id - a.id);
-  if (sort === "discount_desc")
+  }
+
+  if (sort === "newest") {
+    items = [...items].sort((a, b) => b.id - a.id);
+  }
+
+  if (sort === "discount_desc") {
     items = [...items].sort(
       (a, b) => getDiscountPercent(b) - getDiscountPercent(a),
     );
-  if (sort === "rating_desc")
+  }
+
+  if (sort === "rating_desc") {
     items = [...items].sort(
       (a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0),
     );
+  }
 
+  // Phân trang kết quả.
   const total = items.length;
-  const pageNum = Number(page),
-    sizeNum = Number(pageSize);
+  const pageNum = Number(page);
+  const sizeNum = Number(pageSize);
+
   const paginated = items.slice((pageNum - 1) * sizeNum, pageNum * sizeNum);
 
   res.json({
@@ -97,34 +128,41 @@ router.get("/", async (req, res) => {
   });
 });
 
-// GET /products/categories
+// Lấy danh sách danh mục sản phẩm.
 router.get("/categories", async (req, res) => {
   try {
     const items = await products.findAll();
+
     const categories = [
       ...new Set(items.map((p) => p.category).filter(Boolean)),
     ];
+
     res.json(categories);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi hệ thống khi lấy danh mục" });
+    res.status(500).json({
+      message: "Lỗi hệ thống khi lấy danh mục",
+    });
   }
 });
 
-// GET /products/category/:categoryName
+// Lấy sản phẩm theo danh mục.
 router.get("/category/:categoryName", async (req, res) => {
   try {
     const items = await products.findAll();
+
     const filtered = items.filter(
       (p) => p.category === req.params.categoryName,
     );
+
     res.json(filtered);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi hệ thống khi lọc theo danh mục" });
+    res.status(500).json({
+      message: "Lỗi hệ thống khi lọc theo danh mục",
+    });
   }
 });
 
-// GET /products/recommended?tab=best-seller|top-rated|<category>&limit=5
-// Dùng cho khối "Recommended" ở trang chủ (có tab lọc)
+// Lấy sản phẩm đề xuất theo tab.
 router.get("/recommended", async (req, res) => {
   try {
     const { tab = "best-seller", limit = 5 } = req.query;
@@ -139,18 +177,19 @@ router.get("/recommended", async (req, res) => {
         .filter((p) => (p.rating?.rate || 0) > 0)
         .sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
     } else {
-      // tab = tên danh mục cụ thể
+      // Tab còn lại được xem là tên danh mục.
       items = items.filter((p) => p.category === tab);
     }
 
     res.json(items.slice(0, Number(limit)));
   } catch (error) {
-    res.status(500).json({ message: "Lỗi hệ thống khi lấy sản phẩm đề xuất" });
+    res.status(500).json({
+      message: "Lỗi hệ thống khi lấy sản phẩm đề xuất",
+    });
   }
 });
 
-// GET /products/clearance?limit=5
-// Dùng cho khối "Clearance Sale" - chỉ lấy sản phẩm đang giảm giá, sắp theo % giảm nhiều nhất
+// Lấy sản phẩm đang giảm giá, sắp xếp theo % giảm.
 router.get("/clearance", async (req, res) => {
   try {
     const { limit = 5 } = req.query;
@@ -168,51 +207,73 @@ router.get("/clearance", async (req, res) => {
 
     res.json(items.slice(0, Number(limit)));
   } catch (error) {
-    res.status(500).json({ message: "Lỗi hệ thống khi lấy sản phẩm thanh lý" });
+    res.status(500).json({
+      message: "Lỗi hệ thống khi lấy sản phẩm thanh lý",
+    });
   }
 });
 
-// GET /products/new-arrival?tab=featured|<category>&limit=8
-// Dùng cho khối "New Arrival" ở trang chủ (có tab lọc)
+// Lấy sản phẩm mới, hỗ trợ lọc theo danh mục.
 router.get("/new-arrival", async (req, res) => {
   try {
     const { tab = "featured", limit = 8 } = req.query;
     let items = await products.findAll();
 
     items = items.filter((p) => p.isNew);
+
     if (tab !== "featured") {
       items = items.filter((p) => p.category === tab);
     }
+
     items = [...items].sort((a, b) => b.id - a.id);
 
     res.json(items.slice(0, Number(limit)));
   } catch (error) {
-    res.status(500).json({ message: "Lỗi hệ thống khi lấy sản phẩm mới về" });
+    res.status(500).json({
+      message: "Lỗi hệ thống khi lấy sản phẩm mới về",
+    });
   }
 });
 
+// Lấy danh sách thương hiệu và số lượng sản phẩm.
 router.get("/brands", async (req, res) => {
   const items = await products.findAll();
   const counts = {};
+
   items.forEach((p) => {
-    if (p.brand) counts[p.brand] = (counts[p.brand] || 0) + 1;
+    if (p.brand) {
+      counts[p.brand] = (counts[p.brand] || 0) + 1;
+    }
   });
-  res.json(Object.entries(counts).map(([name, count]) => ({ name, count })));
+
+  res.json(
+    Object.entries(counts).map(([name, count]) => ({
+      name,
+      count,
+    })),
+  );
 });
 
-// GET /products/:id
+// Lấy sản phẩm theo ID.
 router.get("/:id", async (req, res) => {
   try {
     const item = await products.findById(req.params.id);
-    if (!item)
-      return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+
+    if (!item) {
+      return res.status(404).json({
+        message: "Không tìm thấy sản phẩm",
+      });
+    }
+
     res.json(item);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi hệ thống khi tìm sản phẩm" });
+    res.status(500).json({
+      message: "Lỗi hệ thống khi tìm sản phẩm",
+    });
   }
 });
 
-// POST /products (admin)
+// Admin tạo sản phẩm mới.
 router.post(
   "/",
   authenticateToken,
@@ -230,9 +291,13 @@ router.post(
         isBestSeller,
         inStock,
       } = req.body;
+
       if (!title || price === undefined || !category) {
-        return res.status(400).json({ message: "Thiếu title/price/category" });
+        return res.status(400).json({
+          message: "Thiếu title/price/category",
+        });
       }
+
       const newProduct = await products.create({
         title,
         price: Number(price),
@@ -246,14 +311,17 @@ router.post(
         isBestSeller: Boolean(isBestSeller),
         inStock: inStock === undefined ? true : Boolean(inStock),
       });
+
       res.status(201).json(newProduct);
     } catch (error) {
-      res.status(500).json({ message: "Lỗi hệ thống khi tạo sản phẩm" });
+      res.status(500).json({
+        message: "Lỗi hệ thống khi tạo sản phẩm",
+      });
     }
   },
 );
 
-// PUT /products/:id (thay toàn bộ, admin)
+// Admin cập nhật toàn bộ sản phẩm.
 router.put(
   "/:id",
   authenticateToken,
@@ -263,16 +331,23 @@ router.put(
       const updated = await products.updateById(req.params.id, req.body, {
         replace: true,
       });
-      if (!updated)
-        return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+
+      if (!updated) {
+        return res.status(404).json({
+          message: "Không tìm thấy sản phẩm",
+        });
+      }
+
       res.json(updated);
     } catch (error) {
-      res.status(500).json({ message: "Lỗi hệ thống khi cập nhật sản phẩm" });
+      res.status(500).json({
+        message: "Lỗi hệ thống khi cập nhật sản phẩm",
+      });
     }
   },
 );
 
-// PATCH /products/:id (cập nhật 1 phần, admin)
+// Admin cập nhật một phần sản phẩm.
 router.patch(
   "/:id",
   authenticateToken,
@@ -282,16 +357,23 @@ router.patch(
       const updated = await products.updateById(req.params.id, req.body, {
         replace: false,
       });
-      if (!updated)
-        return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+
+      if (!updated) {
+        return res.status(404).json({
+          message: "Không tìm thấy sản phẩm",
+        });
+      }
+
       res.json(updated);
     } catch (error) {
-      res.status(500).json({ message: "Lỗi hệ thống khi sửa sản phẩm" });
+      res.status(500).json({
+        message: "Lỗi hệ thống khi sửa sản phẩm",
+      });
     }
   },
 );
 
-// DELETE /products/:id (admin)
+// Admin xóa sản phẩm.
 router.delete(
   "/:id",
   authenticateToken,
@@ -299,16 +381,23 @@ router.delete(
   async (req, res) => {
     try {
       const deleted = await products.deleteById(req.params.id);
-      if (!deleted)
-        return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+
+      if (!deleted) {
+        return res.status(404).json({
+          message: "Không tìm thấy sản phẩm",
+        });
+      }
+
       res.json(deleted);
     } catch (error) {
-      res.status(500).json({ message: "Lỗi hệ thống khi xóa sản phẩm" });
+      res.status(500).json({
+        message: "Lỗi hệ thống khi xóa sản phẩm",
+      });
     }
   },
 );
 
-// POST /products/bulk (Thêm hàng loạt - Đã gộp logic normalize và sửa lỗi I/O file JSON)
+// Admin thêm nhiều sản phẩm cùng lúc.
 router.post(
   "/bulk",
   authenticateToken,
@@ -316,6 +405,7 @@ router.post(
   async (req, res) => {
     try {
       const { products: rows } = req.body;
+
       if (!rows || !Array.isArray(rows)) {
         return res.status(400).json({
           message: "Dữ liệu products gửi lên không hợp lệ hoặc trống",
@@ -325,22 +415,25 @@ router.post(
       const valid = [];
       const skipped = [];
 
-      // 1. Phân loại và lọc dữ liệu lỗi
+      // Kiểm tra và phân loại dữ liệu hợp lệ.
       rows.forEach((raw, index) => {
         const row = normalizeRow(raw);
+
         if (!row.title || row.price === undefined || row.price === "") {
           skipped.push({
-            rowIndex: index + 2, // +2 vì dòng 1 là header, Excel đếm từ 1
+            rowIndex: index + 2,
             reason: "Thiếu title hoặc price",
             raw,
           });
           return;
         }
+
         valid.push(row);
       });
 
-      // 2. Ghi tuần tự vào tệp tin JSON qua vòng lặp `for...of` để không bị xung đột đọc/ghi (I/O)
+      // Lưu lần lượt từng sản phẩm để tránh xung đột đọc/ghi file.
       const created = [];
+
       for (const row of valid) {
         const item = await products.create({
           title: row.title,
@@ -350,10 +443,11 @@ router.post(
           description: row.description || "",
           rating: { rate: 0, count: 0 },
         });
+
         created.push(item);
       }
 
-      // 3. Trả về thống kê số dòng thành công và số dòng thất bại
+      // Trả về kết quả import.
       res.status(201).json({
         count: created.length,
         skippedCount: skipped.length,
@@ -362,7 +456,9 @@ router.post(
       });
     } catch (error) {
       console.error("Error in bulk create:", error);
-      res.status(500).json({ message: "Lỗi hệ thống khi import hàng loạt" });
+      res.status(500).json({
+        message: "Lỗi hệ thống khi import hàng loạt",
+      });
     }
   },
 );
