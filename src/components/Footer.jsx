@@ -6,9 +6,9 @@ export const Footer = () => {
   const { data: categories = [] } = useCategories();
 
   return (
-    <footer className="bg-white text-green pt-14 pb-4 border-t border-gray-100 text-[13px] mt-auto font-sans">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-8 pb-12 border-b border-gray-100">
+    <footer className="bg-white text-green pt-10 sm:pt-14 pb-4 border-t border-gray-100 text-[13px] mt-auto font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 pb-12 border-b border-gray-100">
           {/* Phân Loại */}
           <div className="lg:col-span-3">
             <h4 className="font-bold text-green text-[14px] mb-4">Phân Loại</h4>
@@ -148,8 +148,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Đăng Ký Nhận Tin */}
-          <div className="lg:col-span-4 space-y-4 lg:pl-6">
+          <div className="sm:col-span-2 lg:col-span-4 space-y-4 lg:pl-6">
             <h4 className="font-bold text-green text-[15px]">
               Đăng Ký Nhận Tin & Nhận{" "}
               <span className="text-[#E84C3D] font-bold">GIẢM 10%</span>
@@ -160,7 +159,7 @@ export const Footer = () => {
                 placeholder="Địa chỉ Email"
                 className="flex-1 px-3 py-2.5 text-[13px] bg-transparent outline-none min-w-0 text-gray-700 placeholder-gray-400"
               />
-              <button className="bg-green hover:bg-green-light/90 text-white px-5 text-[11px] font-bold tracking-wider uppercase rounded-sm transition shrink-0">
+              <button className="bg-green hover:bg-green-light/90 text-white px-3 sm:px-5 text-[11px] font-bold tracking-wider uppercase rounded-sm transition shrink-0">
                 ĐĂNG KÝ
               </button>
             </div>
@@ -187,13 +186,13 @@ export const Footer = () => {
                 contact@swatbabymall.com
               </p>
             </div>
-            <div className="flex gap-2.5 pt-2">
+            <div className="flex flex-wrap gap-2.5 pt-2">
               {[TwitterIcon, FacebookIcon, InstagramIcon, YoutubeIcon].map(
                 (Icon, i) => (
                   <a
                     key={i}
                     href="#"
-                    className="w-8 h-8 rounded-full bg-[#f4f6f8] hover:bg-[#00a79d] hover:text-white flex items-center justify-center transition text-gray-700"
+                    className="w-8 h-8 rounded-full bg-[#f4f6f8] hover:bg-[#00a79d] hover:text-white flex items-center justify-center transition text-gray-700 shrink-0"
                   >
                     <Icon size={13} />
                   </a>
@@ -204,7 +203,7 @@ export const Footer = () => {
         </div>
 
         {/* Thanh Tiền tệ, Cổng Thanh toán & Tải App */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-5 border-b border-gray-100 text-gray-500 text-[12px]">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 py-5 border-b border-gray-100 text-gray-500 text-[12px]">
           <div className="flex gap-2">
             <select className="border border-gray-200 rounded px-3 py-1 bg-white outline-none cursor-pointer hover:border-gray-300">
               <option>VND</option>
@@ -215,14 +214,14 @@ export const Footer = () => {
               <option>Eng</option>
             </select>
           </div>
-          <div className="flex items-center gap-4 text-[14px] font-sans font-bold tracking-tight select-none opacity-80">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[14px] font-sans font-bold tracking-tight select-none opacity-80">
             <span className="text-[#003087] italic">PayPal</span>
             <span className="text-[#eb001b]">mastercard</span>
             <span className="text-[#00579f]">VISA</span>
             <span className="text-[#635bff] lowercase">stripe</span>
             <span className="text-[#ffb3c7] lowercase">klarna.</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <span className="text-gray-400 text-[12px]">Tải ứng dụng</span>
             <a
               href="#"
@@ -241,8 +240,8 @@ export const Footer = () => {
 
         {/* Bản quyền */}
         <div className="text-center text-gray-400 text-[12px] pt-4">
-          © 2026 <span className="font-semibold text-gray-700">Shawonetc3</span>{" "}
-          . Bảo lưu mọi quyền.
+          © 2026 <span className="font-semibold text-gray-700">MiniShop</span> .
+          Bảo lưu mọi quyền.
         </div>
       </div>
     </footer>

@@ -19,7 +19,7 @@ import { Breadcrumb } from "../../components/Breadcrumb";
 import { UserIcon, ChevronRightIcon } from "../../components/icons";
 
 const inputClass =
-  "w-full text-xs text-ink rounded border border-line focus:border-green focus:ring-1 focus:ring-green px-3.5 py-3 outline-none";
+  "w-full text-sm text-ink rounded border border-line focus:border-ink px-4 py-3 outline-none transition-colors";
 
 const TABS = [
   { key: "info", label: "Thông tin tài khoản" },
@@ -50,25 +50,25 @@ function AccountInfoForm({ profile, userId }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold text-ink/70 mb-2">
+          <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
             Họ <span className="text-rust">*</span>
           </label>
           <input {...register("name.firstname")} className={inputClass} />
           {errors.name?.firstname && (
-            <p className="text-rust text-xs mt-1">
+            <p className="text-rust text-xs mt-1.5">
               {errors.name.firstname.message}
             </p>
           )}
         </div>
         <div>
-          <label className="block text-xs font-semibold text-ink/70 mb-2">
+          <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
             Tên <span className="text-rust">*</span>
           </label>
           <input {...register("name.lastname")} className={inputClass} />
           {errors.name?.lastname && (
-            <p className="text-rust text-xs mt-1">
+            <p className="text-rust text-xs mt-1.5">
               {errors.name.lastname.message}
             </p>
           )}
@@ -76,19 +76,21 @@ function AccountInfoForm({ profile, userId }) {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
           Email <span className="text-rust">*</span>
         </label>
         <input {...register("email")} className={inputClass} />
         {errors.email && (
-          <p className="text-rust text-xs mt-1">{errors.email.message}</p>
+          <p className="text-rust text-xs mt-1.5">{errors.email.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
           Số điện thoại{" "}
-          <span className="text-ink/40 font-normal">(Không bắt buộc)</span>
+          <span className="text-ink/40 font-normal normal-case">
+            (Không bắt buộc)
+          </span>
         </label>
         <input {...register("phone")} className={inputClass} />
       </div>
@@ -96,7 +98,7 @@ function AccountInfoForm({ profile, userId }) {
       <button
         type="submit"
         disabled={isPending}
-        className="btn-primary px-9 disabled:opacity-50"
+        className="btn-primary w-full sm:w-auto px-10 rounded text-sm uppercase tracking-wider font-bold disabled:opacity-50"
       >
         {isPending ? "Đang lưu..." : "Lưu thay đổi"}
       </button>
@@ -130,27 +132,27 @@ function AddressForm({ profile, userId }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
           Thành phố <span className="text-rust">*</span>
         </label>
         <input {...register("city")} className={inputClass} />
         {errors.city && (
-          <p className="text-rust text-xs mt-1">{errors.city.message}</p>
+          <p className="text-rust text-xs mt-1.5">{errors.city.message}</p>
         )}
       </div>
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
-          Địa chỉ <span className="text-rust">*</span>
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
+          Địa chỉ chi tiết <span className="text-rust">*</span>
         </label>
         <input {...register("street")} className={inputClass} />
         {errors.street && (
-          <p className="text-rust text-xs mt-1">{errors.street.message}</p>
+          <p className="text-rust text-xs mt-1.5">{errors.street.message}</p>
         )}
       </div>
       <button
         type="submit"
         disabled={isPending}
-        className="btn-primary px-9 disabled:opacity-50"
+        className="btn-primary w-full sm:w-auto px-10 rounded text-sm uppercase tracking-wider font-bold disabled:opacity-50"
       >
         {isPending ? "Đang lưu..." : "Lưu thay đổi"}
       </button>
@@ -179,9 +181,9 @@ function ChangePasswordForm({ userId }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-sm">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-md">
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
           Mật khẩu hiện tại <span className="text-rust">*</span>
         </label>
         <input
@@ -190,13 +192,13 @@ function ChangePasswordForm({ userId }) {
           className={inputClass}
         />
         {errors.currentPassword && (
-          <p className="text-rust text-xs mt-1">
+          <p className="text-rust text-xs mt-1.5">
             {errors.currentPassword.message}
           </p>
         )}
       </div>
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
           Mật khẩu mới <span className="text-rust">*</span>
         </label>
         <input
@@ -205,11 +207,13 @@ function ChangePasswordForm({ userId }) {
           className={inputClass}
         />
         {errors.newPassword && (
-          <p className="text-rust text-xs mt-1">{errors.newPassword.message}</p>
+          <p className="text-rust text-xs mt-1.5">
+            {errors.newPassword.message}
+          </p>
         )}
       </div>
       <div>
-        <label className="block text-xs font-semibold text-ink/70 mb-2">
+        <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
           Nhập lại mật khẩu mới <span className="text-rust">*</span>
         </label>
         <input
@@ -218,7 +222,7 @@ function ChangePasswordForm({ userId }) {
           className={inputClass}
         />
         {errors.confirmPassword && (
-          <p className="text-rust text-xs mt-1">
+          <p className="text-rust text-xs mt-1.5">
             {errors.confirmPassword.message}
           </p>
         )}
@@ -226,7 +230,7 @@ function ChangePasswordForm({ userId }) {
       <button
         type="submit"
         disabled={isPending}
-        className="btn-primary px-9 disabled:opacity-50"
+        className="btn-primary w-full sm:w-auto px-10 rounded text-sm uppercase tracking-wider font-bold disabled:opacity-50"
       >
         {isPending ? "Đang xử lý..." : "Đổi mật khẩu"}
       </button>
@@ -248,56 +252,65 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
       <Breadcrumb items={[{ label: "Tài khoản" }]} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <aside className="lg:col-span-4 bg-white rounded-lg border border-line p-6">
-          <div className="flex flex-col items-center text-center mb-6">
-            <div className="w-24 h-24 rounded-full bg-paper border border-line flex items-center justify-center mb-4">
-              <UserIcon size={36} className="text-ink/30" />
+      {/* Thiết kế nguyên khối */}
+      <div className="bg-white rounded border border-line shadow-sm overflow-hidden flex flex-col md:flex-row">
+        {/* Sidebar */}
+        <aside className="w-full md:w-1/3 lg:w-1/4 border-b md:border-b-0 md:border-r border-line bg-neutral-50/50 p-6 sm:p-8">
+          <div className="flex flex-col items-center text-center mb-8">
+            <div className="w-20 h-20 rounded bg-white border border-line flex items-center justify-center mb-4">
+              <UserIcon size={32} className="text-ink/50" />
             </div>
             <h2 className="text-lg font-display font-bold text-ink">
               {profile.name?.firstname} {profile.name?.lastname}
             </h2>
-            <p className="text-xs text-ink/40 mt-1">{profile.email}</p>
+            <p className="text-xs text-ink/60 mt-1 truncate w-full">
+              {profile.email}
+            </p>
           </div>
 
-          <nav className="space-y-2.5 text-xs font-medium">
+          <nav className="flex md:flex-col gap-2 overflow-x-auto hide-scrollbar md:space-y-1">
             {TABS.map((tab) =>
               tab.isLink ? (
                 <Link
                   key={tab.key}
                   to={tab.to}
-                  className="flex items-center justify-between px-4 py-3.5 rounded border border-line text-ink/70 hover:border-green hover:text-green transition"
+                  className="shrink-0  flex items-center justify-between px-4 py-3 rounded text-sm font-bold uppercase tracking-wider text-ink/60 hover:text-ink hover:bg-neutral-100 transition-colors"
                 >
                   <span>{tab.label}</span>
-                  <ChevronRightIcon size={14} className="text-ink/30" />
+                  <ChevronRightIcon
+                    size={16}
+                    className="hidden md:block opacity-50"
+                  />
                 </Link>
               ) : (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`w-full flex items-center justify-between px-4 py-3.5 rounded transition ${
+                  className={`shrink-0  flex items-center justify-between px-4 py-3 rounded text-sm font-bold uppercase tracking-wider transition-colors ${
                     activeTab === tab.key
-                      ? "bg-green text-white font-semibold shadow-sm"
-                      : "border border-line text-ink/70 hover:border-green hover:text-green"
+                      ? "bg-ink text-white"
+                      : "text-ink/60 hover:text-ink hover:bg-neutral-100"
                   }`}
                 >
                   <span>{tab.label}</span>
                   <ChevronRightIcon
-                    size={14}
-                    className={
-                      activeTab === tab.key ? "text-white/70" : "text-ink/30"
-                    }
+                    size={16}
+                    className={`hidden md:block ${
+                      activeTab === tab.key ? "opacity-100" : "opacity-50"
+                    }`}
                   />
                 </button>
               ),
             )}
           </nav>
         </aside>
-        <section className="lg:col-span-8 bg-white rounded-lg border border-line p-8">
-          <h1 className="text-2xl font-display font-bold text-ink mb-8">
+
+        {/* Nội dung Form */}
+        <section className="w-full md:w-2/3 lg:w-3/4 p-6 sm:p-8 md:p-10 lg:p-12 bg-white">
+          <h1 className="text-xl md:text-2xl font-display font-bold text-ink uppercase tracking-wider border-b border-line pb-4 mb-8">
             {tabTitles[activeTab]}
           </h1>
           {activeTab === "info" && (

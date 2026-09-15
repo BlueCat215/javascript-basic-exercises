@@ -12,6 +12,7 @@ import {
   createAccountSchema,
   editAccountSchema,
 } from "../../schemas/adminAccountSchema";
+import { TableRowSkeleton } from "../../components/Skeleton";
 
 const inputClass = "border border-line rounded-tag px-3 py-2 text-sm w-full";
 
@@ -249,13 +250,10 @@ export default function AdminAccounts() {
           </tr>
         </thead>
         <tbody>
-          {isLoading && (
-            <tr>
-              <td colSpan={5} className="p-4 text-center">
-                Đang tải...
-              </td>
-            </tr>
-          )}
+          {isLoading &&
+            Array.from({ length: 5 }).map((_, i) => (
+              <TableRowSkeleton key={i} columns={5} />
+            ))}
           {filtered.map((u) => (
             <tr key={u.id} className="border-t border-line">
               <td className="p-3">{u.username}</td>

@@ -16,16 +16,16 @@ const COUNTRIES = [
 
 const Field = ({ label, required, error, children }) => (
   <div>
-    <label className="block text-xs font-semibold text-ink/70 mb-1.5">
+    <label className="block text-xs font-bold text-ink uppercase tracking-wider mb-2">
       {label} {required && <span className="text-rust">*</span>}
     </label>
     {children}
-    {error && <p className="text-rust text-[11px] mt-1">{error}</p>}
+    {error && <p className="text-rust text-[11px] mt-1.5">{error}</p>}
   </div>
 );
 
 const inputClass =
-  "w-full text-xs rounded border border-line py-2.5 px-3 focus:border-green focus:ring-1 focus:ring-green outline-none bg-white";
+  "w-full text-sm text-ink rounded border border-line py-3 px-3.5 focus:border-ink focus:ring-1 focus:ring-ink outline-none bg-white transition-colors";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -82,11 +82,14 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-xl mx-auto px-6 py-20 text-center">
-        <p className="text-ink/50 mb-4">
+      <div className="max-w-xl mx-auto px-6 py-20 text-center space-y-4">
+        <p className="text-ink/60 font-medium">
           Giỏ hàng trống, không thể thanh toán.
         </p>
-        <button onClick={() => navigate("/products")} className="btn-primary">
+        <button
+          onClick={() => navigate("/products")}
+          className="btn-primary uppercase text-xs tracking-wider font-bold px-8 py-3 rounded"
+        >
           Tiếp tục mua sắm
         </button>
       </div>
@@ -94,25 +97,26 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
       <Breadcrumb
         items={[{ to: "/cart", label: "Giỏ hàng" }, { label: "Thanh toán" }]}
       />
 
-      <div className="bg-white rounded-xl border border-line p-6 sm:p-10">
-        <h1 className="text-2xl font-display font-bold text-ink mb-8 uppercase">
-          Thanh toán
+      {/* Khung nguyên khối thanh toán */}
+      <div className="bg-white rounded border border-line/80 shadow-sm p-6 sm:p-10">
+        <h1 className="text-xl sm:text-2xl font-display font-bold text-ink uppercase tracking-wider mb-8 pb-4 border-b border-line">
+          Thanh toán đơn hàng
         </h1>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-10"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
         >
-          {/* CỘT TRÁI */}
-          <div className="lg:col-span-7 space-y-8">
+          {/* CỘT TRÁI: Thông tin giao hàng */}
+          <div className="lg:col-span-7 space-y-6">
             <div>
-              <h2 className="text-base font-bold text-ink mb-6 pb-2 border-b border-line">
-                Thông tin nhận hàng
+              <h2 className="text-base font-bold text-ink uppercase tracking-wider mb-6 pb-2 border-b border-line">
+                1. Thông tin nhận hàng
               </h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -154,7 +158,7 @@ export default function CheckoutPage() {
                   </select>
                 </Field>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Field
                     label="Địa chỉ"
                     required
@@ -233,36 +237,34 @@ export default function CheckoutPage() {
               </div>
 
               <div className="pt-6 mt-6 border-t border-line">
-                <h3 className="text-sm font-bold text-ink mb-3">
-                  Thông tin thêm
+                <h3 className="text-sm font-bold text-ink uppercase tracking-wider mb-3">
+                  Ghi chú đơn hàng
                 </h3>
-                <Field
-                  label="Ghi chú đơn hàng"
-                  error={errors.orderNotes?.message}
-                >
+                <Field error={errors.orderNotes?.message}>
                   <textarea
                     {...register("orderNotes")}
                     rows={4}
                     placeholder="Ghi chú giao hàng, yêu cầu đặc biệt..."
-                    className={inputClass}
+                    className={`${inputClass} resize-y min-h-25`}
                   />
                 </Field>
               </div>
             </div>
           </div>
 
-          {/* CỘT PHẢI */}
+          {/* CỘT PHẢI: Tóm tắt đơn hàng & Phương thức thanh toán */}
           <div className="lg:col-span-5">
-            <h2 className="text-base font-bold text-ink mb-6">
-              Đơn hàng của bạn
-            </h2>
-            <div className="bg-paper rounded-xl p-6 border border-line">
-              <div className="flex justify-between items-center pb-3 border-b border-line text-[11px] font-bold tracking-wider text-ink/40 uppercase">
+            <div className="bg-neutral-50 rounded border border-line p-6 sticky top-6 space-y-6">
+              <h2 className="text-base font-bold text-ink uppercase tracking-wider pb-3 border-b border-line">
+                2. Đơn hàng của bạn
+              </h2>
+
+              <div className="flex justify-between items-center text-[11px] font-bold tracking-wider text-ink/50 uppercase">
                 <span>Sản phẩm</span>
                 <span>Tạm tính</span>
               </div>
 
-              <div className="py-4 border-b border-line space-y-3">
+              <div className="py-2 border-b border-line max-h-60 overflow-y-auto space-y-3 hide-scrollbar">
                 {items.map((i) => (
                   <div
                     key={i.productId}
@@ -272,65 +274,72 @@ export default function CheckoutPage() {
                       <img
                         src={i.product?.image}
                         alt={i.product?.title}
-                        className="w-12 h-12 object-contain rounded border border-line bg-white shrink-0"
+                        className="w-12 h-12 object-contain rounded border border-line bg-white shrink-0 p-1"
                       />
                       <div>
                         <h4 className="text-xs font-bold text-ink leading-snug line-clamp-1">
                           {i.product?.title}
                         </h4>
-                        <span className="text-xs text-ink/40 block mt-0.5">
-                          x {i.quantity}
+                        <span className="text-xs text-ink/50 block mt-0.5">
+                          Số lượng: {i.quantity}
                         </span>
                       </div>
                     </div>
-                    <div className="text-xs font-semibold text-ink text-right whitespace-nowrap pt-1">
+                    <div className="text-xs font-bold text-ink text-right whitespace-nowrap pt-1">
                       ${(i.product?.price * i.quantity).toFixed(2)}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="py-3 flex justify-between items-center text-xs border-b border-line">
-                <span className="text-ink/60 font-medium">Tạm tính</span>
-                <span className="font-semibold text-ink">
-                  ${subtotal.toFixed(2)}
-                </span>
-              </div>
-              {voucher && (
-                <div className="py-3 flex justify-between items-center text-xs border-b border-line">
-                  <span className="text-ink/60 font-medium">
-                    Giảm giá ({voucher.code})
-                  </span>
-                  <span className="font-semibold text-green">
-                    -${discount.toFixed(2)}
+              <div className="space-y-2 text-sm border-b border-line pb-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-ink/60">Tạm tính</span>
+                  <span className="font-bold text-ink">
+                    ${subtotal.toFixed(2)}
                   </span>
                 </div>
-              )}
-              <div className="py-4 flex justify-between items-center border-b border-line">
-                <span className="text-sm font-bold text-ink">Tổng cộng</span>
-                <span className="text-lg font-display font-bold text-green">
+                {voucher && (
+                  <div className="flex justify-between items-center text-green">
+                    <span className="font-medium">
+                      Giảm giá ({voucher.code})
+                    </span>
+                    <span className="font-bold">-${discount.toFixed(2)}</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-between items-center pt-1">
+                <span className="text-base font-bold text-ink uppercase tracking-wider">
+                  Tổng cộng
+                </span>
+                <span className="text-2xl font-display font-bold text-green">
                   ${total.toFixed(2)}
                 </span>
               </div>
 
-              <div className="pt-5 space-y-3">
-                <label className="flex items-center gap-2.5 cursor-pointer bg-white/60 p-3 rounded-lg border border-line">
+              {/* Phương thức thanh toán dạng Flat */}
+              <div className="space-y-3 pt-2 border-t border-line">
+                <p className="text-xs font-bold text-ink uppercase tracking-wider">
+                  Phương thức thanh toán
+                </p>
+                <label className="flex items-center gap-3 cursor-pointer bg-white p-3.5 rounded border border-line hover:border-ink transition-colors">
                   <input
                     type="radio"
                     value="cod"
                     {...register("paymentMethod")}
-                    className="text-green focus:ring-green h-4 w-4"
+                    className="text-ink focus:ring-0 h-4 w-4"
                   />
                   <span className="text-xs font-bold text-ink">
                     Thanh toán khi nhận hàng (COD)
                   </span>
                 </label>
-                <label className="flex items-center gap-2.5 cursor-pointer bg-white/60 p-3 rounded-lg border border-line">
+                <label className="flex items-center gap-3 cursor-pointer bg-white p-3.5 rounded border border-line hover:border-ink transition-colors">
                   <input
                     type="radio"
                     value="bank_transfer"
                     {...register("paymentMethod")}
-                    className="text-green focus:ring-green h-4 w-4"
+                    className="text-ink focus:ring-0 h-4 w-4"
                   />
                   <span className="text-xs font-bold text-ink">
                     Chuyển khoản ngân hàng
@@ -346,7 +355,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="btn-primary w-full mt-6 disabled:opacity-50"
+                className="w-full bg-ink hover:bg-ink/80 text-white py-3.5 rounded text-sm font-bold uppercase tracking-wider transition-colors disabled:opacity-50 mt-4 shadow-sm"
               >
                 {isPending ? "Đang xử lý..." : "Xác nhận đặt hàng"}
               </button>

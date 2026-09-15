@@ -28,6 +28,8 @@ import {
   Watch,
   Sparkles,
   CheckCircle2,
+  Monitor,
+  Mouse,
 } from "lucide-react";
 
 import {
@@ -81,6 +83,8 @@ export const ElectronicsIcon = withDefaults(Cpu);
 export const WatchIcon = withDefaults(Watch);
 export const SparklesIcon = withDefaults(Sparkles);
 export const CheckCircleIcon = withDefaults(CheckCircle2);
+export const MonitorIcon = withDefaults(Monitor);
+export const MouseIcon = withDefaults(Mouse);
 export const FacebookIcon = withSocialDefaults(FaFacebookF);
 export const InstagramIcon = withSocialDefaults(FaInstagram);
 export const YoutubeIcon = withSocialDefaults(FaYoutube);
@@ -91,8 +95,20 @@ export const categoryIconMap = {
   jewelery: GemIcon,
   "men's clothing": ShirtIcon,
   "women's clothing": ShirtIcon,
+
+  "thiết bị điện tử": ElectronicsIcon,
+  "trang sức": GemIcon,
+  "thời trang nam": ShirtIcon,
+  "thời trang nữ": ShirtIcon,
+  "màn hình": MonitorIcon,
+  "phụ kiện máy tính": MouseIcon,
 };
-export const getCategoryIcon = (name) => categoryIconMap[name] || SparklesIcon;
+
+export const getCategoryIcon = (name) => {
+  if (!name) return SparklesIcon;
+  const normalizedName = name.toLowerCase().trim();
+  return categoryIconMap[normalizedName] || SparklesIcon;
+};
 
 export const categoryBadgeColors = [
   "bg-emerald-50 text-green border border-emerald-100",

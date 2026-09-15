@@ -11,13 +11,18 @@ import {
 import { ProductForm } from "../../components/ProductForm";
 import { Pagination } from "../../components/Pagination";
 import { ExcelImportButton } from "./components/ExcelImportButton";
+import { TableRowSkeleton } from "../../components/Skeleton";
 
 const initialForm = {
   title: "",
   price: "",
+  originalPrice: "",
   description: "",
   image: "",
   category: "",
+  isNew: false,
+  isBestSeller: false,
+  inStock: true,
 };
 
 export default function AdminProducts() {
@@ -47,17 +52,26 @@ export default function AdminProducts() {
   };
   const openEdit = (product) => {
     setEditingId(product.id);
-    methods.reset(product);
+    methods.reset({
+      ...initialForm,
+      ...product,
+      originalPrice: product.originalPrice ?? "",
+    });
     setIsModalOpen(true);
   };
 
   const onSubmit = methods.handleSubmit((formData) => {
+    const payload = {
+      ...formData,
+      originalPrice:
+        formData.originalPrice === "" ? null : formData.originalPrice,
+    };
     if (editingId)
       updateProduct(
-        { id: editingId, data: formData },
+        { id: editingId, data: payload },
         { onSuccess: () => setIsModalOpen(false) },
       );
-    else createProduct(formData, { onSuccess: () => setIsModalOpen(false) });
+    else createProduct(payload, { onSuccess: () => setIsModalOpen(false) });
   });
 
   const handleDelete = (id) => {
@@ -81,69 +95,69 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <table className="w-full text-sm border border-line">
+      <table className="w-full text-sm border border-line p-2">
         <thead className="bg-paper">
           <tr className="text-left">
             <th className="p-3">ID</th>
             <th className="p-3">Tên</th>
             <th className="p-3">Danh mục</th>
             <th className="p-3">Giá</th>
+            <th className="p-3">Nhãn</th>
             <th className="p-3">Hành động</th>
-          </tr>
-          <tr className="bg-white border-t border-line">
-            <th className="p-2" />
-            <th className="p-2">
-              <input
-                value={filters.q}
-                onChange={(e) =>
-                  setFilters((f) => ({ ...f, q: e.target.value, page: 1 }))
-                }
-                placeholder="Lọc theo tên..."
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              />
-            </th>
-            <th className="p-2">
-              <input
-                value={filters.category}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    category: e.target.value,
-                    page: 1,
-                  }))
-                }
-                placeholder="Lọc theo danh mục..."
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              />
-            </th>
-            <th className="p-2" />
-            <th className="p-2" />
           </tr>
         </thead>
         <tbody>
-          {isLoading && (
-            <tr>
-              <td colSpan={5} className="p-4 text-center">
-                Đang tải...
-              </td>
-            </tr>
-          )}
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, i) => (
+              <TableRowSkeleton key={i} columns={6} />
+            ))}
           {data?.items?.map((p) => (
             <tr key={p.id} className="border-t border-line">
               <td className="p-3 font-mono">{p.id}</td>
               <td className="p-3 line-clamp-1">{p.title}</td>
               <td className="p-3 capitalize">{p.category}</td>
-              <td className="p-3 font-mono">${p.price}</td>
+              <td className="p-3 font-mono">
+                ${p.price}
+                {p.originalPrice > p.price && (
+                  <span className="ml-1.5 text-xs text-ink/30 line-through">
+                    ${p.originalPrice}
+                  </span>
+                )}
+              </td>
+              <td className="p-3">
+                <div className="flex flex-wrap gap-1">
+                  {p.isNew && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
+                      Mới
+                    </span>
+                  )}
+                  {p.isBestSeller && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-gold/20 text-gold">
+                      Bán chạy
+                    </span>
+                  )}
+                  {p.originalPrice > p.price && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-rust/20 text-rust">
+                      Giảm giá
+                    </span>
+                  )}
+                  {p.inStock === false && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-paper text-ink/40">
+                      Hết hàng
+                    </span>
+                  )}
+                </div>
+              </td>
               <td className="p-3 flex gap-2">
                 <button
                   onClick={() => openEdit(p)}
-                  className="text-gold hover:underline"
+                  className="text-blue-600 hover:underline text-xs font-semibold"
                 >
                   Sửa
                 </button>
                 <button
                   onClick={() => handleDelete(p.id)}
-                  className="text-rust hover:underline"
+                  className="text-rust hover:underline text-xs font-semibold"
                 >
                   Xóa
                 </button>

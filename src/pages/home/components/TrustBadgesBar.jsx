@@ -7,24 +7,23 @@ import {
 
 const items = [
   { Icon: TruckIcon, text: "Miễn phí vận chuyển từ $199" },
-  { Icon: ReturnIcon, text: "Đổi trả trong 30 ngày" },
+  { Icon: ReturnIcon, text: "Đổi trả dễ dàng 30 ngày" },
   { Icon: ShieldIcon, text: "Thanh toán an toàn 100%" },
   { Icon: SupportIcon, text: "Hỗ trợ khách hàng 24/7" },
 ];
 
 export const TrustBadgesBar = () => (
-  <section className="mt-12 bg-green-light/90 text-white py-8 px-6 lg:px-8 ">
-    <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 font-semibold text-center md:text-left">
+  <section className="bg-green-light/90 mt-16 border-y  py-2 px-6">
+    <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 ">
       {items.map(({ Icon, text }, i) => (
         <div
           key={i}
-          className="flex items-center justify-center md:justify-start gap-3.5 group cursor-default"
+          className="flex flex-col items-center text-center gap-3 md:px-4"
         >
-          <div>
-            <Icon size={25} className="text-gold" />
+          <div className="w-12 h-12 bg-white rounded flex items-center justify-center text-ink">
+            <Icon size={20} />
           </div>
-
-          <span className="text-sm font-semibold md:text-[15px] leading-snug text-white/80 group-hover:text-white transition-colors">
+          <span className="text-xs font-bold uppercase tracking-wider text-white">
             {text}
           </span>
         </div>

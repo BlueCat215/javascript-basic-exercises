@@ -13,6 +13,7 @@ import {
   MenuIcon,
   ChevronRightIcon,
   LogOutIcon,
+  CloseIcon,
 } from "./icons";
 import { TopPromoBanner } from "./TopPormoBanner";
 
@@ -21,6 +22,7 @@ export const Header = () => {
   const [search, setSearch] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
   const [showCollections, setShowCollections] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const clearAuth = useAuthStore((s) => s.clearAuth);
 
@@ -57,20 +59,28 @@ export const Header = () => {
     <>
       <TopPromoBanner />
       {/* Header chính */}
-      <header className="bg-green-light/90 py-4">
-        <div className="max-w-6xl mx-auto px-6 flex items-center gap-6">
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-green font-bold text-lg">
+      <header className="bg-green-light/90 py-3 sm:py-4">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 flex items-center gap-2 sm:gap-4 lg:gap-6">
+          <button
+            onClick={() => setShowMobileMenu(true)}
+            className="lg:hidden text-white p-1 shrink-0"
+            aria-label="Mở menu"
+          >
+            <MenuIcon size={20} />
+          </button>
+
+          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center text-green font-bold text-base sm:text-lg shrink-0">
               M
             </div>
-            <span className="text-white font-display text-lg font-bold leading-tight">
-              Mini Shop <br /> Hieu
+            <span className="hidden xs:block text-white font-display text-sm sm:text-lg font-bold leading-tight whitespace-nowrap">
+              Mini Shop <br className="hidden sm:block" /> Hieu
             </span>
           </Link>
 
           <form
             onSubmit={handleSearch}
-            className="flex-1 max-w-xl hidden md:flex"
+            className="flex-1 min-w-0 max-w-xl hidden lg:flex"
           >
             <div className="flex w-full bg-white rounded-full overflow-hidden">
               <input
@@ -90,7 +100,7 @@ export const Header = () => {
                 <select
                   value={searchCategory}
                   onChange={(e) => setSearchCategory(e.target.value)}
-                  className="h-full appearance-none bg-transparent pl-4 pr-8 text-xs font-bold text-ink outline-none cursor-pointer capitalize"
+                  className="h-full appearance-none bg-transparent pl-4 pr-8 text-xs font-bold text-ink outline-none cursor-pointer capitalize max-w-36 truncate"
                 >
                   <option value="">Tất cả danh mục</option>
                   {categories.map((c) => (
@@ -107,10 +117,19 @@ export const Header = () => {
             </div>
           </form>
 
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 ml-auto shrink-0">
+            {/* Ô tìm kiếm nhanh cho mobile/tablet: mở menu (đã có ô tìm kiếm) */}
+            <button
+              onClick={() => setShowMobileMenu(true)}
+              className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors shrink-0"
+              aria-label="Tìm kiếm"
+            >
+              <SearchIcon size={16} />
+            </button>
+
             <Link
               to="/account/favorites"
-              className="relative w-9 h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors"
+              className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors shrink-0"
             >
               <HeartIcon size={16} />
               {favorites.length > 0 && (
@@ -123,12 +142,12 @@ export const Header = () => {
             {isAuthenticated ? (
               <Link
                 to="/account"
-                className="relative w-9 h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors"
+                className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors shrink-0"
               >
                 <UserIcon size={16} />
               </Link>
             ) : (
-              <div className="hidden lg:flex flex-col text-left text-white">
+              <div className="hidden lg:flex flex-col text-left text-white shrink-0">
                 <span className="text-[10px] uppercase tracking-wider text-white/70">
                   Chào Mừng
                 </span>
@@ -143,9 +162,9 @@ export const Header = () => {
 
             <Link
               to="/cart"
-              className="flex items-center gap-3 pl-4 border-l border-white/20 hover:opacity-90 group transition"
+              className="flex items-center gap-2 sm:gap-3 sm:pl-4 sm:border-l sm:border-white/20 hover:opacity-90 group transition shrink-0"
             >
-              <div className="relative w-9 h-9 rounded-full bg-white group-hover:bg-amber-100 flex items-center justify-center text-green transition-colors">
+              <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white group-hover:bg-amber-100 flex items-center justify-center text-green transition-colors shrink-0">
                 <CartIcon size={16} />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-gold text-white text-[10px] font-bold h-4 min-w-4 px-1 rounded-full flex items-center justify-center shadow-sm">
@@ -167,7 +186,7 @@ export const Header = () => {
               <button
                 onClick={handleLogout}
                 title="Đăng xuất"
-                className="w-9 h-9 rounded-full bg-red-500/10 hover:bg-red-500 flex items-center justify-center text-white/80 hover:text-white border border-white/10 hover:border-red-500/30 transition-all ml-1"
+                className="hidden sm:flex w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-500/10 hover:bg-red-500 items-center justify-center text-white/80 hover:text-white border border-white/10 hover:border-red-500/30 transition-all shrink-0"
               >
                 <LogOutIcon size={16} />
               </button>
@@ -176,8 +195,108 @@ export const Header = () => {
         </div>
       </header>
 
-      <nav className="bg-green-light/90">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      {showMobileMenu && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div
+            className="absolute inset-0 bg-ink/30"
+            onClick={() => setShowMobileMenu(false)}
+          />
+          <div className="absolute left-0 top-0 h-full w-[85vw] max-w-xs sm:w-80 bg-white shadow-xl p-5 space-y-6 overflow-y-auto">
+            <div className="flex justify-between items-center">
+              <span className="font-display font-bold text-ink">Menu</span>
+              <button
+                onClick={() => setShowMobileMenu(false)}
+                className="text-ink/50"
+                aria-label="Đóng menu"
+              >
+                <CloseIcon size={20} />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                handleSearch(e);
+                setShowMobileMenu(false);
+              }}
+              className="flex border border-line rounded-full overflow-hidden"
+            >
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Tìm sản phẩm..."
+                className="flex-1 min-w-0 px-4 py-2 text-sm outline-none"
+              />
+              <button type="submit" className="px-3 text-ink/50 shrink-0">
+                <SearchIcon size={16} />
+              </button>
+            </form>
+
+            {isAuthenticated && (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setShowMobileMenu(false);
+                }}
+                className="sm:hidden flex items-center gap-2 text-sm font-semibold text-red-500"
+              >
+                <LogOutIcon size={16} /> Đăng xuất
+              </button>
+            )}
+
+            <nav className="flex flex-col gap-1 text-sm font-semibold text-ink">
+              <Link
+                to="/"
+                onClick={() => setShowMobileMenu(false)}
+                className="py-2.5 border-b border-line"
+              >
+                Trang chủ
+              </Link>
+              <Link
+                to="/products"
+                onClick={() => setShowMobileMenu(false)}
+                className="py-2.5 border-b border-line"
+              >
+                Sản phẩm
+              </Link>
+              <Link
+                to="/about"
+                onClick={() => setShowMobileMenu(false)}
+                className="py-2.5 border-b border-line"
+              >
+                Giới thiệu
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => setShowMobileMenu(false)}
+                className="py-2.5 border-b border-line"
+              >
+                Liên hệ
+              </Link>
+            </nav>
+
+            <div>
+              <p className="text-xs font-bold text-ink/40 uppercase mb-2">
+                Danh mục
+              </p>
+              <div className="flex flex-col gap-1">
+                {categories.map((c) => (
+                  <Link
+                    key={c}
+                    to={`/products?category=${encodeURIComponent(c)}`}
+                    onClick={() => setShowMobileMenu(false)}
+                    className="py-2 text-sm text-ink/70 capitalize hover:text-green"
+                  >
+                    {c}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <nav className="bg-green-light/90 hidden lg:block">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <div className="relative">
             <button
               onClick={() => setShowCollections((v) => !v)}
@@ -205,7 +324,7 @@ export const Header = () => {
             )}
           </div>
 
-          <div className="hidden lg:flex items-center gap-7 text-xs font-semibold text-white/90 uppercase tracking-wide">
+          <div className="flex items-center gap-5 xl:gap-7 text-xs font-semibold text-white/90 uppercase tracking-wide">
             <Link to="/" className="py-3.5 font-bold hover:text-[#F1DC67]">
               Trang chủ
             </Link>
@@ -226,8 +345,8 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
-            <div className="border border-white rounded-full px-4 py-1.5 text-[12px] text-white/80">
+          <div className="hidden xl:flex items-center gap-4">
+            <div className="border border-white rounded-full px-4 py-1.5 text-[12px] text-white/80 whitespace-nowrap">
               Hotline 24/7 <strong className="text-white">1900 1234</strong>
             </div>
             <select className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer">

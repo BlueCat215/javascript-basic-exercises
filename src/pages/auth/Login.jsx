@@ -43,29 +43,33 @@ export default function Login() {
   const onSubmit = (formData) => loginMutate(formData);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
       <Breadcrumb items={[{ label: "Đăng nhập" }]} />
-      <div className="bg-white rounded-2xl border border-line p-8 sm:p-14 md:p-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <div className="lg:col-span-6 flex justify-center items-center">
+
+      <div className="bg-white rounded-xl sm:rounded-2xl border border-line p-5 sm:p-10 md:p-14 lg:p-16 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="hidden lg:flex lg:col-span-6 justify-center items-center">
             <img
               src="/login.svg"
               alt="Login Illustration"
-              className="w-full max-h-100 object-contain"
+              className="w-full max-h-96 object-contain"
             />
           </div>
 
           <div className="lg:col-span-6 w-full max-w-md mx-auto lg:mx-0">
-            <div className="mb-7">
+            <div className="mb-6 sm:mb-7 text-center sm:text-left">
               <h1 className="text-2xl sm:text-3xl font-display font-bold text-green">
                 Đăng nhập
               </h1>
-              <p className="text-xs font-bold uppercase tracking-widest text-ink/50 mt-1.5">
+              <p className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-ink/50 mt-1.5">
                 Tiếp tục để mua sắm
               </p>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4 sm:space-y-5"
+            >
               <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-ink">
                   Tên đăng nhập
@@ -73,10 +77,10 @@ export default function Login() {
                 <input
                   {...register("username")}
                   placeholder="VD: hoang"
-                  className="w-full px-4 py-2.5 bg-white border border-line rounded-md text-sm text-ink placeholder-ink/40 focus:border-green focus:ring-1 focus:ring-green outline-none"
+                  className="w-full px-3.5 sm:px-4 py-2.5 bg-white border border-line rounded-md text-base sm:text-sm text-ink placeholder:text-ink/40 focus:border-green focus:ring-1 focus:ring-green outline-none transition-all"
                 />
                 {errors.username && (
-                  <p className="text-rust text-xs mt-1">
+                  <p className="text-rust text-xs mt-1 font-medium">
                     {errors.username.message}
                   </p>
                 )}
@@ -91,34 +95,34 @@ export default function Login() {
                     type={showPassword ? "text" : "password"}
                     {...register("password")}
                     placeholder="••••••••"
-                    className="w-full px-4 py-2.5 bg-white border border-line rounded-md text-sm text-ink placeholder-ink/40 pr-14 focus:border-green focus:ring-1 focus:ring-green outline-none"
+                    className="w-full px-3.5 sm:px-4 py-2.5 bg-white border border-line rounded-md text-base sm:text-sm text-ink placeholder:text-ink/40 pr-14 focus:border-green focus:ring-1 focus:ring-green outline-none transition-all"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-ink/40 hover:text-ink/70 text-xs font-semibold"
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-ink/50 hover:text-ink text-xs font-semibold touch-manipulation select-none"
                   >
                     {showPassword ? "Ẩn" : "Hiện"}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-rust text-xs mt-1">
+                  <p className="text-rust text-xs mt-1 font-medium">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <div className="text-left pt-0.5">
+              <div className="text-right sm:text-left pt-0.5">
                 <span
                   title="Tính năng đang phát triển"
-                  className="text-xs text-ink/30 font-medium cursor-not-allowed"
+                  className="text-xs text-ink/40 font-medium cursor-not-allowed hover:underline"
                 >
                   Quên mật khẩu?
                 </span>
               </div>
 
               {error && (
-                <div className="p-3 bg-rust/10 border border-rust/30 text-rust text-xs rounded-md">
+                <div className="p-3 bg-rust/10 border border-rust/30 text-rust text-xs rounded-md leading-relaxed">
                   {error.response?.data?.message ||
                     "Tài khoản hoặc mật khẩu không chính xác."}
                 </div>
@@ -127,18 +131,18 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="btn-primary  mt-1 disabled:opacity-50"
+                className="w-full py-3 px-4 btn-primary mt-1 disabled:opacity-50 active:scale-[0.99] transition-transform font-bold"
               >
                 {isPending ? "Đang xử lý..." : "Đăng nhập"}
               </button>
 
-              <div className="text-left pt-2">
+              <div className="text-center sm:text-left pt-2 flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
                 <span className="text-xs font-semibold text-ink/50 uppercase tracking-wider">
-                  Chưa có tài khoản ?
+                  Chưa có tài khoản?
                 </span>
                 <Link
                   to="/register"
-                  className="text-xs font-bold text-green uppercase tracking-wide ml-1"
+                  className="text-xs font-bold text-green uppercase tracking-wide hover:underline"
                 >
                   Đăng ký
                 </Link>

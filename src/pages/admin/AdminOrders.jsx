@@ -5,6 +5,7 @@ import {
 } from "./hooks/useAdminOrderQueries";
 import { useAdminAccountsQuery } from "./hooks/useAdminAccountQueries";
 import { useAdminProductsQuery } from "./hooks/useAdminProductQueries";
+import { TableRowSkeleton } from "../../components/Skeleton";
 
 const STATUS_OPTIONS = ["pending", "shipped", "completed", "cancelled"];
 
@@ -85,10 +86,10 @@ function OrderDetailModal({ order, customerName, productById, onClose }) {
             Sản phẩm
           </p>
           <ul className="text-sm divide-y divide-line">
-            {order.products.map((p, idx) => {
-              const product = productById.get(p.productId);
+            {order.products.map((p) => {
+              const product = productById.get(String(p.productId));
               return (
-                <li key={idx} className="flex items-center gap-3 py-2">
+                <li key={p.productId} className="flex items-center gap-3 py-2">
                   {product?.image && (
                     <img
                       src={product.image}
@@ -141,20 +142,27 @@ export default function AdminOrders() {
     keyword: "",
     status: "",
   });
-  const [viewingOrder, setViewingOrder] = useState(null);
+  const [viewingOrderId, setViewingOrderId] = useState(null);
+  const [pendingStatusId, setPendingStatusId] = useState(null);
 
-  const { data: orders = [], isLoading } = useAdminOrdersQuery();
-  const { data: accounts = [] } = useAdminAccountsQuery();
-  const { data: productsData } = useAdminProductsQuery({
-    page: 1,
-    pageSize: 1000,
-  });
-  const { mutate: updateStatus, isPending: isUpdatingStatus } =
-    useUpdateOrderStatus();
+  const {
+    data: orders = [],
+    isLoading,
+    isError: isOrdersError,
+  } = useAdminOrdersQuery();
+  const { data: accounts = [], isError: isAccountsError } =
+    useAdminAccountsQuery();
+  // pageSize lớn để lấy toàn bộ sản phẩm phục vụ tra cứu tên/ảnh/giá trong đơn hàng
+  const { data: productsData, isError: isProductsError } =
+    useAdminProductsQuery({
+      page: 1,
+      pageSize: 1000,
+    });
+  const { mutate: updateStatus } = useUpdateOrderStatus();
 
   const productById = useMemo(() => {
     const map = new Map();
-    (productsData?.items || []).forEach((p) => map.set(p.id, p));
+    (productsData?.items || []).forEach((p) => map.set(String(p.id), p));
     return map;
   }, [productsData]);
 
@@ -191,6 +199,23 @@ export default function AdminOrders() {
       });
   }, [orders, columnFilters, accountNameById]);
 
+  const viewingOrder = useMemo(
+    () => orders.find((o) => o.id === viewingOrderId) || null,
+    [orders, viewingOrderId],
+  );
+
+  const handleStatusChange = (id, status) => {
+    setPendingStatusId(id);
+    updateStatus(
+      { id, status },
+      {
+        onSettled: () => setPendingStatusId(null),
+      },
+    );
+  };
+
+  const hasLoadError = isOrdersError || isAccountsError || isProductsError;
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -198,6 +223,15 @@ export default function AdminOrders() {
           Quản lý đơn hàng
         </h1>
       </div>
+
+      {hasLoadError && (
+        <div className="bg-rust/10 text-rust text-sm rounded-tag px-4 py-3">
+          Đã xảy ra lỗi khi tải dữ liệu
+          {isOrdersError && " đơn hàng"}
+          {isAccountsError && " tài khoản"}
+          {isProductsError && " sản phẩm"}. Vui lòng thử tải lại trang.
+        </div>
+      )}
 
       <table className="w-full text-sm border border-line">
         <thead className="bg-paper">
@@ -244,13 +278,10 @@ export default function AdminOrders() {
           </tr>
         </thead>
         <tbody>
-          {isLoading && (
-            <tr>
-              <td colSpan={7} className="p-4 text-center">
-                Đang tải...
-              </td>
-            </tr>
-          )}
+          {isLoading &&
+            Array.from({ length: 7 }).map((_, i) => (
+              <TableRowSkeleton key={i} columns={7} />
+            ))}
           {!isLoading && filtered.length === 0 && (
             <tr>
               <td colSpan={7} className="p-4 text-center text-ink/40">
@@ -266,11 +297,11 @@ export default function AdminOrders() {
               </td>
               <td className="p-3">
                 <div className="flex items-center -space-x-2">
-                  {o.products.slice(0, 3).map((p, idx) => {
-                    const product = productById.get(p.productId);
+                  {o.products.slice(0, 3).map((p) => {
+                    const product = productById.get(String(p.productId));
                     return product?.image ? (
                       <img
-                        key={idx}
+                        key={p.productId}
                         src={product.image}
                         alt={product.title}
                         title={product.title}
@@ -278,7 +309,7 @@ export default function AdminOrders() {
                       />
                     ) : (
                       <span
-                        key={idx}
+                        key={p.productId}
                         className="w-8 h-8 rounded-full border-2 border-white bg-paper flex items-center justify-center text-[10px] text-ink/40"
                       >
                         ?
@@ -301,11 +332,9 @@ export default function AdminOrders() {
               <td className="p-3">
                 <select
                   value={o.status}
-                  disabled={isUpdatingStatus}
-                  onChange={(e) =>
-                    updateStatus({ id: o.id, status: e.target.value })
-                  }
-                  className={`text-xs font-medium px-2 py-1 rounded-tag border-0 ${statusBadgeClass[o.status] || "bg-paper"}`}
+                  disabled={pendingStatusId === o.id}
+                  onChange={(e) => handleStatusChange(o.id, e.target.value)}
+                  className={`text-xs font-medium px-2 py-1 rounded-tag border-0 disabled:opacity-50 ${statusBadgeClass[o.status] || "bg-paper"}`}
                 >
                   {STATUS_OPTIONS.map((s) => (
                     <option key={s} value={s}>
@@ -316,7 +345,7 @@ export default function AdminOrders() {
               </td>
               <td className="p-3">
                 <button
-                  onClick={() => setViewingOrder(o)}
+                  onClick={() => setViewingOrderId(o.id)}
                   className="text-gold hover:underline"
                 >
                   Xem chi tiết
@@ -332,7 +361,7 @@ export default function AdminOrders() {
           order={viewingOrder}
           customerName={accountNameById.get(viewingOrder.userId)}
           productById={productById}
-          onClose={() => setViewingOrder(null)}
+          onClose={() => setViewingOrderId(null)}
         />
       )}
     </div>

@@ -51,7 +51,7 @@ export const PopularCategoriesGrid = () => {
             <div className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-lg  transition-transform">
               <img src="/new.svg" alt="" />
             </div>
-            <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center break-words w-full px-1">
+            <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center wrap-break-words w-full px-1">
               Sản phẩm mới
             </span>
           </Link>
@@ -62,7 +62,7 @@ export const PopularCategoriesGrid = () => {
             <div className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-lg  transition-transform">
               <img src="/sale.svg" alt="" />
             </div>
-            <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center break-words w-full px-1">
+            <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center wrap-break-words w-full px-1">
               Giảm giá
             </span>
           </Link>
@@ -79,7 +79,7 @@ export const PopularCategoriesGrid = () => {
                 >
                   <Icon size={24} />
                 </div>
-                <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center break-words w-full px-1">
+                <span className="text-[12px] font-bold text-ink mt-2 group-hover:text-green uppercase text-center wrap-break-words w-full px-1">
                   {c}
                 </span>
               </Link>
