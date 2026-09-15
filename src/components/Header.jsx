@@ -19,6 +19,7 @@ import { TopPromoBanner } from "./TopPormoBanner";
 export const Header = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
   const [showCollections, setShowCollections] = useState(false);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const clearAuth = useAuthStore((s) => s.clearAuth);
@@ -46,7 +47,10 @@ export const Header = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/products?q=${encodeURIComponent(search)}`);
+    const params = new URLSearchParams();
+    if (search) params.set("q", search);
+    if (searchCategory) params.set("category", searchCategory);
+    navigate(`/products?${params.toString()}`);
   };
 
   return (
@@ -73,14 +77,33 @@ export const Header = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Tìm sản phẩm..."
-                className="flex-1 px-4 py-2 text-sm outline-none text-ink"
+                className="flex-1 min-w-0 px-4 py-2 text-sm outline-none text-ink"
               />
               <button
                 type="submit"
-                className="px-4 text-ink/50 hover:text-green transition"
+                className="px-4 text-ink hover:text-green transition shrink-0"
               >
                 <SearchIcon size={16} />
               </button>
+
+              <div className="relative shrink-0 border-r border-line">
+                <select
+                  value={searchCategory}
+                  onChange={(e) => setSearchCategory(e.target.value)}
+                  className="h-full appearance-none bg-transparent pl-4 pr-8 text-xs font-bold text-ink outline-none cursor-pointer capitalize"
+                >
+                  <option value="">Tất cả danh mục</option>
+                  {categories.map((c) => (
+                    <option key={c} value={c} className="capitalize">
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                <ChevronRightIcon
+                  size={12}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 rotate-90 text-ink pointer-events-none"
+                />
+              </div>
             </div>
           </form>
 
