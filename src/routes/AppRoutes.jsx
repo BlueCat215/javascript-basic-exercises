@@ -22,6 +22,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminAccounts from "../pages/admin/AdminAccounts";
 import AdminOrders from "../pages/admin/AdminOrders";
+import AdminContactMessages from "../pages/admin/AdminContactMessages";
 
 export default function AppRoutes() {
   return (
@@ -51,6 +52,7 @@ export default function AppRoutes() {
         <Route index element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="orders" element={<AdminOrders />} />
+        <Route path="contact-messages" element={<AdminContactMessages />} />
         <Route path="accounts" element={<AdminAccounts />} />
       </Route>
     </Routes>

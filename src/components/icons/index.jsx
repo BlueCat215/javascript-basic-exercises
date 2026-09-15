@@ -30,6 +30,7 @@ import {
   CheckCircle2,
   Monitor,
   Mouse,
+  Mail,
 } from "lucide-react";
 
 import {
@@ -85,6 +86,7 @@ export const SparklesIcon = withDefaults(Sparkles);
 export const CheckCircleIcon = withDefaults(CheckCircle2);
 export const MonitorIcon = withDefaults(Monitor);
 export const MouseIcon = withDefaults(Mouse);
+export const MailIcon = withDefaults(Mail);
 export const FacebookIcon = withSocialDefaults(FaFacebookF);
 export const InstagramIcon = withSocialDefaults(FaInstagram);
 export const YoutubeIcon = withSocialDefaults(FaYoutube);
