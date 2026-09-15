@@ -202,101 +202,106 @@ export default function AdminAccounts() {
         </button>
       </div>
 
-      <table className="w-full text-sm border border-line">
-        <thead className="bg-paper">
-          <tr className="text-left">
-            <th className="p-3">Username</th>
-            <th className="p-3">Email</th>
-            <th className="p-3">Role</th>
-            <th className="p-3">Trạng thái</th>
-            <th className="p-3">Hành động</th>
-          </tr>
-          <tr className="bg-white border-t border-line">
-            <th className="p-2">
-              <input
-                value={columnFilters.username}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, username: e.target.value }))
-                }
-                placeholder="Lọc username..."
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              />
-            </th>
-            <th className="p-2">
-              <input
-                value={columnFilters.email}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, email: e.target.value }))
-                }
-                placeholder="Lọc email..."
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              />
-            </th>
-            <th className="p-2">
-              <select
-                value={columnFilters.role}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, role: e.target.value }))
-                }
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              >
-                <option value="">Tất cả</option>
-                <option value="admin">Admin</option>
-                <option value="customer">Customer</option>
-              </select>
-            </th>
-            <th className="p-2" />
-            <th className="p-2" />
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading &&
-            Array.from({ length: 5 }).map((_, i) => (
-              <TableRowSkeleton key={i} columns={5} />
-            ))}
-          {filtered.map((u) => (
-            <tr key={u.id} className="border-t border-line">
-              <td className="p-3">{u.username}</td>
-              <td className="p-3">{u.email}</td>
-              <td className="p-3 capitalize">{u.role}</td>
-              <td className="p-3">
-                {u.isLocked ? (
-                  <span className="text-rust">Đã khóa</span>
-                ) : (
-                  <span className="text-green-600">Hoạt động</span>
-                )}
-              </td>
-              <td className="p-3 flex gap-2 flex-wrap">
-                <button
-                  onClick={() => setModal({ mode: "edit", account: u })}
-                  className="text-gold hover:underline"
-                >
-                  Sửa
-                </button>
-                <button
-                  onClick={() =>
-                    toggleLock({ id: u.id, isLocked: !u.isLocked })
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border border-line">
+          <thead className="bg-paper">
+            <tr className="text-left">
+              <th className="p-3">Username</th>
+              <th className="p-3">Email</th>
+              <th className="p-3">Role</th>
+              <th className="p-3">Trạng thái</th>
+              <th className="p-3">Hành động</th>
+            </tr>
+            <tr className="bg-white border-t border-line">
+              <th className="p-2">
+                <input
+                  value={columnFilters.username}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({
+                      ...f,
+                      username: e.target.value,
+                    }))
                   }
-                  className="text-gold hover:underline"
+                  placeholder="Lọc username..."
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                />
+              </th>
+              <th className="p-2">
+                <input
+                  value={columnFilters.email}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({ ...f, email: e.target.value }))
+                  }
+                  placeholder="Lọc email..."
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                />
+              </th>
+              <th className="p-2">
+                <select
+                  value={columnFilters.role}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({ ...f, role: e.target.value }))
+                  }
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
                 >
-                  {u.isLocked ? "Mở khóa" : "Khóa"}
-                </button>
-                {u.role !== "admin" && (
+                  <option value="">Tất cả</option>
+                  <option value="admin">Admin</option>
+                  <option value="customer">Customer</option>
+                </select>
+              </th>
+              <th className="p-2" />
+              <th className="p-2" />
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading &&
+              Array.from({ length: 5 }).map((_, i) => (
+                <TableRowSkeleton key={i} columns={5} />
+              ))}
+            {filtered.map((u) => (
+              <tr key={u.id} className="border-t border-line">
+                <td className="p-3">{u.username}</td>
+                <td className="p-3">{u.email}</td>
+                <td className="p-3 capitalize">{u.role}</td>
+                <td className="p-3">
+                  {u.isLocked ? (
+                    <span className="text-rust">Đã khóa</span>
+                  ) : (
+                    <span className="text-green-600">Hoạt động</span>
+                  )}
+                </td>
+                <td className="p-3 flex gap-2 flex-wrap">
+                  <button
+                    onClick={() => setModal({ mode: "edit", account: u })}
+                    className="text-gold hover:underline"
+                  >
+                    Sửa
+                  </button>
                   <button
                     onClick={() =>
-                      window.confirm("Xóa tài khoản này?") &&
-                      deleteAccount(u.id)
+                      toggleLock({ id: u.id, isLocked: !u.isLocked })
                     }
-                    className="text-rust hover:underline"
+                    className="text-gold hover:underline"
                   >
-                    Xóa
+                    {u.isLocked ? "Mở khóa" : "Khóa"}
                   </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  {u.role !== "admin" && (
+                    <button
+                      onClick={() =>
+                        window.confirm("Xóa tài khoản này?") &&
+                        deleteAccount(u.id)
+                      }
+                      className="text-rust hover:underline"
+                    >
+                      Xóa
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {modal && (
         <AccountModal

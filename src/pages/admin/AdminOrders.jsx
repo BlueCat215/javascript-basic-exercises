@@ -233,128 +233,130 @@ export default function AdminOrders() {
         </div>
       )}
 
-      <table className="w-full text-sm border border-line">
-        <thead className="bg-paper">
-          <tr className="text-left">
-            <th className="p-3">Mã đơn</th>
-            <th className="p-3">Khách hàng</th>
-            <th className="p-3">Sản phẩm</th>
-            <th className="p-3">Ngày đặt</th>
-            <th className="p-3">Tổng tiền</th>
-            <th className="p-3">Trạng thái</th>
-            <th className="p-3">Hành động</th>
-          </tr>
-          <tr className="bg-white border-t border-line">
-            <th className="p-2" colSpan={2}>
-              <input
-                value={columnFilters.keyword}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, keyword: e.target.value }))
-                }
-                placeholder="Tìm theo mã đơn, tên KH, SĐT..."
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              />
-            </th>
-            <th className="p-2" />
-            <th className="p-2" />
-            <th className="p-2" />
-            <th className="p-2">
-              <select
-                value={columnFilters.status}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, status: e.target.value }))
-                }
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              >
-                <option value="">Tất cả</option>
-                {STATUS_OPTIONS.map((s) => (
-                  <option key={s} value={s}>
-                    {statusLabel[s]}
-                  </option>
-                ))}
-              </select>
-            </th>
-            <th className="p-2" />
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading &&
-            Array.from({ length: 7 }).map((_, i) => (
-              <TableRowSkeleton key={i} columns={7} />
-            ))}
-          {!isLoading && filtered.length === 0 && (
-            <tr>
-              <td colSpan={7} className="p-4 text-center text-ink/40">
-                Không có đơn hàng nào khớp
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border border-line">
+          <thead className="bg-paper">
+            <tr className="text-left">
+              <th className="p-3">Mã đơn</th>
+              <th className="p-3">Khách hàng</th>
+              <th className="p-3">Sản phẩm</th>
+              <th className="p-3">Ngày đặt</th>
+              <th className="p-3">Tổng tiền</th>
+              <th className="p-3">Trạng thái</th>
+              <th className="p-3">Hành động</th>
             </tr>
-          )}
-          {filtered.map((o) => (
-            <tr key={o.id} className="border-t border-line">
-              <td className="p-3 font-mono">#{o.id}</td>
-              <td className="p-3">
-                {accountNameById.get(o.userId) || `#${o.userId}`}
-              </td>
-              <td className="p-3">
-                <div className="flex items-center -space-x-2">
-                  {o.products.slice(0, 3).map((p) => {
-                    const product = productById.get(String(p.productId));
-                    return product?.image ? (
-                      <img
-                        key={p.productId}
-                        src={product.image}
-                        alt={product.title}
-                        title={product.title}
-                        className="w-8 h-8 rounded-full object-cover border-2 border-white"
-                      />
-                    ) : (
-                      <span
-                        key={p.productId}
-                        className="w-8 h-8 rounded-full border-2 border-white bg-paper flex items-center justify-center text-[10px] text-ink/40"
-                      >
-                        ?
-                      </span>
-                    );
-                  })}
-                  {o.products.length > 3 && (
-                    <span className="w-8 h-8 rounded-full border-2 border-white bg-paper flex items-center justify-center text-[10px] text-ink/60">
-                      +{o.products.length - 3}
-                    </span>
-                  )}
-                </div>
-              </td>
-              <td className="p-3 text-xs text-ink/60">
-                {new Date(o.createdAt).toLocaleDateString("vi-VN")}
-              </td>
-              <td className="p-3 font-mono">
-                {o.total !== undefined ? `$${o.total}` : "—"}
-              </td>
-              <td className="p-3">
+            <tr className="bg-white border-t border-line">
+              <th className="p-2" colSpan={2}>
+                <input
+                  value={columnFilters.keyword}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({ ...f, keyword: e.target.value }))
+                  }
+                  placeholder="Tìm theo mã đơn, tên KH, SĐT..."
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                />
+              </th>
+              <th className="p-2" />
+              <th className="p-2" />
+              <th className="p-2" />
+              <th className="p-2">
                 <select
-                  value={o.status}
-                  disabled={pendingStatusId === o.id}
-                  onChange={(e) => handleStatusChange(o.id, e.target.value)}
-                  className={`text-xs font-medium px-2 py-1 rounded-tag border-0 disabled:opacity-50 ${statusBadgeClass[o.status] || "bg-paper"}`}
+                  value={columnFilters.status}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({ ...f, status: e.target.value }))
+                  }
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
                 >
+                  <option value="">Tất cả</option>
                   {STATUS_OPTIONS.map((s) => (
                     <option key={s} value={s}>
                       {statusLabel[s]}
                     </option>
                   ))}
                 </select>
-              </td>
-              <td className="p-3">
-                <button
-                  onClick={() => setViewingOrderId(o.id)}
-                  className="text-gold hover:underline"
-                >
-                  Xem chi tiết
-                </button>
-              </td>
+              </th>
+              <th className="p-2" />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {isLoading &&
+              Array.from({ length: 7 }).map((_, i) => (
+                <TableRowSkeleton key={i} columns={7} />
+              ))}
+            {!isLoading && filtered.length === 0 && (
+              <tr>
+                <td colSpan={7} className="p-4 text-center text-ink/40">
+                  Không có đơn hàng nào khớp
+                </td>
+              </tr>
+            )}
+            {filtered.map((o) => (
+              <tr key={o.id} className="border-t border-line">
+                <td className="p-3 font-mono">#{o.id}</td>
+                <td className="p-3">
+                  {accountNameById.get(o.userId) || `#${o.userId}`}
+                </td>
+                <td className="p-3">
+                  <div className="flex items-center -space-x-2">
+                    {o.products.slice(0, 3).map((p) => {
+                      const product = productById.get(String(p.productId));
+                      return product?.image ? (
+                        <img
+                          key={p.productId}
+                          src={product.image}
+                          alt={product.title}
+                          title={product.title}
+                          className="w-8 h-8 rounded-full object-cover border-2 border-white"
+                        />
+                      ) : (
+                        <span
+                          key={p.productId}
+                          className="w-8 h-8 rounded-full border-2 border-white bg-paper flex items-center justify-center text-[10px] text-ink/40"
+                        >
+                          ?
+                        </span>
+                      );
+                    })}
+                    {o.products.length > 3 && (
+                      <span className="w-8 h-8 rounded-full border-2 border-white bg-paper flex items-center justify-center text-[10px] text-ink/60">
+                        +{o.products.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </td>
+                <td className="p-3 text-xs text-ink/60">
+                  {new Date(o.createdAt).toLocaleDateString("vi-VN")}
+                </td>
+                <td className="p-3 font-mono">
+                  {o.total !== undefined ? `$${o.total}` : "—"}
+                </td>
+                <td className="p-3">
+                  <select
+                    value={o.status}
+                    disabled={pendingStatusId === o.id}
+                    onChange={(e) => handleStatusChange(o.id, e.target.value)}
+                    className={`text-xs font-medium px-2 py-1 rounded-tag border-0 disabled:opacity-50 ${statusBadgeClass[o.status] || "bg-paper"}`}
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s} value={s}>
+                        {statusLabel[s]}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td className="p-3">
+                  <button
+                    onClick={() => setViewingOrderId(o.id)}
+                    className="text-gold hover:underline"
+                  >
+                    Xem chi tiết
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {viewingOrder && (
         <OrderDetailModal

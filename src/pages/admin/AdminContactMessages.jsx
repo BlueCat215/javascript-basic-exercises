@@ -113,117 +113,119 @@ export default function AdminContactMessages() {
         </h1>
       </div>
 
-      <table className="w-full text-sm border border-line">
-        <thead className="bg-paper">
-          <tr className="text-left">
-            <th className="p-3">Người gửi</th>
-            <th className="p-3">Chủ đề</th>
-            <th className="p-3">Ngày gửi</th>
-            <th className="p-3">Trạng thái</th>
-            <th className="p-3">Hành động</th>
-          </tr>
-          <tr className="bg-white border-t border-line">
-            <th className="p-2">
-              <input
-                value={columnFilters.keyword}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, keyword: e.target.value }))
-                }
-                placeholder="Tìm theo tên, email, nội dung..."
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              />
-            </th>
-            <th className="p-2" />
-            <th className="p-2" />
-            <th className="p-2">
-              <select
-                value={columnFilters.status}
-                onChange={(e) =>
-                  setColumnFilters((f) => ({ ...f, status: e.target.value }))
-                }
-                className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
-              >
-                <option value="">Tất cả</option>
-                <option value="unread">Chưa đọc</option>
-                <option value="read">Đã đọc</option>
-              </select>
-            </th>
-            <th className="p-2" />
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading && (
-            <tr>
-              <td colSpan={5} className="p-4 text-center">
-                Đang tải...
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border border-line">
+          <thead className="bg-paper">
+            <tr className="text-left">
+              <th className="p-3">Người gửi</th>
+              <th className="p-3">Chủ đề</th>
+              <th className="p-3">Ngày gửi</th>
+              <th className="p-3">Trạng thái</th>
+              <th className="p-3">Hành động</th>
             </tr>
-          )}
-          {!isLoading && filtered.length === 0 && (
-            <tr>
-              <td colSpan={5} className="p-4 text-center text-ink/40">
-                Không có tin nhắn nào khớp
-              </td>
-            </tr>
-          )}
-          {filtered.map((m) => (
-            <tr
-              key={m.id}
-              className={`border-t border-line ${!m.isRead ? "bg-gold/5 font-medium" : ""}`}
-            >
-              <td className="p-3">
-                <p className="truncate">
-                  {m.firstName} {m.lastName}
-                </p>
-                <p className="text-xs text-ink/40 font-normal truncate">
-                  {m.email}
-                </p>
-              </td>
-              <td className="p-3 truncate max-w-55">
-                {m.subject || <span className="text-ink/30">—</span>}
-              </td>
-              <td className="p-3 text-xs text-ink/60 font-normal">
-                {new Date(m.createdAt).toLocaleDateString("vi-VN")}
-              </td>
-              <td className="p-3">
-                {m.isRead ? (
-                  <span className="text-xs font-normal text-ink/40">
-                    Đã đọc
-                  </span>
-                ) : (
-                  <span className="text-xs font-medium text-rust">
-                    Chưa đọc
-                  </span>
-                )}
-              </td>
-              <td className="p-3 flex gap-2 font-normal">
-                <button
-                  onClick={() => openMessage(m)}
-                  className="text-gold hover:underline"
-                >
-                  Xem
-                </button>
-                {m.isRead && (
-                  <button
-                    onClick={() => markRead({ id: m.id, isRead: false })}
-                    className="text-ink/50 hover:underline"
-                  >
-                    Đánh dấu chưa đọc
-                  </button>
-                )}
-                <button
-                  onClick={() =>
-                    window.confirm("Xóa tin nhắn này?") && deleteMessage(m.id)
+            <tr className="bg-white border-t border-line">
+              <th className="p-2">
+                <input
+                  value={columnFilters.keyword}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({ ...f, keyword: e.target.value }))
                   }
-                  className="text-rust hover:underline"
+                  placeholder="Tìm theo tên, email, nội dung..."
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                />
+              </th>
+              <th className="p-2" />
+              <th className="p-2" />
+              <th className="p-2">
+                <select
+                  value={columnFilters.status}
+                  onChange={(e) =>
+                    setColumnFilters((f) => ({ ...f, status: e.target.value }))
+                  }
+                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
                 >
-                  Xóa
-                </button>
-              </td>
+                  <option value="">Tất cả</option>
+                  <option value="unread">Chưa đọc</option>
+                  <option value="read">Đã đọc</option>
+                </select>
+              </th>
+              <th className="p-2" />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {isLoading && (
+              <tr>
+                <td colSpan={5} className="p-4 text-center">
+                  Đang tải...
+                </td>
+              </tr>
+            )}
+            {!isLoading && filtered.length === 0 && (
+              <tr>
+                <td colSpan={5} className="p-4 text-center text-ink/40">
+                  Không có tin nhắn nào khớp
+                </td>
+              </tr>
+            )}
+            {filtered.map((m) => (
+              <tr
+                key={m.id}
+                className={`border-t border-line ${!m.isRead ? "bg-gold/5 font-medium" : ""}`}
+              >
+                <td className="p-3">
+                  <p className="truncate">
+                    {m.firstName} {m.lastName}
+                  </p>
+                  <p className="text-xs text-ink/40 font-normal truncate">
+                    {m.email}
+                  </p>
+                </td>
+                <td className="p-3 truncate max-w-55">
+                  {m.subject || <span className="text-ink/30">—</span>}
+                </td>
+                <td className="p-3 text-xs text-ink/60 font-normal">
+                  {new Date(m.createdAt).toLocaleDateString("vi-VN")}
+                </td>
+                <td className="p-3">
+                  {m.isRead ? (
+                    <span className="text-xs font-normal text-ink/40">
+                      Đã đọc
+                    </span>
+                  ) : (
+                    <span className="text-xs font-medium text-rust">
+                      Chưa đọc
+                    </span>
+                  )}
+                </td>
+                <td className="p-3 flex gap-2 font-normal">
+                  <button
+                    onClick={() => openMessage(m)}
+                    className="text-gold hover:underline"
+                  >
+                    Xem
+                  </button>
+                  {m.isRead && (
+                    <button
+                      onClick={() => markRead({ id: m.id, isRead: false })}
+                      className="text-ink/50 hover:underline"
+                    >
+                      Đánh dấu chưa đọc
+                    </button>
+                  )}
+                  <button
+                    onClick={() =>
+                      window.confirm("Xóa tin nhắn này?") && deleteMessage(m.id)
+                    }
+                    className="text-rust hover:underline"
+                  >
+                    Xóa
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {viewingMessage && (
         <MessageDetailModal

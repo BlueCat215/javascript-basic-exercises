@@ -85,7 +85,7 @@ export default function AdminProducts() {
           Quản lý sản phẩm
         </h1>
         <div className="flex gap-2">
-          <ExcelImportButton onImported={() => setFilters((f) => ({ ...f }))} />
+          <ExcelImportButton />
           <button
             onClick={openCreate}
             className="btn-primary text-sm px-4 py-2"
@@ -95,77 +95,79 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <table className="w-full text-sm border border-line p-2">
-        <thead className="bg-paper">
-          <tr className="text-left">
-            <th className="p-3">ID</th>
-            <th className="p-3">Tên</th>
-            <th className="p-3">Danh mục</th>
-            <th className="p-3">Giá</th>
-            <th className="p-3">Nhãn</th>
-            <th className="p-3">Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading &&
-            Array.from({ length: 6 }).map((_, i) => (
-              <TableRowSkeleton key={i} columns={6} />
-            ))}
-          {data?.items?.map((p) => (
-            <tr key={p.id} className="border-t border-line">
-              <td className="p-3 font-mono">{p.id}</td>
-              <td className="p-3 line-clamp-1">{p.title}</td>
-              <td className="p-3 capitalize">{p.category}</td>
-              <td className="p-3 font-mono">
-                ${p.price}
-                {p.originalPrice > p.price && (
-                  <span className="ml-1.5 text-xs text-ink/30 line-through">
-                    ${p.originalPrice}
-                  </span>
-                )}
-              </td>
-              <td className="p-3">
-                <div className="flex flex-wrap gap-1">
-                  {p.isNew && (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
-                      Mới
-                    </span>
-                  )}
-                  {p.isBestSeller && (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-gold/20 text-gold">
-                      Bán chạy
-                    </span>
-                  )}
-                  {p.originalPrice > p.price && (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-rust/20 text-rust">
-                      Giảm giá
-                    </span>
-                  )}
-                  {p.inStock === false && (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-paper text-ink/40">
-                      Hết hàng
-                    </span>
-                  )}
-                </div>
-              </td>
-              <td className="p-3 flex gap-2">
-                <button
-                  onClick={() => openEdit(p)}
-                  className="text-blue-600 hover:underline text-xs font-semibold"
-                >
-                  Sửa
-                </button>
-                <button
-                  onClick={() => handleDelete(p.id)}
-                  className="text-rust hover:underline text-xs font-semibold"
-                >
-                  Xóa
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border border-line p-2">
+          <thead className="bg-paper">
+            <tr className="text-left">
+              <th className="p-3">ID</th>
+              <th className="p-3">Tên</th>
+              <th className="p-3">Danh mục</th>
+              <th className="p-3">Giá</th>
+              <th className="p-3">Nhãn</th>
+              <th className="p-3">Hành động</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {isLoading &&
+              Array.from({ length: 6 }).map((_, i) => (
+                <TableRowSkeleton key={i} columns={6} />
+              ))}
+            {data?.items?.map((p) => (
+              <tr key={p.id} className="border-t border-line">
+                <td className="p-3 font-mono">{p.id}</td>
+                <td className="p-3 line-clamp-1">{p.title}</td>
+                <td className="p-3 capitalize">{p.category}</td>
+                <td className="p-3 font-mono">
+                  ${p.price}
+                  {p.originalPrice > p.price && (
+                    <span className="ml-1.5 text-xs text-ink/30 line-through">
+                      ${p.originalPrice}
+                    </span>
+                  )}
+                </td>
+                <td className="p-3">
+                  <div className="flex flex-wrap gap-1">
+                    {p.isNew && (
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
+                        Mới
+                      </span>
+                    )}
+                    {p.isBestSeller && (
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-gold/20 text-gold">
+                        Bán chạy
+                      </span>
+                    )}
+                    {p.originalPrice > p.price && (
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-rust/20 text-rust">
+                        Giảm giá
+                      </span>
+                    )}
+                    {p.inStock === false && (
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-paper text-ink/40">
+                        Hết hàng
+                      </span>
+                    )}
+                  </div>
+                </td>
+                <td className="p-3 flex gap-2">
+                  <button
+                    onClick={() => openEdit(p)}
+                    className="text-blue-600 hover:underline text-xs font-semibold"
+                  >
+                    Sửa
+                  </button>
+                  <button
+                    onClick={() => handleDelete(p.id)}
+                    className="text-rust hover:underline text-xs font-semibold"
+                  >
+                    Xóa
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {data && (
         <Pagination

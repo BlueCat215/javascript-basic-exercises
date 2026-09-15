@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import adminProductService from "../services/adminProductService";
 import { useQueryClient } from "@tanstack/react-query";
 
-export const ExcelImportButton = ({ onImported }) => {
+export const ExcelImportButton = () => {
   const inputRef = useRef(null);
   const queryClient = useQueryClient();
   const handleFile = async (e) => {
@@ -27,7 +27,6 @@ export const ExcelImportButton = ({ onImported }) => {
         toast.success(`Đã import ${result.count} sản phẩm`);
       }
       queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
-      onImported?.();
     } catch {
       toast.error("Import thất bại — kiểm tra định dạng file");
     } finally {
