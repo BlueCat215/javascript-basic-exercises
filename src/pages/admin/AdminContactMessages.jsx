@@ -179,7 +179,7 @@ export default function AdminContactMessages() {
                   {m.email}
                 </p>
               </td>
-              <td className="p-3 truncate max-w-[220px]">
+              <td className="p-3 truncate max-w-55">
                 {m.subject || <span className="text-ink/30">—</span>}
               </td>
               <td className="p-3 text-xs text-ink/60 font-normal">
