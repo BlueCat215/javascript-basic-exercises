@@ -255,9 +255,7 @@ export default function ProfilePage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
       <Breadcrumb items={[{ label: "Tài khoản" }]} />
 
-      {/* Thiết kế nguyên khối */}
       <div className="bg-white rounded border border-line shadow-sm overflow-hidden flex flex-col md:flex-row">
-        {/* Sidebar */}
         <aside className="w-full md:w-1/3 lg:w-1/4 border-b md:border-b-0 md:border-r border-line bg-neutral-50/50 p-6 sm:p-8">
           <div className="flex flex-col items-center text-center mb-8">
             <div className="w-20 h-20 rounded bg-white border border-line flex items-center justify-center mb-4">
@@ -308,7 +306,6 @@ export default function ProfilePage() {
           </nav>
         </aside>
 
-        {/* Nội dung Form */}
         <section className="w-full md:w-2/3 lg:w-3/4 p-6 sm:p-8 md:p-10 lg:p-12 bg-white">
           <h1 className="text-xl md:text-2xl font-display font-bold text-ink uppercase tracking-wider border-b border-line pb-4 mb-8">
             {tabTitles[activeTab]}

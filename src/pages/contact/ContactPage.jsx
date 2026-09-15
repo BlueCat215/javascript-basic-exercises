@@ -20,7 +20,6 @@ const COUNTRIES = [
   { value: "SG", label: "Singapore" },
 ];
 
-// Giảm bo tròn xuống rounded, thiết kế phẳng, sắc nét
 const inputClass =
   "w-full text-sm rounded border border-line px-4 py-3 focus:border-green focus:ring-1 focus:ring-green outline-none transition-colors bg-white";
 
@@ -199,7 +198,6 @@ export default function ContactPage() {
             </form>
           </div>
 
-          {/* Cột Thông tin liên hệ (Bên phải) */}
           <div className="lg:col-span-4 p-6 md:p-10 bg-neutral-50/50 order-1 lg:order-2 border-b lg:border-b-0 border-line/80 flex flex-col">
             <h3 className="text-lg font-display font-bold text-ink uppercase mb-8">
               Thông tin liên hệ
