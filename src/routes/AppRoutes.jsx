@@ -21,6 +21,7 @@ import FavoritesPage from "../pages/account/FavoritesPage";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminAccounts from "../pages/admin/AdminAccounts";
+import AdminOrders from "../pages/admin/AdminOrders";
 
 export default function AppRoutes() {
   return (
@@ -49,6 +50,7 @@ export default function AppRoutes() {
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
+        <Route path="orders" element={<AdminOrders />} />
         <Route path="accounts" element={<AdminAccounts />} />
       </Route>
     </Routes>

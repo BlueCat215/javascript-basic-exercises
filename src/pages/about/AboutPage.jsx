@@ -85,9 +85,8 @@ export default function AboutPage() {
           <p className="text-[15px] text-ink leading-relaxed mb-6">
             MiniShop là một website thương mại điện tử được xây dựng nhằm áp
             dụng các kiến thức về ReactJS, TanStack Query, Zustand, React Hook
-            Form và các kỹ thuật xử lý thực tế trong phát triển ứng dụng web
-            hiện đại. Sản phẩm hiển thị trên trang đến từ nguồn dữ liệu mẫu phục
-            vụ mục đích minh họa.
+            Form. Sản phẩm hiển thị trên trang đến từ nguồn dữ liệu mẫu phục vụ
+            mục đích minh họa.
           </p>
           <Link to="/products" className="btn-primary self-start">
             Khám phá sản phẩm

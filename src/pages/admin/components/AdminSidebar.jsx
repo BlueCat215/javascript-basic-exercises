@@ -3,11 +3,13 @@ import {
   DashboardIcon,
   PackageIcon,
   UsersIcon,
+  TruckIcon,
 } from "../../../components/icons";
 
 const links = [
   { to: "/admin", end: true, label: "Tổng quan", Icon: DashboardIcon },
   { to: "/admin/products", label: "Sản phẩm", Icon: PackageIcon },
+  { to: "/admin/orders", label: "Đơn hàng", Icon: TruckIcon },
   { to: "/admin/accounts", label: "Tài khoản", Icon: UsersIcon },
 ];
 

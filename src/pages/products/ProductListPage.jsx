@@ -18,7 +18,6 @@ import { SearchIcon, StarIcon, ChevronRightIcon } from "../../components/icons";
 
 const RATING_OPTIONS = [4, 3, 2, 1];
 
-//dùng chung param với GET /products (isNew, isBestSeller, onSale)
 const QUICK_FILTERS = [
   { key: "isNew", label: "Sản phẩm mới" },
   { key: "isBestSeller", label: "Bán chạy" },

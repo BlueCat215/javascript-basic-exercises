@@ -86,7 +86,7 @@ export default function ProductDetailPage() {
       <section className="bg-white rounded-2xl border border-line shadow-sm p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 transition-all">
         {/* Cột 1: Hình ảnh */}
         <div className="lg:col-span-5 flex flex-col items-center">
-          <div className="relative w-full aspect-square max-h-115 bg-paper rounded-2xl border border-line flex items-center justify-center p-8 group overflow-hidden">
+          <div className="relative w-full aspect-square max-h-115  border-line flex items-center justify-center p-8 group overflow-hidden">
             <img
               src={product.image}
               alt={product.title}

@@ -90,7 +90,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
 
         <div className="relative w-full h-44 rounded-md overflow-hidden mb-3 flex items-center justify-center shrink-0">
           {(isNew || inStock === false) && (
-            <span className="absolute top-2 left-2 z-10 text-[10px] font-bold uppercase px-2 py-1 rounded bg-ink text-white">
+            <span className="absolute top-2 left-2 z-10 text-[10px] font-semibold uppercase px-2 py-1 rounded bg-ink text-white">
               {inStock === false ? "Hết hàng" : "Mới"}
             </span>
           )}
@@ -102,7 +102,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
           />
         </div>
 
-        <p className="font-mono text-[10px] uppercase tracking-widest text-ink/40 line-clamp-1 w-full chunks-0">
+        <p className="font-semibold text-[10px] uppercase tracking-widest text-ink/70 line-clamp-1 w-full chunks-0">
           {category}
         </p>
 
@@ -122,7 +122,9 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
           )}
         </div>
         {purchases ? (
-          <p className="text-[10px] text-ink/40 mt-1">Đã mua: {purchases}</p>
+          <p className="text-[12px] text-ink/70 font-semibold mt-1">
+            Đã mua: {purchases}
+          </p>
         ) : null}
       </Link>
 

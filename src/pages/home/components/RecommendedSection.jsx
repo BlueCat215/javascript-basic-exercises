@@ -4,8 +4,6 @@ import { useCategories, useRecommendedProducts } from "../hooks/useHomeQueries";
 import { ProductCard } from "../../../components/ProductCard";
 import { LoadingState, EmptyState } from "../../../components/StatusState";
 
-// Ứng với mỗi tab, trỏ "Xem tất cả" sang ProductListPage với đúng bộ lọc tương ứng
-// (isBestSeller / sort=rating_desc / category) thay vì trang /products/recommended không tồn tại
 const buildViewAllLink = (tab) => {
   if (tab === "best-seller") return "/products?isBestSeller=true";
   if (tab === "top-rated") return "/products?sort=rating_desc";
