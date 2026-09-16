@@ -20,10 +20,18 @@ export const useProductsByCategories = (categories) => {
   });
 };
 
-export const usePromoProducts = () => {
+export const usePromoBannerProducts = (limit = 8) => {
   return useQuery({
-    queryKey: ["products", "promo"],
-    queryFn: () => homeService.getProducts({ sort: "price_asc", pageSize: 1 }),
+    queryKey: ["products", "promo-banner", limit],
+    queryFn: () => homeService.getProducts({ sort: "newest", pageSize: limit }),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useClearanceBannerProducts = (limit = 8) => {
+  return useQuery({
+    queryKey: ["products", "clearance-banner", limit],
+    queryFn: () => homeService.getClearance(limit),
     staleTime: 1000 * 60 * 5,
   });
 };
