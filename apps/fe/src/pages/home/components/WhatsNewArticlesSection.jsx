@@ -18,7 +18,8 @@ export const WhatsNewArticlesSection = () => {
     <section>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-display font-bold text-ink">
-          <span className="text-green">What's New</span> Today
+          <span className="text-green font-bold">Có gì mới</span>
+          <span className="text-ink/40 font-normal"> trong hôm nay ?</span>
         </h2>
         <span className="text-xs text-ink/40 cursor-default">
           Xem thêm bài viết

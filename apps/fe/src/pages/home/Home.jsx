@@ -6,6 +6,7 @@ import { ClearanceSaleSection } from "./components/ClearanceSaleSection";
 import { NewArrivalSection } from "./components/NewArrivalSection";
 import { WhatsNewArticlesSection } from "./components/WhatsNewArticlesSection";
 import { TrustBadgesBar } from "./components/TrustBadgesBar";
+import { CategoryShowcasePanels } from "./components/CategoryShowcasePanels";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <RecommendedSection />
         <ClearanceSaleSection />
         <NewArrivalSection />
+        <CategoryShowcasePanels categories={["Trang sức", "Thời trang nam"]} />
         <WhatsNewArticlesSection />
       </div>
 

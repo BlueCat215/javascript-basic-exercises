@@ -84,7 +84,7 @@ export const DualPromoBanners = () => {
             className="banner-fade flex items-center justify-between w-full"
           >
             <div className="space-y-4 max-w-[65%]">
-              <span className="border border-rust text-rust px-3 py-1 rounded-sm text-[10px] uppercase font-bold tracking-widest">
+              <span className="text-rust py-1 rounded-sm text-xl uppercase font-bold tracking-widest">
                 {onSale.originalPrice > onSale.price
                   ? `Giảm ${Math.round(
                       ((onSale.originalPrice - onSale.price) /
@@ -93,7 +93,7 @@ export const DualPromoBanners = () => {
                     )}%`
                   : "Ưu đãi"}
               </span>
-              <div className="text-2xl md:text-3xl font-display font-bold text-ink leading-tight">
+              <div className="text-2xl mt-4 md:text-3xl font-display font-bold text-ink leading-tight">
                 ${onSale.price}
                 {onSale.originalPrice > onSale.price && (
                   <span className="ml-2 text-base font-normal text-ink/40 line-through">

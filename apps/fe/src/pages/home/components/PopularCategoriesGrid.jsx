@@ -24,7 +24,7 @@ export const PopularCategoriesGrid = () => {
   return (
     <section className="max-w-6xl mx-auto px-4 mt-14 relative">
       <div className="text-center mb-8">
-        <h2 className="text-xl md:text-2xl font-display font-bold text-ink">
+        <h2 className="text-xl md:text-3xl font-display font-bold text-green-light/90">
           Danh mục phổ biến
         </h2>
         <div className="w-12 h-0.5 bg-green mx-auto mt-2" />

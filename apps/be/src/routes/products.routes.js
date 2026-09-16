@@ -148,13 +148,14 @@ router.get("/categories", async (req, res) => {
 // Lấy sản phẩm theo danh mục.
 router.get("/category/:categoryName", async (req, res) => {
   try {
+    const { limit } = req.query;
     const items = await products.findAll();
 
     const filtered = items.filter(
       (p) => p.category === req.params.categoryName,
     );
 
-    res.json(filtered);
+    res.json(limit ? filtered.slice(0, Number(limit)) : filtered);
   } catch (error) {
     res.status(500).json({
       message: "Lỗi hệ thống khi lọc theo danh mục",

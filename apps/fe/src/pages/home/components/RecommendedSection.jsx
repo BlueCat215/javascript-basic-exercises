@@ -24,24 +24,25 @@ export const RecommendedSection = () => {
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xl md:text-2xl font-display font-bold text-ink uppercase tracking-wider">
-          Gợi ý cho bạn
+      <div className="flex items-center justify-between md:justify-center md:relative mb-6">
+        <h2 className="text-[14px] md:text-3xl font-display font-bold text-ink/70 uppercase tracking-wider">
+          <span className="text-green-light">Gợi ý</span>{" "}
+          <span className="text-ink/40 font-normal">cho bạn từ minishop</span>
         </h2>
         <Link
           to={buildViewAllLink(tab)}
-          className="text-xs font-bold uppercase tracking-wider text-ink/60 hover:text-ink transition-colors"
+          className="text-xs font-bold text-ink hover:underline md:absolute md:right-0"
         >
           Xem tất cả
         </Link>
       </div>
 
-      <div className="flex overflow-x-auto hide-scrollbar items-center gap-6 mb-8 border-b border-line/60">
+      <div className="flex overflow-x-auto scrollbar-none items-center md:justify-center gap-6 mt-6 mb-8 pt-2">
         {tabs.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`pb-3 font-bold uppercase tracking-wider text-[11px] whitespace-nowrap transition-colors border-b-2 ${
+            className={`inline-block pb-2 font-bold tracking-wider text-[13px] whitespace-nowrap transition-all duration-300 border-b-2 hover:-translate-y-1 will-change-transform ${
               tab === key
                 ? "border-green text-green"
                 : "border-transparent text-ink/50 hover:text-ink"

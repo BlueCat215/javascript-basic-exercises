@@ -11,15 +11,15 @@ export const ClearanceSaleSection = () => {
   return (
     <section>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-display font-bold text-ink">
-          <span className="text-green">Xả hàng</span>
+        <h2 className="text-[14px] md:text-3xl font-display font-bold text-ink">
+          <span className="text-green">Xả hàng </span>
           <span className="text-ink/40 font-normal">
             | Giảm giá lên đến 70%
           </span>
         </h2>
         <Link
           to="/products?onSale=true&sort=discount_desc"
-          className="text-xs text-ink hover:underline"
+          className="text-xs font-bold text-ink hover:underline"
         >
           Xem tất cả
         </Link>
