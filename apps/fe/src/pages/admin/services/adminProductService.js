@@ -6,6 +6,7 @@ const adminProductService = {
   update: (id, data) => api.put(`/products/${id}`, data),
   remove: (id) => api.delete(`/products/${id}`),
   bulkImport: (products) => api.post("/products/bulk", { products }),
+  getCategories: () => api.get("/products/categories"),
 };
 
 export default adminProductService;

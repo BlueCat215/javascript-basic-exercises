@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema } from "../../schemas/productSchema";
 import {
   useAdminProductsQuery,
+  useAdminCategoriesQuery,
   useCreateProduct,
   useUpdateProduct,
   useDeleteProduct,
@@ -36,6 +37,7 @@ export default function AdminProducts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading } = useAdminProductsQuery(filters);
+  const { data: categories = [] } = useAdminCategoriesQuery();
   const { mutate: createProduct } = useCreateProduct();
   const { mutate: updateProduct } = useUpdateProduct();
   const { mutate: deleteProduct } = useDeleteProduct();
@@ -78,6 +80,12 @@ export default function AdminProducts() {
     if (window.confirm("Xóa sản phẩm này?")) deleteProduct(id);
   };
 
+  const handleFilterChange = (patch) => {
+    setFilters((f) => ({ ...f, ...patch, page: 1 }));
+  };
+
+  const hasActiveFilters = filters.q || filters.category;
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -93,6 +101,36 @@ export default function AdminProducts() {
             + Thêm sản phẩm
           </button>
         </div>
+      </div>
+
+      <div className="flex flex-wrap gap-3">
+        <input
+          type="text"
+          value={filters.q}
+          onChange={(e) => handleFilterChange({ q: e.target.value })}
+          placeholder="Tìm theo tên sản phẩm..."
+          className="border border-line rounded-tag px-3 py-2 text-sm w-full sm:w-64 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30"
+        />
+        <select
+          value={filters.category}
+          onChange={(e) => handleFilterChange({ category: e.target.value })}
+          className="border border-line rounded-tag px-3 py-2 text-sm w-full sm:w-48 capitalize focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30"
+        >
+          <option value="">Tất cả danh mục</option>
+          {categories.map((c) => (
+            <option key={c} value={c} className="capitalize">
+              {c}
+            </option>
+          ))}
+        </select>
+        {hasActiveFilters && (
+          <button
+            onClick={() => handleFilterChange({ q: "", category: "" })}
+            className="text-xs font-semibold text-ink/50 hover:text-ink px-2"
+          >
+            Xóa lọc
+          </button>
+        )}
       </div>
 
       <div className="overflow-x-auto">

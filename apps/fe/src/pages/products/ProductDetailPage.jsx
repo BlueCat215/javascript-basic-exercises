@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useProductDetailQuery } from "./hooks/useProductDetailQuery";
 import { useAddToCart } from "../cart/hooks/useCartQueries";
 import { useAuthStore } from "../../store/useAuthStore";
-import { LoadingState, ErrorState } from "../../components/StatusState";
+import { ErrorState } from "../../components/StatusState";
 import {
   useIsFavorite,
   useAddFavorite,
@@ -19,6 +19,7 @@ import { ProductGallery } from "./components/detail/ProductGallery";
 import { ProductInfo } from "./components/detail/ProductInfo";
 import { ProductPurchasePanel } from "./components/detail/ProductPurchasePanel";
 import { ProductTabs } from "./components/detail/ProductTabs";
+import { ProductDetailSkeleton } from "../../components/Skeleton";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -62,7 +63,7 @@ export default function ProductDetailPage() {
     );
   };
 
-  if (isLoading) return <LoadingState />;
+  if (isLoading) return <ProductDetailSkeleton />;
   if (isError || !product)
     return <ErrorState message="Không tìm thấy sản phẩm" />;
 
@@ -79,7 +80,6 @@ export default function ProductDetailPage() {
         ]}
       />
 
-      {/* Main Product Layout - 3 Columns */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
         <ProductGallery product={product} />
         <ProductInfo product={product} />

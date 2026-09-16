@@ -10,6 +10,14 @@ export const useAdminProductsQuery = (filters) => {
   });
 };
 
+export const useAdminCategoriesQuery = () => {
+  return useQuery({
+    queryKey: ["admin", "categories"],
+    queryFn: adminProductService.getCategories,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
 const invalidate = (qc) =>
   qc.invalidateQueries({ queryKey: ["admin", "products"] });
 
