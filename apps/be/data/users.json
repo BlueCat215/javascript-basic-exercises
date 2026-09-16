@@ -1,0 +1,249 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "111111",
+    "email": "john@gmail.com",
+    "role": "admin",
+    "isLocked": false,
+    "name": {
+      "firstname": "Hieu",
+      "lastname": "Nguyen"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "-37.3159",
+        "long": "81.1496"
+      },
+      "city": "kilcoole",
+      "street": "new road",
+      "number": 7682,
+      "zipcode": "12926-3874"
+    },
+    "phone": "1-570-236-7033",
+    "__v": 0
+  },
+  {
+    "id": 2,
+    "username": "user",
+    "password": "123456",
+    "email": "anhhieuk746@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "Hiếuu",
+      "lastname": "Nguyễn"
+    },
+    "address": {
+      "city": "kilcoole",
+      "street": "Lovers Ln"
+    },
+    "phone": "1-570-236-7033",
+    "__v": 0
+  },
+  {
+    "id": 3,
+    "username": "kevinryan",
+    "password": "kev02937@",
+    "email": "kevin@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "kevin",
+      "lastname": "ryan"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "40.3467",
+        "long": "-30.1310"
+      },
+      "city": "Cullman",
+      "street": "Frances Ct",
+      "number": 86,
+      "zipcode": "29567-1452"
+    },
+    "phone": "1-567-094-1345",
+    "__v": 0
+  },
+  {
+    "id": 4,
+    "username": "donero",
+    "password": "ewedon",
+    "email": "don@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "don",
+      "lastname": "romer"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "50.3467",
+        "long": "-20.1310"
+      },
+      "city": "San Antonio",
+      "street": "Hunters Creek Dr",
+      "number": 6454,
+      "zipcode": "98234-1734"
+    },
+    "phone": "1-765-789-6734",
+    "__v": 0
+  },
+  {
+    "id": 5,
+    "username": "derek",
+    "password": "jklg*_56",
+    "email": "derek@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "derek",
+      "lastname": "powell"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "40.3467",
+        "long": "-40.1310"
+      },
+      "city": "san Antonio",
+      "street": "adams St",
+      "number": 245,
+      "zipcode": "80796-1234"
+    },
+    "phone": "1-956-001-1945",
+    "__v": 0
+  },
+  {
+    "id": 6,
+    "username": "david_r",
+    "password": "3478*#54",
+    "email": "david_r@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "david",
+      "lastname": "russell"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "20.1677",
+        "long": "-10.6789"
+      },
+      "city": "el paso",
+      "street": "prospect st",
+      "number": 124,
+      "zipcode": "12346-0456"
+    },
+    "phone": "1-678-345-9856",
+    "__v": 0
+  },
+  {
+    "id": 7,
+    "username": "snyder",
+    "password": "f238&@*$",
+    "email": "miriam@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "miriam",
+      "lastname": "snyder"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "10.3456",
+        "long": "20.6419"
+      },
+      "city": "fresno",
+      "street": "saddle st",
+      "number": 1342,
+      "zipcode": "96378-0245"
+    },
+    "phone": "1-123-943-0563",
+    "__v": 0
+  },
+  {
+    "id": 8,
+    "username": "hopkins",
+    "password": "William56$hj",
+    "email": "william@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "william",
+      "lastname": "hopkins"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "50.3456",
+        "long": "10.6419"
+      },
+      "city": "mesa",
+      "street": "vally view ln",
+      "number": 1342,
+      "zipcode": "96378-0245"
+    },
+    "phone": "1-478-001-0890",
+    "__v": 0
+  },
+  {
+    "id": 9,
+    "username": "kate_h",
+    "password": "kfejk@*_",
+    "email": "kate@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "kate",
+      "lastname": "hale"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "40.12456",
+        "long": "20.5419"
+      },
+      "city": "miami",
+      "street": "avondale ave",
+      "number": 345,
+      "zipcode": "96378-0245"
+    },
+    "phone": "1-678-456-1934",
+    "__v": 0
+  },
+  {
+    "id": 10,
+    "username": "jimmie_k",
+    "password": "klein*#%*",
+    "email": "jimmie@gmail.com",
+    "role": "customer",
+    "isLocked": false,
+    "name": {
+      "firstname": "jimmie",
+      "lastname": "klein"
+    },
+    "address": {
+      "geolocation": {
+        "lat": "30.24788",
+        "long": "-20.545419"
+      },
+      "city": "fort wayne",
+      "street": "oak lawn ave",
+      "number": 526,
+      "zipcode": "10256-4532"
+    },
+    "phone": "1-104-001-4567",
+    "__v": 0
+  },
+  {
+    "id": 11,
+    "email": "anhhieuk746@gmail.com",
+    "username": "hoang",
+    "password": "123456",
+    "name": {
+      "firstname": "",
+      "lastname": ""
+    },
+    "address": {},
+    "phone": "",
+    "role": "customer"
+  }
+]
