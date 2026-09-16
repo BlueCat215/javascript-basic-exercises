@@ -13,6 +13,9 @@ export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const voucher = location.state?.voucher || null;
+  // Danh sách sản phẩm được chọn từ trang giỏ hàng. Nếu vào thẳng /checkout
+  // (không qua trang giỏ), coi như thanh toán toàn bộ giỏ như trước.
+  const selectedProductIds = location.state?.selectedProductIds || null;
 
   const { data: cart } = useActiveCart();
   const { mutate: checkout, isPending } = useCheckout();
@@ -26,7 +29,10 @@ export default function CheckoutPage() {
     defaultValues: { country: "VN", paymentMethod: "cod" },
   });
 
-  const items = cart?.products || [];
+  const allItems = cart?.products || [];
+  const items = selectedProductIds
+    ? allItems.filter((i) => selectedProductIds.includes(i.productId))
+    : allItems;
   const subtotal = items.reduce(
     (sum, i) => sum + (i.product?.price || 0) * i.quantity,
     0,
@@ -37,6 +43,7 @@ export default function CheckoutPage() {
   const onSubmit = (formData) => {
     checkout(
       {
+        productIds: items.map((i) => i.productId),
         shippingInfo: {
           fullName: `${formData.firstName} ${formData.lastName}`,
           company: formData.company || undefined,
@@ -66,13 +73,15 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-xl mx-auto px-6 py-20 text-center space-y-4">
         <p className="text-ink/60 font-medium">
-          Giỏ hàng trống, không thể thanh toán.
+          {selectedProductIds
+            ? "Không có sản phẩm nào được chọn để thanh toán."
+            : "Giỏ hàng trống, không thể thanh toán."}
         </p>
         <button
-          onClick={() => navigate("/products")}
+          onClick={() => navigate(selectedProductIds ? "/cart" : "/products")}
           className="btn-primary uppercase text-xs tracking-wider font-bold px-8 py-3 rounded"
         >
-          Tiếp tục mua sắm
+          {selectedProductIds ? "Quay lại giỏ hàng" : "Tiếp tục mua sắm"}
         </button>
       </div>
     );

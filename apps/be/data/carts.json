@@ -191,6 +191,14 @@
       {
         "productId": 1,
         "quantity": 4
+      },
+      {
+        "productId": 2,
+        "quantity": 2
+      },
+      {
+        "productId": 3,
+        "quantity": 1
       }
     ],
     "date": "2026-09-13T01:02:33.236Z"

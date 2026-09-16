@@ -10,6 +10,7 @@ import {
   HeartIcon,
   UserIcon,
   CartIcon,
+  PackageIcon,
   MenuIcon,
   ChevronRightIcon,
   LogOutIcon,
@@ -118,7 +119,6 @@ export const Header = () => {
           </form>
 
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 ml-auto shrink-0">
-            {/* Ô tìm kiếm nhanh cho mobile/tablet: mở menu (đã có ô tìm kiếm) */}
             <button
               onClick={() => setShowMobileMenu(true)}
               className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors shrink-0"
@@ -158,6 +158,16 @@ export const Header = () => {
                   Đăng nhập / Đăng ký
                 </Link>
               </div>
+            )}
+
+            {isAuthenticated && (
+              <Link
+                to="/account/orders"
+                title="Đơn hàng của tôi"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-amber-100 flex items-center justify-center text-green transition-colors shrink-0"
+              >
+                <PackageIcon size={16} />
+              </Link>
             )}
 
             <Link

@@ -32,6 +32,7 @@ import {
   Mouse,
   Mail,
   ExternalLink,
+  Image,
 } from "lucide-react";
 
 import {
@@ -89,6 +90,7 @@ export const MonitorIcon = withDefaults(Monitor);
 export const MouseIcon = withDefaults(Mouse);
 export const MailIcon = withDefaults(Mail);
 export const ExternalLinkIcon = withDefaults(ExternalLink);
+export const ImageIcon = withDefaults(Image);
 export const FacebookIcon = withSocialDefaults(FaFacebookF);
 export const InstagramIcon = withSocialDefaults(FaInstagram);
 export const YoutubeIcon = withSocialDefaults(FaYoutube);
