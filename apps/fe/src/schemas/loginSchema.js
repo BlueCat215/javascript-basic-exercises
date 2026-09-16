@@ -2,7 +2,7 @@ import { z } from "zod";
 export const loginSchema = z.object({
   username: z
     .string()
-    .min(1, "Vui lòng nhập username")
+    .min(1, "Vui lòng nhập tên người dùng")
     .min(3, "Nhập ít nhất 3 ký tự"),
   password: z
     .string()
