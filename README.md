@@ -63,7 +63,7 @@ không có lỗi đỏ nào.
   `REFRESH_SECRET` (xem `apps/be/src/config.js`). Không bắt buộc, có giá trị
   mặc định sẵn để chạy demo.
 
-## Xử lý sự cố thường gặp
+## Xử lý sự cố
 
 - **Lỗi `categories.map is not a function` hoặc trang trắng khi mở client:**
   chưa tạo `apps/fe/.env` (xem lại bước 1 ở "Cài đặt lần đầu").
