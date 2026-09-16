@@ -16,122 +16,143 @@ const statusLabel = {
   cancelled: "Đã hủy",
 };
 
-const statusBadgeClass = {
-  pending: "bg-gold/20 text-gold",
-  shipped: "bg-blue-100 text-blue-700",
-  completed: "bg-green/20 text-green",
-  cancelled: "bg-rust/20 text-rust",
+const statusDotClass = {
+  pending: "bg-gold",
+  shipped: "bg-ink/40",
+  completed: "bg-green",
+  cancelled: "bg-rust",
 };
 
-function OrderDetailModal({ order, customerName, productById, onClose }) {
+const filterInputClass =
+  "w-full border-b border-line bg-transparent py-1 text-xs font-normal focus:outline-none focus:border-gold transition-colors";
+
+function OrderDetailPanel({ order, customerName, productById, onClose }) {
   return (
-    <div className="fixed inset-0 bg-ink/30 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-tag p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto space-y-4">
-        <div className="flex justify-between items-start">
-          <h2 className="font-bold">Đơn hàng #{order.id}</h2>
-          <span
-            className={`text-xs font-medium px-2 py-1 rounded-tag ${statusBadgeClass[order.status] || "bg-paper"}`}
-          >
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div
+        className="fixed inset-0 bg-ink/30"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div className="relative w-full max-w-lg h-full bg-surface border-l border-line flex flex-col">
+        <div className="flex items-center justify-between px-6 h-14 border-b border-line shrink-0">
+          <h2 className="font-display font-semibold text-ink">
+            Đơn hàng #{order.id}
+          </h2>
+          <span className="inline-flex items-center gap-1.5 text-xs text-ink/60">
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${statusDotClass[order.status] || "bg-ink/30"}`}
+            />
             {statusLabel[order.status] || order.status}
           </span>
         </div>
 
-        <p className="text-xs text-ink/40">
-          {new Date(order.createdAt).toLocaleString("vi-VN")}
-        </p>
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+          <p className="text-xs text-ink/40">
+            {new Date(order.createdAt).toLocaleString("vi-VN")}
+          </p>
 
-        <div className="text-sm space-y-1">
-          <p>
-            <span className="text-ink/50">Khách hàng: </span>
-            {customerName || `#${order.userId}`}
-          </p>
-          {order.shippingInfo?.fullName && (
+          <div className="text-sm space-y-2">
             <p>
-              <span className="text-ink/50">Người nhận: </span>
-              {order.shippingInfo.fullName}
+              <span className="text-ink/45">Khách hàng </span>
+              {customerName || `#${order.userId}`}
             </p>
-          )}
-          {order.shippingInfo?.phone && (
+            {order.shippingInfo?.fullName && (
+              <p>
+                <span className="text-ink/45">Người nhận </span>
+                {order.shippingInfo.fullName}
+              </p>
+            )}
+            {order.shippingInfo?.phone && (
+              <p>
+                <span className="text-ink/45">SĐT </span>
+                {order.shippingInfo.phone}
+              </p>
+            )}
+            {(order.shippingInfo?.address || order.shippingInfo?.street) && (
+              <p>
+                <span className="text-ink/45">Địa chỉ </span>
+                {order.shippingInfo.address ||
+                  [
+                    order.shippingInfo.street,
+                    order.shippingInfo.city,
+                    order.shippingInfo.state,
+                    order.shippingInfo.zipCode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ")}
+              </p>
+            )}
             <p>
-              <span className="text-ink/50">SĐT: </span>
-              {order.shippingInfo.phone}
+              <span className="text-ink/45">Thanh toán </span>
+              {order.paymentMethod === "cod"
+                ? "Tiền mặt khi nhận hàng"
+                : order.paymentMethod === "bank_transfer"
+                  ? "Chuyển khoản"
+                  : order.paymentMethod || "—"}
             </p>
-          )}
-          {(order.shippingInfo?.address || order.shippingInfo?.street) && (
-            <p>
-              <span className="text-ink/50">Địa chỉ: </span>
-              {order.shippingInfo.address ||
-                [
-                  order.shippingInfo.street,
-                  order.shippingInfo.city,
-                  order.shippingInfo.state,
-                  order.shippingInfo.zipCode,
-                ]
-                  .filter(Boolean)
-                  .join(", ")}
-            </p>
-          )}
-          <p>
-            <span className="text-ink/50">Thanh toán: </span>
-            {order.paymentMethod === "cod"
-              ? "Tiền mặt khi nhận hàng"
-              : order.paymentMethod === "bank_transfer"
-                ? "Chuyển khoản"
-                : order.paymentMethod || "—"}
-          </p>
-        </div>
+          </div>
 
-        <div className="border-t border-line pt-3">
-          <p className="text-xs font-bold uppercase tracking-wider text-ink/40 mb-2">
-            Sản phẩm
-          </p>
-          <ul className="text-sm divide-y divide-line">
-            {order.products.map((p) => {
-              const product = productById.get(String(p.productId));
-              return (
-                <li key={p.productId} className="flex items-center gap-3 py-2">
-                  {product?.image && (
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-10 h-10 rounded object-cover border border-line shrink-0"
-                    />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <p className="truncate">
-                      {product
-                        ? product.title
-                        : `Sản phẩm #${p.productId} (không còn tồn tại)`}
-                    </p>
+          <div className="border-t border-line pt-4">
+            <p className="text-sm font-medium text-ink mb-2">Sản phẩm</p>
+            <ul className="text-sm divide-y divide-line">
+              {order.products.map((p) => {
+                const product = productById.get(String(p.productId));
+                return (
+                  <li
+                    key={p.productId}
+                    className="flex items-center gap-3 py-3"
+                  >
+                    {product?.image && (
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="w-10 h-10 object-cover border border-line shrink-0"
+                      />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <p className="truncate">
+                        {product
+                          ? product.title
+                          : `Sản phẩm #${p.productId} (không còn tồn tại)`}
+                      </p>
+                      {product && (
+                        <p className="text-xs text-ink/40 font-mono">
+                          ${product.price} × {p.quantity}
+                        </p>
+                      )}
+                      {!product && (
+                        <p className="text-xs text-ink/40">
+                          Số lượng: {p.quantity}
+                        </p>
+                      )}
+                    </div>
                     {product && (
-                      <p className="text-xs text-ink/40">
-                        ${product.price} × {p.quantity}
-                      </p>
+                      <span className="text-sm font-mono shrink-0">
+                        ${(product.price * p.quantity).toFixed(2)}
+                      </span>
                     )}
-                    {!product && (
-                      <p className="text-xs text-ink/40">
-                        Số lượng: {p.quantity}
-                      </p>
-                    )}
-                  </div>
-                  {product && (
-                    <span className="text-sm font-medium shrink-0">
-                      ${(product.price * p.quantity).toFixed(2)}
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <div className="flex justify-between font-bold text-sm mt-3 pt-3 border-t border-line">
-            <span>Tổng tiền</span>
-            <span>{order.total !== undefined ? `$${order.total}` : "—"}</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="flex justify-between font-medium text-sm mt-3 pt-3 border-t border-line">
+              <span>Tổng tiền</span>
+              <span className="font-mono">
+                {order.total !== undefined ? `$${order.total}` : "—"}
+              </span>
+            </div>
           </div>
         </div>
 
-        <button onClick={onClose} className="btn-secondary w-full">
-          Đóng
-        </button>
+        <div className="px-6 py-4 border-t border-line shrink-0">
+          <button
+            onClick={onClose}
+            className="text-sm text-ink/60 hover:text-ink"
+          >
+            Đóng
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -152,7 +173,6 @@ export default function AdminOrders() {
   } = useAdminOrdersQuery();
   const { data: accounts = [], isError: isAccountsError } =
     useAdminAccountsQuery();
-  // pageSize lớn để lấy toàn bộ sản phẩm phục vụ tra cứu tên/ảnh/giá trong đơn hàng
   const { data: productsData, isError: isProductsError } =
     useAdminProductsQuery({
       page: 1,
@@ -206,26 +226,22 @@ export default function AdminOrders() {
 
   const handleStatusChange = (id, status) => {
     setPendingStatusId(id);
-    updateStatus(
-      { id, status },
-      {
-        onSettled: () => setPendingStatusId(null),
-      },
-    );
+    updateStatus({ id, status }, { onSettled: () => setPendingStatusId(null) });
   };
 
   const hasLoadError = isOrdersError || isAccountsError || isProductsError;
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-display font-bold text-ink">
-          Quản lý đơn hàng
+    <div className="space-y-6">
+      <div>
+        <p className="text-sm text-ink/50">Quản trị</p>
+        <h1 className="text-xl font-display font-semibold text-ink mt-1">
+          Đơn hàng
         </h1>
       </div>
 
       {hasLoadError && (
-        <div className="bg-rust/10 text-rust text-sm rounded-tag px-4 py-3">
+        <div className="border-l-2 border-rust bg-rust/5 text-rust text-sm px-4 py-3">
           Đã xảy ra lỗi khi tải dữ liệu
           {isOrdersError && " đơn hàng"}
           {isAccountsError && " tài khoản"}
@@ -233,39 +249,39 @@ export default function AdminOrders() {
         </div>
       )}
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm border border-line">
+      <div className="overflow-x-auto border border-line">
+        <table className="w-full text-sm">
           <thead className="bg-paper">
             <tr className="text-left">
-              <th className="p-3">Mã đơn</th>
-              <th className="p-3">Khách hàng</th>
-              <th className="p-3">Sản phẩm</th>
-              <th className="p-3">Ngày đặt</th>
-              <th className="p-3">Tổng tiền</th>
-              <th className="p-3">Trạng thái</th>
-              <th className="p-3">Hành động</th>
+              <th className="p-3 font-medium text-ink/60">Mã đơn</th>
+              <th className="p-3 font-medium text-ink/60">Khách hàng</th>
+              <th className="p-3 font-medium text-ink/60">Sản phẩm</th>
+              <th className="p-3 font-medium text-ink/60">Ngày đặt</th>
+              <th className="p-3 font-medium text-ink/60">Tổng tiền</th>
+              <th className="p-3 font-medium text-ink/60">Trạng thái</th>
+              <th className="p-3 font-medium text-ink/60">Hành động</th>
             </tr>
-            <tr className="bg-white border-t border-line">
-              <th className="p-2" colSpan={2}>
+            <tr className="bg-surface border-t border-line">
+              <th className="p-2 font-normal" colSpan={2}>
                 <input
                   value={columnFilters.keyword}
                   onChange={(e) =>
                     setColumnFilters((f) => ({ ...f, keyword: e.target.value }))
                   }
                   placeholder="Tìm theo mã đơn, tên KH, SĐT..."
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 />
               </th>
               <th className="p-2" />
               <th className="p-2" />
               <th className="p-2" />
-              <th className="p-2">
+              <th className="p-2 font-normal">
                 <select
                   value={columnFilters.status}
                   onChange={(e) =>
                     setColumnFilters((f) => ({ ...f, status: e.target.value }))
                   }
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 >
                   <option value="">Tất cả</option>
                   {STATUS_OPTIONS.map((s) => (
@@ -278,7 +294,7 @@ export default function AdminOrders() {
               <th className="p-2" />
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-line">
             {isLoading &&
               Array.from({ length: 7 }).map((_, i) => (
                 <TableRowSkeleton key={i} columns={7} />
@@ -291,7 +307,7 @@ export default function AdminOrders() {
               </tr>
             )}
             {filtered.map((o) => (
-              <tr key={o.id} className="border-t border-line">
+              <tr key={o.id}>
                 <td className="p-3 font-mono">#{o.id}</td>
                 <td className="p-3">
                   {accountNameById.get(o.userId) || `#${o.userId}`}
@@ -335,7 +351,7 @@ export default function AdminOrders() {
                     value={o.status}
                     disabled={pendingStatusId === o.id}
                     onChange={(e) => handleStatusChange(o.id, e.target.value)}
-                    className={`text-xs font-medium px-2 py-1 rounded-tag border-0 disabled:opacity-50 ${statusBadgeClass[o.status] || "bg-paper"}`}
+                    className="text-xs bg-transparent border-b border-line focus:outline-none focus:border-gold disabled:opacity-50 py-1"
                   >
                     {STATUS_OPTIONS.map((s) => (
                       <option key={s} value={s}>
@@ -359,7 +375,7 @@ export default function AdminOrders() {
       </div>
 
       {viewingOrder && (
-        <OrderDetailModal
+        <OrderDetailPanel
           order={viewingOrder}
           customerName={accountNameById.get(viewingOrder.userId)}
           productById={productById}

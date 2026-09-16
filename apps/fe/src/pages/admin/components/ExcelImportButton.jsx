@@ -44,7 +44,7 @@ export const ExcelImportButton = () => {
       />
       <button
         onClick={() => inputRef.current.click()}
-        className="btn-secondary text-sm px-4 py-2"
+        className="btn-secondary rounded-sm! text-sm px-4 py-2"
       >
         Import Excel
       </button>

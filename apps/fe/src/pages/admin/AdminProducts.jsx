@@ -34,7 +34,7 @@ export default function AdminProducts() {
     pageSize: 10,
   });
   const [editingId, setEditingId] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   const { data, isLoading } = useAdminProductsQuery(filters);
   const { data: categories = [] } = useAdminCategoriesQuery();
@@ -50,7 +50,7 @@ export default function AdminProducts() {
   const openCreate = () => {
     setEditingId(null);
     methods.reset(initialForm);
-    setIsModalOpen(true);
+    setIsPanelOpen(true);
   };
   const openEdit = (product) => {
     setEditingId(product.id);
@@ -59,7 +59,7 @@ export default function AdminProducts() {
       ...product,
       originalPrice: product.originalPrice ?? "",
     });
-    setIsModalOpen(true);
+    setIsPanelOpen(true);
   };
 
   const onSubmit = methods.handleSubmit((formData) => {
@@ -71,9 +71,9 @@ export default function AdminProducts() {
     if (editingId)
       updateProduct(
         { id: editingId, data: payload },
-        { onSuccess: () => setIsModalOpen(false) },
+        { onSuccess: () => setIsPanelOpen(false) },
       );
-    else createProduct(payload, { onSuccess: () => setIsModalOpen(false) });
+    else createProduct(payload, { onSuccess: () => setIsPanelOpen(false) });
   });
 
   const handleDelete = (id) => {
@@ -87,11 +87,14 @@ export default function AdminProducts() {
   const hasActiveFilters = filters.q || filters.category;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-display font-bold text-ink">
-          Quản lý sản phẩm
-        </h1>
+        <div>
+          <p className="text-sm text-ink/50">Quản trị</p>
+          <h1 className="text-xl font-display font-semibold text-ink mt-1">
+            Sản phẩm
+          </h1>
+        </div>
         <div className="flex gap-2">
           <ExcelImportButton />
           <button
@@ -103,58 +106,62 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3">
-        <input
-          type="text"
-          value={filters.q}
-          onChange={(e) => handleFilterChange({ q: e.target.value })}
-          placeholder="Tìm theo tên sản phẩm..."
-          className="border border-line rounded-tag px-3 py-2 text-sm w-full sm:w-64 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30"
-        />
-        <select
-          value={filters.category}
-          onChange={(e) => handleFilterChange({ category: e.target.value })}
-          className="border border-line rounded-tag px-3 py-2 text-sm w-full sm:w-48 capitalize focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30"
-        >
-          <option value="">Tất cả danh mục</option>
-          {categories.map((c) => (
-            <option key={c} value={c} className="capitalize">
-              {c}
-            </option>
-          ))}
-        </select>
+      <div className="flex flex-wrap items-end gap-6">
+        <div className="w-full sm:w-64">
+          <input
+            type="text"
+            value={filters.q}
+            onChange={(e) => handleFilterChange({ q: e.target.value })}
+            placeholder="Tìm theo tên sản phẩm..."
+            className="w-full border-b border-line bg-transparent py-2 text-sm focus:outline-none focus:border-gold transition-colors"
+          />
+        </div>
+        <div className="w-full sm:w-48">
+          <select
+            value={filters.category}
+            onChange={(e) => handleFilterChange({ category: e.target.value })}
+            className="w-full border-b border-line bg-transparent py-2 text-sm capitalize focus:outline-none focus:border-gold transition-colors"
+          >
+            <option value="">Tất cả danh mục</option>
+            {categories.map((c) => (
+              <option key={c} value={c} className="capitalize">
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
         {hasActiveFilters && (
           <button
             onClick={() => handleFilterChange({ q: "", category: "" })}
-            className="text-xs font-semibold text-ink/50 hover:text-ink px-2"
+            className="text-xs font-medium text-ink/50 hover:text-ink pb-2.5"
           >
             Xóa lọc
           </button>
         )}
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm border border-line p-2">
+      <div className="overflow-x-auto border border-line">
+        <table className="w-full text-sm">
           <thead className="bg-paper">
             <tr className="text-left">
-              <th className="p-3">ID</th>
-              <th className="p-3">Tên</th>
-              <th className="p-3">Danh mục</th>
-              <th className="p-3">Giá</th>
-              <th className="p-3">Nhãn</th>
-              <th className="p-3">Hành động</th>
+              <th className="p-3 font-medium text-ink/60">ID</th>
+              <th className="p-3 font-medium text-ink/60">Tên</th>
+              <th className="p-3 font-medium text-ink/60">Danh mục</th>
+              <th className="p-3 font-medium text-ink/60">Giá</th>
+              <th className="p-3 font-medium text-ink/60">Nhãn</th>
+              <th className="p-3 font-medium text-ink/60">Hành động</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-line">
             {isLoading &&
               Array.from({ length: 6 }).map((_, i) => (
                 <TableRowSkeleton key={i} columns={6} />
               ))}
             {data?.items?.map((p) => (
-              <tr key={p.id} className="border-t border-line">
-                <td className="p-3 font-mono">{p.id}</td>
+              <tr key={p.id}>
+                <td className="p-3 font-mono text-ink/60">{p.id}</td>
                 <td className="p-3 line-clamp-1">{p.title}</td>
-                <td className="p-3 capitalize">{p.category}</td>
+                <td className="p-3 capitalize text-ink/70">{p.category}</td>
                 <td className="p-3 font-mono">
                   ${p.price}
                   {p.originalPrice > p.price && (
@@ -166,37 +173,37 @@ export default function AdminProducts() {
                 <td className="p-3">
                   <div className="flex flex-wrap gap-1">
                     {p.isNew && (
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
+                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-sm border border-green-light/50 text-green-light">
                         Mới
                       </span>
                     )}
                     {p.isBestSeller && (
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-gold/20 text-gold">
+                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-sm border border-gold/40 text-gold">
                         Bán chạy
                       </span>
                     )}
                     {p.originalPrice > p.price && (
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-rust/20 text-rust">
+                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-sm border border-rust/40 text-rust">
                         Giảm giá
                       </span>
                     )}
                     {p.inStock === false && (
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-paper text-ink/40">
+                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-sm border border-line text-ink/40">
                         Hết hàng
                       </span>
                     )}
                   </div>
                 </td>
-                <td className="p-3 flex gap-2">
+                <td className="p-3 flex gap-3">
                   <button
                     onClick={() => openEdit(p)}
-                    className="text-blue-600 hover:underline text-xs font-semibold"
+                    className="text-gold hover:underline text-xs font-medium"
                   >
                     Sửa
                   </button>
                   <button
                     onClick={() => handleDelete(p.id)}
-                    className="text-rust hover:underline text-xs font-semibold"
+                    className="text-rust hover:underline text-xs font-medium"
                   >
                     Xóa
                   </button>
@@ -215,23 +222,42 @@ export default function AdminProducts() {
         />
       )}
 
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-ink/30 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-tag p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <h2 className="font-bold mb-4">
-              {editingId ? "Sửa sản phẩm" : "Thêm sản phẩm"}
-            </h2>
+      {isPanelOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div
+            className="fixed inset-0 bg-ink/30"
+            onClick={() => setIsPanelOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="relative w-full max-w-xl h-full bg-surface border-l border-line flex flex-col">
+            <div className="flex items-center justify-between px-6 h-14 border-b border-line shrink-0">
+              <h2 className="font-display font-semibold text-ink">
+                {editingId ? "Sửa sản phẩm" : "Thêm sản phẩm"}
+              </h2>
+              <button
+                onClick={() => setIsPanelOpen(false)}
+                className="text-ink/40 hover:text-ink text-xl leading-none"
+                aria-label="Đóng"
+              >
+                ×
+              </button>
+            </div>
             <FormProvider {...methods}>
-              <form onSubmit={onSubmit} className="space-y-4">
-                <ProductForm />
-                <div className="flex gap-2 pt-2">
+              <form
+                onSubmit={onSubmit}
+                className="flex flex-col flex-1 min-h-0"
+              >
+                <div className="flex-1 overflow-y-auto px-6 py-6">
+                  <ProductForm />
+                </div>
+                <div className="flex gap-2 px-6 py-4 border-t border-line shrink-0">
                   <button type="submit" className="btn-primary flex-1">
                     Lưu
                   </button>
                   <button
                     type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="btn-secondary flex-1"
+                    onClick={() => setIsPanelOpen(false)}
+                    className="text-sm text-ink/60 hover:text-ink px-4"
                   >
                     Đóng
                   </button>

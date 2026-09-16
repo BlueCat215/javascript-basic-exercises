@@ -5,54 +5,77 @@ import {
   useDeleteContactMessage,
 } from "./hooks/useAdminContactQueries";
 
-function MessageDetailModal({ message, onClose }) {
+const filterInputClass =
+  "w-full border-b border-line bg-transparent py-1 text-xs font-normal focus:outline-none focus:border-gold transition-colors";
+
+function MessageDetailPanel({ message, onClose }) {
   return (
-    <div className="fixed inset-0 bg-ink/30 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-tag p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto space-y-3">
-        <div className="flex justify-between items-start">
-          <h2 className="font-bold">
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div
+        className="fixed inset-0 bg-ink/30"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div className="relative w-full max-w-md h-full bg-surface border-l border-line flex flex-col">
+        <div className="flex items-center justify-between px-6 h-14 border-b border-line shrink-0">
+          <h2 className="font-display font-semibold text-ink">
             {message.firstName} {message.lastName}
           </h2>
-          <span className="text-xs text-ink/40">
+          <button
+            onClick={onClose}
+            className="text-ink/40 hover:text-ink text-xl leading-none"
+            aria-label="Đóng"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+          <p className="text-xs text-ink/40">
             {new Date(message.createdAt).toLocaleString("vi-VN")}
-          </span>
-        </div>
-
-        <div className="text-sm space-y-1 text-ink/70">
-          <p>
-            <span className="text-ink/50">Email: </span>
-            {message.email}
           </p>
-          {message.phone && (
+
+          <div className="text-sm space-y-2 text-ink/70">
             <p>
-              <span className="text-ink/50">SĐT: </span>
-              {message.phone}
+              <span className="text-ink/45">Email </span>
+              {message.email}
             </p>
-          )}
-          {message.country && (
-            <p>
-              <span className="text-ink/50">Quốc gia: </span>
-              {message.country}
+            {message.phone && (
+              <p>
+                <span className="text-ink/45">SĐT </span>
+                {message.phone}
+              </p>
+            )}
+            {message.country && (
+              <p>
+                <span className="text-ink/45">Quốc gia </span>
+                {message.country}
+              </p>
+            )}
+            {message.subject && (
+              <p>
+                <span className="text-ink/45">Chủ đề </span>
+                {message.subject}
+              </p>
+            )}
+          </div>
+
+          <div className="border-t border-line pt-4">
+            <p className="text-sm font-medium text-ink mb-2">Nội dung</p>
+            <p className="text-sm text-ink/80 whitespace-pre-wrap leading-relaxed">
+              {message.message}
             </p>
-          )}
-          {message.subject && (
-            <p>
-              <span className="text-ink/50">Chủ đề: </span>
-              {message.subject}
-            </p>
-          )}
+          </div>
         </div>
 
-        <div className="border-t border-line pt-3">
-          <p className="text-xs font-bold uppercase tracking-wider text-ink/40 mb-2">
-            Nội dung
-          </p>
-          <p className="text-sm whitespace-pre-wrap">{message.message}</p>
+        <div className="px-6 py-4 border-t border-line shrink-0">
+          <button
+            onClick={onClose}
+            className="text-sm text-ink/60 hover:text-ink"
+          >
+            Đóng
+          </button>
         </div>
-
-        <button onClick={onClose} className="btn-secondary w-full">
-          Đóng
-        </button>
       </div>
     </div>
   );
@@ -101,48 +124,49 @@ export default function AdminContactMessages() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-display font-bold text-ink">
+    <div className="space-y-6">
+      <div>
+        <p className="text-sm text-ink/50">Quản trị</p>
+        <h1 className="text-xl font-display font-semibold text-ink mt-1 flex items-center gap-2">
           Tin nhắn liên hệ
           {unreadCount > 0 && (
-            <span className="ml-2 text-xs font-medium px-2 py-1 rounded-tag bg-rust/20 text-rust align-middle">
+            <span className="text-xs font-mono font-medium text-rust border border-rust/40 rounded-sm px-1.5 py-0.5">
               {unreadCount} chưa đọc
             </span>
           )}
         </h1>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm border border-line">
+      <div className="overflow-x-auto border border-line">
+        <table className="w-full text-sm">
           <thead className="bg-paper">
             <tr className="text-left">
-              <th className="p-3">Người gửi</th>
-              <th className="p-3">Chủ đề</th>
-              <th className="p-3">Ngày gửi</th>
-              <th className="p-3">Trạng thái</th>
-              <th className="p-3">Hành động</th>
+              <th className="p-3 font-medium text-ink/60">Người gửi</th>
+              <th className="p-3 font-medium text-ink/60">Chủ đề</th>
+              <th className="p-3 font-medium text-ink/60">Ngày gửi</th>
+              <th className="p-3 font-medium text-ink/60">Trạng thái</th>
+              <th className="p-3 font-medium text-ink/60">Hành động</th>
             </tr>
-            <tr className="bg-white border-t border-line">
-              <th className="p-2">
+            <tr className="bg-surface border-t border-line">
+              <th className="p-2 font-normal">
                 <input
                   value={columnFilters.keyword}
                   onChange={(e) =>
                     setColumnFilters((f) => ({ ...f, keyword: e.target.value }))
                   }
                   placeholder="Tìm theo tên, email, nội dung..."
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 />
               </th>
               <th className="p-2" />
               <th className="p-2" />
-              <th className="p-2">
+              <th className="p-2 font-normal">
                 <select
                   value={columnFilters.status}
                   onChange={(e) =>
                     setColumnFilters((f) => ({ ...f, status: e.target.value }))
                   }
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 >
                   <option value="">Tất cả</option>
                   <option value="unread">Chưa đọc</option>
@@ -152,10 +176,10 @@ export default function AdminContactMessages() {
               <th className="p-2" />
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-line">
             {isLoading && (
               <tr>
-                <td colSpan={5} className="p-4 text-center">
+                <td colSpan={5} className="p-4 text-center text-ink/50">
                   Đang tải...
                 </td>
               </tr>
@@ -168,36 +192,32 @@ export default function AdminContactMessages() {
               </tr>
             )}
             {filtered.map((m) => (
-              <tr
-                key={m.id}
-                className={`border-t border-line ${!m.isRead ? "bg-gold/5 font-medium" : ""}`}
-              >
+              <tr key={m.id} className={!m.isRead ? "bg-gold/5" : ""}>
                 <td className="p-3">
-                  <p className="truncate">
+                  <p
+                    className={`truncate ${!m.isRead ? "font-medium text-ink" : "text-ink/80"}`}
+                  >
                     {m.firstName} {m.lastName}
                   </p>
-                  <p className="text-xs text-ink/40 font-normal truncate">
-                    {m.email}
-                  </p>
+                  <p className="text-xs text-ink/40 truncate">{m.email}</p>
                 </td>
-                <td className="p-3 truncate max-w-55">
+                <td className="p-3 truncate max-w-55 text-ink/70">
                   {m.subject || <span className="text-ink/30">—</span>}
                 </td>
-                <td className="p-3 text-xs text-ink/60 font-normal">
+                <td className="p-3 text-xs text-ink/60">
                   {new Date(m.createdAt).toLocaleDateString("vi-VN")}
                 </td>
                 <td className="p-3">
-                  {m.isRead ? (
-                    <span className="text-xs font-normal text-ink/40">
-                      Đã đọc
-                    </span>
-                  ) : (
-                    <span className="text-xs font-medium text-rust">
-                      Chưa đọc
-                    </span>
-                  )}
+                  <span className="inline-flex items-center gap-1.5 text-xs">
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        m.isRead ? "bg-ink/20" : "bg-rust"
+                      }`}
+                    />
+                    {m.isRead ? "Đã đọc" : "Chưa đọc"}
+                  </span>
                 </td>
-                <td className="p-3 flex gap-2 font-normal">
+                <td className="p-3 flex gap-3">
                   <button
                     onClick={() => openMessage(m)}
                     className="text-gold hover:underline"
@@ -228,7 +248,7 @@ export default function AdminContactMessages() {
       </div>
 
       {viewingMessage && (
-        <MessageDetailModal
+        <MessageDetailPanel
           message={viewingMessage}
           onClose={() => setViewingMessage(null)}
         />

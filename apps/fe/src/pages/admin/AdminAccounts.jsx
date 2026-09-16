@@ -14,9 +14,12 @@ import {
 } from "../../schemas/adminAccountSchema";
 import { TableRowSkeleton } from "../../components/Skeleton";
 
-const inputClass = "border border-line rounded-tag px-3 py-2 text-sm w-full";
+const inputClass =
+  "w-full border-b border-line bg-transparent py-2 text-sm focus:outline-none focus:border-gold transition-colors";
+const filterInputClass =
+  "w-full border-b border-line bg-transparent py-1 text-xs font-normal focus:outline-none focus:border-gold transition-colors";
 
-function AccountModal({ mode, account, onClose }) {
+function AccountPanel({ mode, account, onClose }) {
   const { mutate: createAccount, isPending: isCreating } = useCreateAccount();
   const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount();
 
@@ -42,15 +45,34 @@ function AccountModal({ mode, account, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-ink/30 z-50 flex items-center justify-center">
-      <div className="bg-white rounded-tag p-6 w-full max-w-md">
-        <h2 className="font-bold mb-4">
-          {isEdit ? "Sửa tài khoản" : "Thêm tài khoản"}
-        </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div
+        className="fixed inset-0 bg-ink/30"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="relative w-full max-w-md h-full bg-surface border-l border-line flex flex-col"
+      >
+        <div className="flex items-center justify-between px-6 h-14 border-b border-line shrink-0">
+          <h2 className="font-display font-semibold text-ink">
+            {isEdit ? "Sửa tài khoản" : "Thêm tài khoản"}
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-ink/40 hover:text-ink text-xl leading-none"
+            aria-label="Đóng"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
           {isEdit ? (
             <>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <input
                     {...register("name.firstname")}
@@ -140,25 +162,25 @@ function AccountModal({ mode, account, onClose }) {
               <p className="text-rust text-xs mt-1">{errors.role.message}</p>
             )}
           </div>
+        </div>
 
-          <div className="flex gap-2 pt-2">
-            <button
-              type="submit"
-              disabled={isCreating || isUpdating}
-              className="btn-primary flex-1 disabled:opacity-50"
-            >
-              {isCreating || isUpdating ? "Đang lưu..." : "Lưu"}
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-secondary flex-1"
-            >
-              Đóng
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="flex gap-2 px-6 py-4 border-t border-line shrink-0">
+          <button
+            type="submit"
+            disabled={isCreating || isUpdating}
+            className="btn-primary flex-1 disabled:opacity-50"
+          >
+            {isCreating || isUpdating ? "Đang lưu..." : "Lưu"}
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-sm text-ink/60 hover:text-ink px-4"
+          >
+            Đóng
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
@@ -169,7 +191,7 @@ export default function AdminAccounts() {
     email: "",
     role: "",
   });
-  const [modal, setModal] = useState(null); // mode: "create" | "edit", account?
+  const [panel, setPanel] = useState(null); // mode: "create" | "edit", account?
 
   const { data: accounts = [], isLoading } = useAdminAccountsQuery();
   const { mutate: toggleLock } = useToggleLockAccount();
@@ -189,31 +211,34 @@ export default function AdminAccounts() {
   }, [accounts, columnFilters]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-display font-bold text-ink">
-          Quản lý tài khoản
-        </h1>
+        <div>
+          <p className="text-sm text-ink/50">Quản trị</p>
+          <h1 className="text-xl font-display font-semibold text-ink mt-1">
+            Tài khoản
+          </h1>
+        </div>
         <button
-          onClick={() => setModal({ mode: "create" })}
+          onClick={() => setPanel({ mode: "create" })}
           className="btn-primary text-sm px-4 py-2"
         >
           + Thêm tài khoản
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm border border-line">
+      <div className="overflow-x-auto border border-line">
+        <table className="w-full text-sm">
           <thead className="bg-paper">
             <tr className="text-left">
-              <th className="p-3">Username</th>
-              <th className="p-3">Email</th>
-              <th className="p-3">Role</th>
-              <th className="p-3">Trạng thái</th>
-              <th className="p-3">Hành động</th>
+              <th className="p-3 font-medium text-ink/60">Username</th>
+              <th className="p-3 font-medium text-ink/60">Email</th>
+              <th className="p-3 font-medium text-ink/60">Role</th>
+              <th className="p-3 font-medium text-ink/60">Trạng thái</th>
+              <th className="p-3 font-medium text-ink/60">Hành động</th>
             </tr>
-            <tr className="bg-white border-t border-line">
-              <th className="p-2">
+            <tr className="bg-surface border-t border-line">
+              <th className="p-2 font-normal">
                 <input
                   value={columnFilters.username}
                   onChange={(e) =>
@@ -223,26 +248,26 @@ export default function AdminAccounts() {
                     }))
                   }
                   placeholder="Lọc username..."
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 />
               </th>
-              <th className="p-2">
+              <th className="p-2 font-normal">
                 <input
                   value={columnFilters.email}
                   onChange={(e) =>
                     setColumnFilters((f) => ({ ...f, email: e.target.value }))
                   }
                   placeholder="Lọc email..."
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 />
               </th>
-              <th className="p-2">
+              <th className="p-2 font-normal">
                 <select
                   value={columnFilters.role}
                   onChange={(e) =>
                     setColumnFilters((f) => ({ ...f, role: e.target.value }))
                   }
-                  className="w-full border border-line rounded px-2 py-1 text-xs font-normal"
+                  className={filterInputClass}
                 >
                   <option value="">Tất cả</option>
                   <option value="admin">Admin</option>
@@ -253,26 +278,29 @@ export default function AdminAccounts() {
               <th className="p-2" />
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-line">
             {isLoading &&
               Array.from({ length: 5 }).map((_, i) => (
                 <TableRowSkeleton key={i} columns={5} />
               ))}
             {filtered.map((u) => (
-              <tr key={u.id} className="border-t border-line">
+              <tr key={u.id}>
                 <td className="p-3">{u.username}</td>
-                <td className="p-3">{u.email}</td>
+                <td className="p-3 text-ink/70">{u.email}</td>
                 <td className="p-3 capitalize">{u.role}</td>
                 <td className="p-3">
-                  {u.isLocked ? (
-                    <span className="text-rust">Đã khóa</span>
-                  ) : (
-                    <span className="text-green-600">Hoạt động</span>
-                  )}
+                  <span className="inline-flex items-center gap-1.5">
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        u.isLocked ? "bg-rust" : "bg-green"
+                      }`}
+                    />
+                    {u.isLocked ? "Đã khóa" : "Hoạt động"}
+                  </span>
                 </td>
-                <td className="p-3 flex gap-2 flex-wrap">
+                <td className="p-3 flex gap-3 flex-wrap">
                   <button
-                    onClick={() => setModal({ mode: "edit", account: u })}
+                    onClick={() => setPanel({ mode: "edit", account: u })}
                     className="text-gold hover:underline"
                   >
                     Sửa
@@ -303,11 +331,11 @@ export default function AdminAccounts() {
         </table>
       </div>
 
-      {modal && (
-        <AccountModal
-          mode={modal.mode}
-          account={modal.account}
-          onClose={() => setModal(null)}
+      {panel && (
+        <AccountPanel
+          mode={panel.mode}
+          account={panel.account}
+          onClose={() => setPanel(null)}
         />
       )}
     </div>

@@ -24,8 +24,10 @@ const links = [
 ];
 
 const linkClass = ({ isActive }) =>
-  `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition ${
-    isActive ? "bg-green text-white" : "text-ink/70 hover:bg-paper"
+  `flex items-center gap-3 px-4 py-2.5 text-sm border-l-2 transition-colors ${
+    isActive
+      ? "border-gold bg-paper text-ink font-medium"
+      : "border-transparent text-ink/60 hover:bg-paper hover:text-ink"
   }`;
 
 export const AdminSidebar = ({ isOpen = false, onClose }) => {
@@ -34,7 +36,6 @@ export const AdminSidebar = ({ isOpen = false, onClose }) => {
 
   return (
     <>
-      {/* Overlay for mobile, closes the drawer on tap */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-ink/30 z-40 lg:hidden"
@@ -44,45 +45,51 @@ export const AdminSidebar = ({ isOpen = false, onClose }) => {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 border-r border-line bg-white p-4 space-y-1 shrink-0
+        className={`fixed inset-y-0 left-0 z-50 w-64 border-r border-line bg-surface shrink-0 flex flex-col
           transform transition-transform duration-200 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           lg:static lg:z-auto lg:w-56 lg:translate-x-0`}
       >
-        <div className="flex items-center justify-between px-4 mb-4">
-          <p className="font-display font-bold text-ink">Admin</p>
+        <div className="flex items-center justify-between px-5 h-14 border-b border-line shrink-0">
+          <p className="font-display font-semibold text-ink text-sm">
+            Quản trị
+          </p>
           <button
             onClick={onClose}
             className="lg:hidden p-1 text-ink/50 hover:text-ink"
             aria-label="Đóng menu"
           >
-            <CloseIcon size={20} />
+            <CloseIcon size={18} />
           </button>
         </div>
-        {links.map(({ to, end, label, Icon, badgeKey }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={linkClass}
-            onClick={onClose}
-          >
-            <Icon size={18} /> {label}
-            {badgeKey === "unread" && unread > 0 && (
-              <span className="ml-auto text-[10px] font-bold bg-rust text-white rounded-full w-5 h-5 flex items-center justify-center">
-                {unread}
-              </span>
-            )}
-          </NavLink>
-        ))}
+
+        <nav className="flex-1 py-2">
+          {links.map(({ to, end, label, Icon, badgeKey }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={linkClass}
+              onClick={onClose}
+            >
+              <Icon size={17} />
+              {label}
+              {badgeKey === "unread" && unread > 0 && (
+                <span className="ml-auto text-[10px] font-mono font-semibold bg-rust text-white rounded-sm w-5 h-4 flex items-center justify-center">
+                  {unread}
+                </span>
+              )}
+            </NavLink>
+          ))}
+        </nav>
 
         <a
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-ink/70 hover:bg-paper transition mt-2 pt-3 border-t border-line"
+          className="flex items-center gap-3 px-4 py-3 text-sm text-ink/60 hover:text-ink hover:bg-paper transition-colors border-t border-line"
         >
-          <ExternalLinkIcon size={18} /> Xem trang web
+          <ExternalLinkIcon size={17} /> Xem trang web
         </a>
       </aside>
     </>
