@@ -5,7 +5,7 @@ import { useCategories } from "../home/hooks/useHomeQueries";
 import {
   useProductListQuery,
   useBrandsQuery,
-} from "./hooks/useProductListQuery";
+} from "../../hooks/useProductListQuery";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { ProductFilterSidebar } from "./components/list/filters/ProductFilterSidebar";
 import { MobileFilterDrawer } from "./components/list/MobileFilterDrawer";

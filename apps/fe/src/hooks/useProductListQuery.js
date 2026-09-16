@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import productListService from "../services/productListService";
+import productListService from "../api/services/productListService";
 
 export const useProductListQuery = (filters) => {
   return useQuery({

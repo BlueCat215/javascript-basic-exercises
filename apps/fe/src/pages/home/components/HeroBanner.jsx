@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
-import { useProductListQuery } from "../../products/hooks/useProductListQuery";
+import { useProductListQuery } from "../../../hooks/useProductListQuery";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../components/icons";
 
 const REQUIRED_FIELDS = ["title", "price", "image", "description", "category"];
