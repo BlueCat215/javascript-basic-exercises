@@ -1,0 +1,12 @@
+{
+  "name": "mini-ecommerce-fullstack",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "dev:fe": "pnpm --filter my-project run dev",
+    "dev:be": "pnpm --filter mock-store-api run dev",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {}
+}
