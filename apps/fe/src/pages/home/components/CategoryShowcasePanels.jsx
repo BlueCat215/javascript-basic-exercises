@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useProductsByCategories } from "../hooks/useHomeQueries";
 
 const PANEL_THEMES = [
-  { bg: "bg-green-light/70", accent: "text-white" },
+  { bg: "bg-green-light/50", accent: "text-white" },
   { bg: "bg-gold/10", accent: "text-green" },
   { bg: "bg-rust/5", accent: "text-rust" },
 ];
@@ -46,8 +46,10 @@ const CategoryPanel = ({ category, products, theme }) => {
 
   return (
     <div className={`rounded-xl p-3 ${theme.bg}`}>
-      <div className="flex items-center justify-between mb-5">
-        <h3 className={`text-lg font-display font-bold ${theme.accent}`}>
+      <div className="flex items-center justify-between mb-6">
+        <h3
+          className={`text-2xl font-display uppercase font-bold ${theme.accent}`}
+        >
           {category}
         </h3>
         <Link

@@ -6,6 +6,7 @@ import {
   TruckIcon,
   MailIcon,
   CloseIcon,
+  ExternalLinkIcon,
 } from "../../../components/icons";
 import { useAdminContactMessagesQuery } from "../hooks/useAdminContactQueries";
 
@@ -74,6 +75,15 @@ export const AdminSidebar = ({ isOpen = false, onClose }) => {
             )}
           </NavLink>
         ))}
+
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-ink/70 hover:bg-paper transition mt-2 pt-3 border-t border-line"
+        >
+          <ExternalLinkIcon size={18} /> Xem trang web
+        </a>
       </aside>
     </>
   );
