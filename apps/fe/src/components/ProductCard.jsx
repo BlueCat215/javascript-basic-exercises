@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
@@ -8,6 +9,7 @@ import {
   useRemoveFavorite,
 } from "../pages/account/hooks/useFavoriteQueries";
 import { HeartIcon, StarIcon } from "./icons";
+import { ImageWithSkeleton } from "./ImageWithSkeleton";
 
 export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
   const {
@@ -22,6 +24,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
     isNew,
     inStock,
   } = product;
+
   const navigate = useNavigate();
   const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -31,10 +34,13 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
   const { mutate: addFavorite } = useAddFavorite();
   const { mutate: removeFavorite } = useRemoveFavorite();
 
-  const hasDiscount = originalPrice && originalPrice > price;
-  const discountPercent = hasDiscount
-    ? Math.round(((originalPrice - price) / originalPrice) * 100)
-    : 0;
+  const { hasDiscount, discountPercent } = useMemo(() => {
+    const hasDiscount = originalPrice && originalPrice > price;
+    const discountPercent = hasDiscount
+      ? Math.round(((originalPrice - price) / originalPrice) * 100)
+      : 0;
+    return { hasDiscount, discountPercent };
+  }, [price, originalPrice]);
 
   const requireAuth = () => {
     toast.error("Vui lòng đăng nhập");
@@ -44,6 +50,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
   const handleAddToCart = (e) => {
     e.preventDefault();
     if (!isAuthenticated) return requireAuth();
+
     addToCart(
       { productId: id, quantity: 1 },
       { onSuccess: () => toast.success("Đã thêm vào giỏ hàng") },
@@ -53,17 +60,21 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
   const handleToggleFavorite = (e) => {
     e.preventDefault();
     if (!isAuthenticated) return requireAuth();
-    if (isFavorite) removeFavorite(id);
-    else addFavorite({ productId: id, product });
+
+    if (isFavorite) {
+      removeFavorite(id);
+    } else {
+      addFavorite({ productId: id, product });
+    }
   };
 
   return (
-    <div className="tag-card group relative bg-white border border-line rounded-md sm:rounded-lg p-1.5 sm:p-3 flex flex-col h-full">
+    <div className="tag-card group relative bg-white border border-line rounded-md sm:rounded-lg p-1.5 sm:p-3 flex flex-col h-full hover:shadow-md transition-shadow duration-200">
       <Link
         to={`/products/${id}`}
-        className="flex flex-col items-center flex-1 text-center"
+        className="flex flex-col items-center flex-1 text-center w-full"
       >
-        <h3 className="text-[11px] sm:text-sm font-semibold text-ink line-clamp-2 h-7 sm:h-10 leading-tight mt-0.5 mb-0.5 sm:mt-1 sm:mb-1 w-full text-center">
+        <h3 className="text-[11px] sm:text-sm font-semibold text-ink line-clamp-2 min-h-8 sm:min-h-10 leading-normal mt-0.5 mb-0.5 sm:mt-1 sm:mb-1 w-full text-center">
           {title}
         </h3>
 
@@ -90,17 +101,19 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
           <div className="mb-1 sm:mb-2 h-4 shrink-0" />
         )}
 
-        <div className="relative w-full aspect-square rounded-md overflow-hidden mb-1.5 sm:mb-3 flex items-center justify-center shrink-0">
+        <div className="relative w-full aspect-square rounded-md mb-1.5 sm:mb-3 shrink-0">
           {(isNew || inStock === false) && (
-            <span className="absolute top-1 left-1 sm:top-2 sm:left-2 z-10 text-[8px] sm:text-[10px] font-semibold uppercase px-1.5 py-0.5 sm:px-2 sm:py-1 rounded bg-ink text-white">
+            <span
+              className={`absolute top-1 left-1 sm:top-2 sm:left-2 z-10 text-[8px] sm:text-[10px] font-semibold uppercase px-1.5 py-0.5 sm:px-2 sm:py-1 rounded text-white ${inStock === false ? "bg-rust" : "bg-ink"}`}
+            >
               {inStock === false ? "Hết hàng" : "Mới"}
             </span>
           )}
-          <img
+          <ImageWithSkeleton
             src={image}
             alt={title}
-            loading="lazy"
-            className="max-w-full max-h-full object-contain p-2 sm:p-4 group-hover:scale-105 transition duration-300"
+            className="absolute inset-0 rounded-md"
+            imgClassName="object-contain p-2 sm:p-4 group-hover:scale-105 transition-transform duration-300"
           />
         </div>
 
@@ -123,6 +136,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
             </>
           )}
         </div>
+
         {purchases ? (
           <p className="text-[10px] sm:text-[12px] text-ink/70 font-semibold mt-1">
             Đã mua: {purchases}
@@ -130,14 +144,19 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
         ) : null}
       </Link>
 
-      <div className="mt-1.5 pt-1.5 sm:mt-3 sm:pt-3 flex items-center justify-between gap-2 shrink-0">
+      <div className="mt-1.5 pt-1.5 sm:mt-3 sm:pt-3 flex items-center justify-between gap-2 shrink-0 border-t border-line/50">
         <button
           onClick={handleAddToCart}
-          disabled={isPending}
+          disabled={isPending || inStock === false}
           className="text-[11px] sm:text-xs font-semibold text-green hover:text-green-light disabled:opacity-50 truncate"
         >
-          {isPending ? "Đang thêm..." : "+ Giỏ hàng"}
+          {isPending
+            ? "Đang thêm..."
+            : inStock === false
+              ? "Hết hàng"
+              : "+ Giỏ hàng"}
         </button>
+
         <button
           onClick={handleToggleFavorite}
           aria-label="Yêu thích"
