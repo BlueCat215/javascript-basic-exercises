@@ -13,14 +13,14 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <Toaster position="top-center" />
-        <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <Toaster position="top-center" />
+      <BrowserRouter>
+        <ErrorBoundary>
           <AppRoutes />
-        </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </ErrorBoundary>
+        </ErrorBoundary>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
