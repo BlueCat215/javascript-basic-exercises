@@ -12,7 +12,7 @@ const productsCollection = new JsonCollection("products.json");
 // Tạo đơn hàng từ giỏ hàng hiện tại.
 router.post("/", authenticateToken, async (req, res) => {
   try {
-    const { shippingInfo, paymentMethod } = req.body;
+    const { shippingInfo, paymentMethod, productIds } = req.body;
     const currentUserId = Number(req.user.id);
 
     // Tìm giỏ hàng active của user.
@@ -32,20 +32,45 @@ router.post("/", authenticateToken, async (req, res) => {
       });
     }
 
+    const hasProductIdsFilter =
+      Array.isArray(productIds) && productIds.length > 0;
+    const selectedIdSet = hasProductIdsFilter
+      ? new Set(productIds.map((id) => Number(id)))
+      : null;
+
+    const orderedItems = hasProductIdsFilter
+      ? activeCart.products.filter((item) =>
+          selectedIdSet.has(Number(item.productId)),
+        )
+      : activeCart.products;
+
+    const remainingItems = hasProductIdsFilter
+      ? activeCart.products.filter(
+          (item) => !selectedIdSet.has(Number(item.productId)),
+        )
+      : [];
+
+    if (orderedItems.length === 0) {
+      return res.status(400).json({
+        message: "Không tìm thấy sản phẩm đã chọn trong giỏ hàng",
+      });
+    }
+
     // Tạo Map để tìm thông tin sản phẩm theo ID.
     const allProducts = await productsCollection.findAll();
     const productMap = new Map(allProducts.map((p) => [p.id, p]));
 
-    // Tính tổng tiền đơn hàng.
-    const total = activeCart.products.reduce((sum, item) => {
+    // Tính tổng tiền đơn hàng — chỉ tính trên các sản phẩm được chốt đơn.
+    const total = orderedItems.reduce((sum, item) => {
       const product = productMap.get(item.productId);
       return sum + (product?.price || 0) * item.quantity;
     }, 0);
 
-    // Đóng giỏ hàng sau khi đặt hàng.
+    // Cập nhật giỏ hàng: sản phẩm đã đặt được lấy ra khỏi giỏ active,
+    // sản phẩm chưa chọn (nếu có) vẫn được giữ lại để mua sau.
     const updatedCart = await carts.updateById(
       activeCart.id,
-      { status: "ordered" },
+      { status: "ordered", products: orderedItems },
       { replace: false },
     );
 
@@ -58,7 +83,7 @@ router.post("/", authenticateToken, async (req, res) => {
     // Tạo đơn hàng mới.
     const newOrder = await orders.create({
       userId: currentUserId,
-      products: activeCart.products,
+      products: orderedItems,
       total,
       shippingInfo,
       paymentMethod,
@@ -66,11 +91,11 @@ router.post("/", authenticateToken, async (req, res) => {
       createdAt: new Date().toISOString(),
     });
 
-    // Tạo giỏ hàng active mới cho user.
+    // Tạo giỏ hàng active mới cho user, giữ lại sản phẩm chưa được chọn.
     await carts.create({
       userId: currentUserId,
       status: "active",
-      products: [],
+      products: remainingItems,
       date: new Date().toISOString(),
     });
 
