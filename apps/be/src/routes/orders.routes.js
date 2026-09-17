@@ -159,17 +159,41 @@ router.patch(
   authorizeRoles("admin"),
   async (req, res) => {
     try {
+      const { status } = req.body;
+      const order = await orders.findById(req.params.id);
+
+      if (!order) {
+        return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+      }
+
+      const DEDUCT_STATUSES = ["shipped", "completed"];
+      const prevStatus = order.status;
+      const shouldDeduct =
+        DEDUCT_STATUSES.includes(status) &&
+        !DEDUCT_STATUSES.includes(prevStatus);
+
+      if (shouldDeduct) {
+        const allProducts = await productsCollection.findAll();
+        const productMap = new Map(allProducts.map((p) => [p.id, p]));
+
+        for (const item of order.products) {
+          const product = productMap.get(Number(item.productId));
+          if (!product) continue;
+
+          const newStock = Math.max(0, (product.stock ?? 0) - item.quantity);
+          await productsCollection.updateById(
+            product.id,
+            { stock: newStock },
+            { replace: false },
+          );
+        }
+      }
+
       const updated = await orders.updateById(
         req.params.id,
-        { status: req.body.status },
+        { status },
         { replace: false },
       );
-
-      if (!updated) {
-        return res.status(404).json({
-          message: "Không tìm thấy đơn hàng",
-        });
-      }
 
       res.json(updated);
     } catch (error) {

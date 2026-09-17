@@ -6,7 +6,14 @@ const router = express.Router();
 const products = new JsonCollection("products.json");
 function withImage(product) {
   const images = Array.isArray(product.images) ? product.images : [];
-  return { ...product, images, image: images[0] ?? "" };
+  const stock = product.stock ?? 0;
+  return {
+    ...product,
+    images,
+    image: images[0] ?? "",
+    stock,
+    inStock: stock > 0,
+  };
 }
 const { uploadProductImages } = require("../middleware/upload");
 

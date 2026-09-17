@@ -93,5 +93,30 @@
     "paymentMethod": "cod",
     "status": "pending",
     "createdAt": "2026-09-14T17:23:56.391Z"
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "products": [
+      {
+        "productId": 6,
+        "quantity": 2
+      }
+    ],
+    "total": 338,
+    "shippingInfo": {
+      "fullName": "09.Nguyễn Đức",
+      "country": "VN",
+      "street": "rsdfwg",
+      "city": "n",
+      "state": "rfte",
+      "zipCode": "354",
+      "phone": "34653454352435",
+      "email": "ducca369@gmail.com",
+      "notes": "hbedtrfjhn"
+    },
+    "paymentMethod": "cod",
+    "status": "completed",
+    "createdAt": "2026-09-17T05:37:26.193Z"
   }
 ]

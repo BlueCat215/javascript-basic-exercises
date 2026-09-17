@@ -16,11 +16,14 @@ export const productSchema = z
       ])
       .optional(),
     category: z.string().min(1, "Vui lòng chọn danh mục"),
+    stock: z.coerce
+      .number({ invalid_type_error: "Số lượng phải là số" })
+      .int("Số lượng phải là số nguyên")
+      .min(0, "Số lượng không được âm"),
     images: z.array(z.string()).optional(),
-    description: z.string().max(1000, "Mô tả tối đa 1000 ký tự").optional(),
+    description: z.string().max(500, "Mô tả tối đa 500 ký tự").optional(),
     isNew: z.boolean().optional(),
     isBestSeller: z.boolean().optional(),
-    inStock: z.boolean().optional(),
   })
   .refine(
     (data) =>

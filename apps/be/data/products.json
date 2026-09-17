@@ -13,7 +13,8 @@
     "isNew": false,
     "isBestSeller": false,
     "inStock": false,
-    "id": 1
+    "id": 1,
+    "stock": 0
   },
   {
     "title": "Áo thun nam cao cấp dáng ôm form (Slim Fit)",
@@ -29,7 +30,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Áo khoác nam chất liệu cotton",
@@ -45,7 +47,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Áo nam dáng ôm phong cách thường ngày",
@@ -61,7 +64,8 @@
     "originalPrice": 21.16,
     "images": [
       "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Vòng tay John Hardy dòng Legends Naga - Rồng nước vàng & bạc",
@@ -77,23 +81,22 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Nhẫn vàng khối nhỏ đính đá Micropave",
     "price": 169,
-    "description": "Cam kết hài lòng tuyệt đối với chính sách đổi trả hoặc hoàn tiền linh hoạt trong vòng 30 ngày kể từ ngày mua hàng. Sản phẩm được thiết kế và phân phối bởi Hafeez Center tại Hoa Kỳ, đảm bảo tiêu chuẩn chất lượng cao. Với thiết kế tinh tế đính đá nhỏ xinh dọc theo vòng nhẫn, đây là món trang sức phù hợp để đeo hàng ngày hoặc kết hợp cùng các bộ trang sức khác, mang đến vẻ đẹp sang trọng nhưng không kém phần nhẹ nhàng, thanh lịch.",
-    "category": "Trang sức",
-    "id": 6,
-    "brand": "Nova",
-    "purchases": 31,
-    "isBestSeller": false,
-    "isNew": true,
-    "inStock": false,
     "originalPrice": 307.27,
+    "category": "Trang sức",
+    "stock": 2,
     "images": [
       "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png"
-    ]
+    ],
+    "description": "Cam kết hài lòng tuyệt đối với chính sách đổi trả hoặc hoàn tiền linh hoạt trong vòng 30 ngày kể từ ngày mua hàng. Sản phẩm được thiết kế và phân phối bởi Hafeez Center tại Hoa Kỳ, đảm bảo tiêu chuẩn chất lượng cao. Với thiết kế tinh tế đính đá nhỏ xinh dọc theo vòng nhẫn, đây là món trang sức phù hợp để đeo hàng ngày hoặc kết hợp cùng các bộ trang sức khác, mang đến vẻ đẹp sang trọng nhưng không kém phần nhẹ nhàng, thanh lịch.",
+    "isNew": true,
+    "isBestSeller": false,
+    "id": 6
   },
   {
     "title": "Nhẫn kiểu Công chúa mạ vàng trắng",
@@ -109,7 +112,8 @@
     "originalPrice": 14.09,
     "images": [
       "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Khuyên tai nong đôi mạ vàng hồng bằng thép không gỉ - Pierced Owl",
@@ -125,7 +129,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Ổ cứng di động WD Elements 2TB - Cổng USB 3.0",
@@ -141,7 +146,8 @@
     "originalPrice": 213.33,
     "images": [
       "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Ổ cứng SSD SanDisk SSD PLUS 1TB - Chuẩn SATA III 6 Gb/s",
@@ -157,7 +163,8 @@
     "originalPrice": 140,
     "images": [
       "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 11,
@@ -173,7 +180,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 12,
@@ -193,7 +201,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_t.png"
-    ]
+    ],
+    "stock": 0
   },
   {
     "title": "Màn hình Acer SB220Q bi 21.5 inch Full HD (1920 x 1080) IPS siêu mỏng",
@@ -209,7 +218,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Màn hình cong chơi game Samsung 49 inch CHG90 144Hz (LC49HG90DMNXZA) – Siêu rộng QLED",
@@ -225,7 +235,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Áo khoác nữ trượt tuyết 3 trong 1 BIYLACLESEN - Áo khoác giữ ấm mùa đông",
@@ -241,7 +252,8 @@
     "originalPrice": 67.05,
     "images": [
       "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 16,
@@ -261,7 +273,8 @@
     "originalPrice": 99.83,
     "images": [
       "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Áo mưa nữ dáng gió sọc caro phù hợp leo núi - Rain Jacket Women Windbreaker",
@@ -277,7 +290,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 18,
@@ -297,7 +311,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Áo thun nữ tay ngắn thấm hút mồ hôi - Opna Women's Moisture",
@@ -313,7 +328,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "title": "Áo thun nữ tay ngắn phong cách năng động - DANVOUY",
@@ -329,7 +345,8 @@
     "originalPrice": null,
     "images": [
       "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 33,
@@ -349,7 +366,8 @@
     "originalPrice": 113,
     "images": [
       "https://www.sony.com.vn/image/942609f36382af7dd7b2cb9a10f541ec?fmt=png-alpha"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 34,
@@ -369,7 +387,8 @@
     "originalPrice": null,
     "images": [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSRqhv_SfakfdD0eCf1uRcoG0TSgSlqW52v8vRBqQj2GHAw5h7Q4tGmtI&s=10"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 35,
@@ -389,7 +408,8 @@
     "originalPrice": null,
     "images": [
       "https://resource.logitech.com/w_544,h_466,ar_7:6,c_pad,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/2025-update/mx-master-3s-bluetooth-edition-top-view-graphite-new-1.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 36,
@@ -409,7 +429,8 @@
     "originalPrice": null,
     "images": [
       "https://product.hstatic.net/200000837185/product/3_6d931ce47b244d58881a615413cf9e52_master.png"
-    ]
+    ],
+    "stock": 50
   },
   {
     "id": 37,
@@ -429,6 +450,7 @@
     "originalPrice": 9,
     "images": [
       "https://cdn.hstatic.net/products/200000594885/1d3a8f2855cc8b17346392d0ac279d51_1d2aab52baea42d4ae6c512a90a94130.png"
-    ]
+    ],
+    "stock": 50
   }
 ]

@@ -206,8 +206,29 @@
   {
     "id": 14,
     "userId": 1,
-    "status": "active",
-    "products": [],
+    "status": "ordered",
+    "products": [
+      {
+        "productId": 6,
+        "quantity": 2
+      }
+    ],
     "date": "2026-09-14T17:23:56.392Z"
+  },
+  {
+    "id": 15,
+    "userId": 1,
+    "status": "active",
+    "products": [
+      {
+        "productId": 3,
+        "quantity": 3
+      },
+      {
+        "productId": 37,
+        "quantity": 1
+      }
+    ],
+    "date": "2026-09-17T05:37:26.195Z"
   }
 ]
