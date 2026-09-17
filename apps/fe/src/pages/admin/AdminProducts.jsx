@@ -13,13 +13,14 @@ import { ProductForm } from "../../components/ProductForm";
 import { Pagination } from "../../components/Pagination";
 import { ExcelImportButton } from "./components/ExcelImportButton";
 import { TableRowSkeleton } from "../../components/Skeleton";
+import adminProductService from "./services/adminProductService";
 
 const initialForm = {
   title: "",
   price: "",
   originalPrice: "",
   description: "",
-  image: "",
+  image: [],
   category: "",
   isNew: false,
   isBestSeller: false,
@@ -57,6 +58,7 @@ export default function AdminProducts() {
     methods.reset({
       ...initialForm,
       ...product,
+      images: product.images ?? [],
       originalPrice: product.originalPrice ?? "",
     });
     setIsPanelOpen(true);
@@ -248,7 +250,11 @@ export default function AdminProducts() {
                 className="flex flex-col flex-1 min-h-0"
               >
                 <div className="flex-1 overflow-y-auto px-6 py-6">
-                  <ProductForm />
+                  <ProductForm
+                    onUpload={(files) =>
+                      adminProductService.uploadImages(files)
+                    }
+                  />
                 </div>
                 <div className="flex gap-2 px-6 py-4 border-t border-line shrink-0">
                   <button type="submit" className="btn-primary flex-1">

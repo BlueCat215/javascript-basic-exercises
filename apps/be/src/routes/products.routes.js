@@ -4,6 +4,11 @@ const { authenticateToken, authorizeRoles } = require("../middleware/auth");
 
 const router = express.Router();
 const products = new JsonCollection("products.json");
+function withImage(product) {
+  const images = Array.isArray(product.images) ? product.images : [];
+  return { ...product, images, image: images[0] ?? "" };
+}
+const { uploadProductImages } = require("../middleware/upload");
 
 // Chuẩn hóa dữ liệu sản phẩm từ nhiều cách đặt tên khác nhau.
 function normalizeRow(row) {
@@ -26,7 +31,9 @@ function normalizeRow(row) {
     title: pick("title", "tên", "tên sản phẩm", "name", "product name"),
     price: pick("price", "giá", "giá bán"),
     category: pick("category", "danh mục", "category name"),
-    image: pick("image", "ảnh", "hình ảnh", "image url"),
+    images: pick("image", "ảnh", "hình ảnh", "image url")
+      ? [pick("image", "ảnh", "hình ảnh", "image url")]
+      : [],
     description: pick("description", "mô tả"),
   };
 }
@@ -120,7 +127,7 @@ router.get("/", async (req, res) => {
   const paginated = items.slice((pageNum - 1) * sizeNum, pageNum * sizeNum);
 
   res.json({
-    items: paginated,
+    items: paginated.map(withImage),
     total,
     page: pageNum,
     pageSize: sizeNum,
@@ -155,7 +162,9 @@ router.get("/category/:categoryName", async (req, res) => {
       (p) => p.category === req.params.categoryName,
     );
 
-    res.json(limit ? filtered.slice(0, Number(limit)) : filtered);
+    res.json(
+      (limit ? filtered.slice(0, Number(limit)) : filtered).map(withImage),
+    );
   } catch (error) {
     res.status(500).json({
       message: "Lỗi hệ thống khi lọc theo danh mục",
@@ -182,7 +191,7 @@ router.get("/recommended", async (req, res) => {
       items = items.filter((p) => p.category === tab);
     }
 
-    res.json(items.slice(0, Number(limit)));
+    res.json(items.slice(0, Number(limit)).map(withImage));
   } catch (error) {
     res.status(500).json({
       message: "Lỗi hệ thống khi lấy sản phẩm đề xuất",
@@ -206,7 +215,7 @@ router.get("/clearance", async (req, res) => {
       }))
       .sort((a, b) => b.discountPercent - a.discountPercent);
 
-    res.json(items.slice(0, Number(limit)));
+    res.json(items.slice(0, Number(limit)).map(withImage));
   } catch (error) {
     res.status(500).json({
       message: "Lỗi hệ thống khi lấy sản phẩm thanh lý",
@@ -228,7 +237,7 @@ router.get("/new-arrival", async (req, res) => {
 
     items = [...items].sort((a, b) => b.id - a.id);
 
-    res.json(items.slice(0, Number(limit)));
+    res.json(items.slice(0, Number(limit)).map(withImage));
   } catch (error) {
     res.status(500).json({
       message: "Lỗi hệ thống khi lấy sản phẩm mới về",
@@ -255,6 +264,24 @@ router.get("/brands", async (req, res) => {
   );
 });
 
+// Admin upload ảnh sản phẩm (tối đa 6 ảnh/lần).
+router.post(
+  "/upload",
+  authenticateToken,
+  authorizeRoles("admin"),
+  uploadProductImages.array("images", 6),
+  (req, res) => {
+    if (!req.files?.length) {
+      return res.status(400).json({ message: "Chưa chọn ảnh nào" });
+    }
+
+    // Trả về đường dẫn tương đối để lưu vào products.json.
+    const paths = req.files.map((f) => `/uploads/products/${f.filename}`);
+
+    res.status(201).json({ images: paths });
+  },
+);
+
 // Lấy sản phẩm theo ID.
 router.get("/:id", async (req, res) => {
   try {
@@ -266,7 +293,7 @@ router.get("/:id", async (req, res) => {
       });
     }
 
-    res.json(item);
+    res.json(withImage(item));
   } catch (error) {
     res.status(500).json({
       message: "Lỗi hệ thống khi tìm sản phẩm",
@@ -286,7 +313,7 @@ router.post(
         price,
         description,
         category,
-        image,
+        images,
         originalPrice,
         isNew,
         isBestSeller,
@@ -304,7 +331,7 @@ router.post(
         price: Number(price),
         description: description || "",
         category,
-        image: image || "",
+        images: Array.isArray(images) ? images : images ? [images] : [],
         rating: { rate: 0, count: 0 },
         purchases: 0,
         originalPrice: originalPrice ? Number(originalPrice) : null,
@@ -313,7 +340,7 @@ router.post(
         inStock: inStock === undefined ? true : Boolean(inStock),
       });
 
-      res.status(201).json(newProduct);
+      res.status(201).json(withImage(newProduct));
     } catch (error) {
       res.status(500).json({
         message: "Lỗi hệ thống khi tạo sản phẩm",
@@ -339,7 +366,7 @@ router.put(
         });
       }
 
-      res.json(updated);
+      res.json(withImage(updated));
     } catch (error) {
       res.status(500).json({
         message: "Lỗi hệ thống khi cập nhật sản phẩm",
@@ -365,7 +392,7 @@ router.patch(
         });
       }
 
-      res.json(updated);
+      res.json(withImage(updated));
     } catch (error) {
       res.status(500).json({
         message: "Lỗi hệ thống khi sửa sản phẩm",
@@ -440,7 +467,7 @@ router.post(
           title: row.title,
           price: Number(row.price) || 0,
           category: row.category || "",
-          image: row.image || "",
+          images: row.image ? [row.image] : [],
           description: row.description || "",
           rating: { rate: 0, count: 0 },
         });

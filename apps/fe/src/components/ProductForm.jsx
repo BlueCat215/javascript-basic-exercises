@@ -1,4 +1,6 @@
+import { useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { imageUrl } from "../utils/imageUrl";
 
 const Field = ({ label, children, error }) => (
   <label className="block w-full">
@@ -17,11 +19,53 @@ const Field = ({ label, children, error }) => (
 const inputClass =
   "w-full border border-line bg-white px-3 sm:px-4 py-2.5 sm:py-2 text-base sm:text-sm rounded-tag focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all placeholder:text-ink/30";
 
-export const ProductForm = () => {
+export const ProductForm = ({ onUpload }) => {
   const {
     register,
+    setValue,
+    watch,
     formState: { errors },
   } = useFormContext();
+
+  const images = watch("images") ?? [];
+
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+
+  const handleFileChange = async (e) => {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+
+    const remaining = 6 - images.length;
+    if (remaining <= 0) {
+      setUploadError("Đã đạt tối đa 6 ảnh");
+      return;
+    }
+
+    setUploading(true);
+    setUploadError("");
+
+    try {
+      const result = await onUpload(files.slice(0, remaining));
+      setValue("images", [...images, ...result.images], {
+        shouldValidate: true,
+      });
+    } catch (err) {
+      setUploadError(err?.response?.data?.message ?? "Upload thất bại");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    setValue(
+      "images",
+      images.filter((_, i) => i !== index),
+      { shouldValidate: true },
+    );
+  };
 
   return (
     <div className="space-y-4 sm:space-y-5 lg:space-y-6">
@@ -65,14 +109,94 @@ export const ProductForm = () => {
         />
       </Field>
 
-      <Field label="Ảnh (URL)" error={errors.image?.message}>
-        <input
-          className={inputClass}
-          type="url"
-          placeholder="https://…"
-          {...register("image")}
-        />
-      </Field>
+      {/* Khu vực upload ảnh */}
+      <div className="block w-full">
+        <span className="block font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-ink/60 mb-1.5 leading-relaxed">
+          Ảnh sản phẩm ({images.length}/6)
+        </span>
+
+        {/* Lưới preview ảnh hiện có */}
+        {images.length > 0 && (
+          <div className="flex flex-wrap gap-3 mb-3">
+            {images.map((src, i) => (
+              <div
+                key={i}
+                className="relative w-20 h-24 rounded-lg border border-line bg-neutral-50 shrink-0 group"
+              >
+                <img
+                  src={imageUrl(src)}
+                  alt={`Ảnh ${i + 1}`}
+                  className="w-full h-full object-contain p-1.5 rounded-lg mix-blend-multiply"
+                />
+                {/* Badge ảnh đại diện */}
+                {i === 0 && (
+                  <span className="absolute bottom-0 left-0 right-0 text-center text-[9px] font-bold bg-ink text-white rounded-b-lg py-0.5">
+                    Đại diện
+                  </span>
+                )}
+                {/* Nút xoá */}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(i)}
+                  className="absolute -top-2 -right-2 w-5 h-5 bg-rust text-white rounded-full text-xs leading-none flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Xoá ảnh"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Nút chọn file — ẩn khi đã đủ 6 ảnh */}
+        {images.length < 6 && (
+          <div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+              multiple
+              className="hidden"
+              onChange={handleFileChange}
+              disabled={uploading}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="flex items-center gap-2 border border-dashed border-line hover:border-gold text-ink/50 hover:text-gold text-sm px-4 py-2.5 rounded-tag transition-colors disabled:opacity-50"
+            >
+              {uploading ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-gold/30 border-t-gold rounded-full animate-spin" />
+                  Đang tải lên…
+                </>
+              ) : (
+                <>
+                  <span className="text-lg leading-none">+</span>
+                  Chọn ảnh
+                </>
+              )}
+            </button>
+            <p className="text-[11px] text-ink/40 mt-1.5">
+              Tối đa 6 ảnh · Mỗi ảnh ≤ 3MB · jpeg, png, webp, gif, avif · Ảnh
+              đầu tiên là ảnh đại diện
+            </p>
+          </div>
+        )}
+
+        {/* Lỗi upload */}
+        {uploadError && (
+          <p className="text-rust text-xs mt-1.5 font-medium">{uploadError}</p>
+        )}
+
+        {/* Lỗi validation từ zod */}
+        {errors.images?.message && (
+          <p className="text-rust text-xs mt-1.5 font-medium">
+            {errors.images.message}
+          </p>
+        )}
+      </div>
 
       <Field label="Mô tả" error={errors.description?.message}>
         <textarea

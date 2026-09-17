@@ -10,6 +10,7 @@ import {
 } from "../pages/account/hooks/useFavoriteQueries";
 import { HeartIcon, StarIcon } from "./icons";
 import { ImageWithSkeleton } from "./ImageWithSkeleton";
+import { imageUrl } from "../utils/imageUrl";
 
 export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
   const {
@@ -110,7 +111,7 @@ export const ProductCard = ({ product, onEdit, onDelete, isAdmin }) => {
             </span>
           )}
           <ImageWithSkeleton
-            src={image}
+            src={imageUrl(image)}
             alt={title}
             className="absolute inset-0 rounded-md"
             imgClassName="object-contain p-2 sm:p-4 group-hover:scale-105 transition-transform duration-300"

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
 
 const { PORT } = require("./src/config");
 const authRoutes = require("./src/routes/auth.routes");
@@ -26,6 +27,8 @@ const app = express();
 // Middleware cơ bản.
 app.use(cors());
 app.use(express.json());
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Đăng ký các API routes.
 app.use("/auth", authRoutes);
@@ -56,6 +59,22 @@ app.use((req, res) => {
 // Middleware xử lý lỗi tập trung.
 app.use((err, req, res, next) => {
   console.error("Global Error Caught:", err);
+
+  if (err instanceof multer.MulterError) {
+    const messages = {
+      LIMIT_FILE_SIZE: "Ảnh vượt quá dung lượng cho phép (tối đa 3MB)",
+      LIMIT_FILE_COUNT: "Vượt quá số lượng ảnh cho phép (tối đa 6 ảnh)",
+      LIMIT_UNEXPECTED_FILE: "Trường upload không hợp lệ",
+    };
+
+    return res.status(400).json({
+      message: messages[err.code] || "Lỗi khi upload ảnh",
+    });
+  }
+
+  if (err.message?.startsWith("Chỉ chấp nhận file ảnh")) {
+    return res.status(400).json({ message: err.message });
+  }
 
   // Xử lý JSON gửi lên bị sai định dạng.
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {

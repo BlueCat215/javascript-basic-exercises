@@ -7,6 +7,13 @@ const adminProductService = {
   remove: (id) => api.delete(`/products/${id}`),
   bulkImport: (products) => api.post("/products/bulk", { products }),
   getCategories: () => api.get("/products/categories"),
+  uploadImages: (files) => {
+    const form = new FormData();
+    files.forEach((f) => form.append("images", f));
+    return api.post("/products/upload", form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
 };
 
 export default adminProductService;
