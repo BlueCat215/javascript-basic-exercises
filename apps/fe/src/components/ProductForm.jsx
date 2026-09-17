@@ -109,13 +109,11 @@ export const ProductForm = ({ onUpload }) => {
         />
       </Field>
 
-      {/* Khu vực upload ảnh */}
       <div className="block w-full">
         <span className="block font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-ink/60 mb-1.5 leading-relaxed">
           Ảnh sản phẩm ({images.length}/6)
         </span>
 
-        {/* Lưới preview ảnh hiện có */}
         {images.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-3">
             {images.map((src, i) => (
@@ -128,13 +126,11 @@ export const ProductForm = ({ onUpload }) => {
                   alt={`Ảnh ${i + 1}`}
                   className="w-full h-full object-contain p-1.5 rounded-lg mix-blend-multiply"
                 />
-                {/* Badge ảnh đại diện */}
                 {i === 0 && (
                   <span className="absolute bottom-0 left-0 right-0 text-center text-[9px] font-bold bg-ink text-white rounded-b-lg py-0.5">
                     Đại diện
                   </span>
                 )}
-                {/* Nút xoá */}
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(i)}
@@ -148,7 +144,6 @@ export const ProductForm = ({ onUpload }) => {
           </div>
         )}
 
-        {/* Nút chọn file — ẩn khi đã đủ 6 ảnh */}
         {images.length < 6 && (
           <div>
             <input
@@ -185,18 +180,27 @@ export const ProductForm = ({ onUpload }) => {
           </div>
         )}
 
-        {/* Lỗi upload */}
         {uploadError && (
           <p className="text-rust text-xs mt-1.5 font-medium">{uploadError}</p>
         )}
 
-        {/* Lỗi validation từ zod */}
         {errors.images?.message && (
           <p className="text-rust text-xs mt-1.5 font-medium">
             {errors.images.message}
           </p>
         )}
       </div>
+
+      <Field label="Số lượng trong kho" error={errors.stock?.message}>
+        <input
+          className={`${inputClass} font-mono`}
+          type="number"
+          min="0"
+          step="1"
+          placeholder="0"
+          {...register("stock")}
+        />
+      </Field>
 
       <Field label="Mô tả" error={errors.description?.message}>
         <textarea
@@ -218,7 +222,6 @@ export const ProductForm = ({ onUpload }) => {
             Sản phẩm mới
           </span>
         </label>
-
         <label className="flex items-center gap-2.5 text-sm sm:text-[15px] cursor-pointer select-none group py-1">
           <input
             type="checkbox"
@@ -227,17 +230,6 @@ export const ProductForm = ({ onUpload }) => {
           />
           <span className="group-hover:text-green transition-colors text-ink">
             Bán chạy
-          </span>
-        </label>
-
-        <label className="flex items-center gap-2.5 text-sm sm:text-[15px] cursor-pointer select-none group py-1">
-          <input
-            type="checkbox"
-            className="w-4 h-4 sm:w-4.5 sm:h-4.5 rounded border-line text-green focus:ring-green/40 transition-colors cursor-pointer"
-            {...register("inStock")}
-          />
-          <span className="group-hover:text-green transition-colors text-ink">
-            Còn hàng
           </span>
         </label>
       </div>

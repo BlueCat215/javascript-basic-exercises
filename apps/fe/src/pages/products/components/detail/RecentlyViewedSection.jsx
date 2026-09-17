@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useRecentlyViewed } from "../../hooks/useRecentlyViewed";
+import { imageUrl } from "../../../../utils/imageUrl";
 
 export const RecentlyViewedSection = ({ excludeId }) => {
   const items = useRecentlyViewed(excludeId);
@@ -20,7 +21,7 @@ export const RecentlyViewedSection = ({ excludeId }) => {
           >
             <div className="shrink-0 w-24 h-24 flex items-center justify-center p-2 overflow-hidden">
               <img
-                src={p.image}
+                src={imageUrl(p.image)}
                 alt={p.title}
                 className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
               />

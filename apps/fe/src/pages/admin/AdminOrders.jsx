@@ -6,6 +6,7 @@ import {
 import { useAdminAccountsQuery } from "./hooks/useAdminAccountQueries";
 import { useAdminProductsQuery } from "./hooks/useAdminProductQueries";
 import { TableRowSkeleton } from "../../components/Skeleton";
+import { imageUrl } from "../../utils/imageUrl";
 
 const STATUS_OPTIONS = ["pending", "shipped", "completed", "cancelled"];
 
@@ -105,7 +106,7 @@ function OrderDetailPanel({ order, customerName, productById, onClose }) {
                   >
                     {product?.image && (
                       <img
-                        src={product.image}
+                        src={imageUrl(product.image)}
                         alt={product.title}
                         className="w-10 h-10 object-cover border border-line shrink-0"
                       />
@@ -319,7 +320,7 @@ export default function AdminOrders() {
                       return product?.image ? (
                         <img
                           key={p.productId}
-                          src={product.image}
+                          src={imageUrl(product.image)}
                           alt={product.title}
                           title={product.title}
                           className="w-8 h-8 rounded-full object-cover border-2 border-white"

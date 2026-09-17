@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { useProductListQuery } from "../hooks/useProductListQuery";
+import { imageUrl } from "../utils/imageUrl";
 
 const REQUIRED_FIELDS = ["title", "price", "image", "description", "category"];
 
@@ -79,7 +80,7 @@ export const TopPromoBanner = () => {
 
           {promoProduct?.image && (
             <img
-              src={promoProduct.image}
+              src={imageUrl(promoProduct.image)}
               alt={promoProduct.title || "Sản phẩm khuyến mãi"}
               loading="lazy"
               onError={(e) => {

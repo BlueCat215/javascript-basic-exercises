@@ -1,4 +1,5 @@
 import { PaymentMethodSelector } from "./PaymentMethodSelector";
+import { imageUrl } from "../../../utils/imageUrl";
 
 export const OrderSummary = ({
   items,
@@ -30,7 +31,7 @@ export const OrderSummary = ({
             >
               <div className="flex items-center gap-3">
                 <img
-                  src={i.product?.image}
+                  src={imageUrl(i.product?.image)}
                   alt={i.product?.title}
                   className="w-12 h-12 object-contain rounded border border-line bg-white shrink-0 p-1"
                 />

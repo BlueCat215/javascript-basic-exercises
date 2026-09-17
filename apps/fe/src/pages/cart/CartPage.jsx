@@ -18,6 +18,7 @@ import {
   CheckCircleIcon,
   TruckIcon,
 } from "../../components/icons";
+import { imageUrl } from "../../utils/imageUrl";
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -31,9 +32,6 @@ export default function CartPage() {
   const [voucherCode, setVoucherCode] = useState("");
   const [voucher, setVoucher] = useState(null);
 
-  // Sản phẩm được chọn để thanh toán. Mặc định sản phẩm mới xuất hiện trong
-  // giỏ (lần đầu tải, hoặc vừa thêm) sẽ được tự chọn; sản phẩm bị bỏ chọn
-  // bởi người dùng vẫn giữ trạng thái đó cho tới khi bị xóa khỏi giỏ.
   const [selectedIds, setSelectedIds] = useState(new Set());
   const knownIdsRef = useRef(new Set());
 
@@ -155,7 +153,7 @@ export default function CartPage() {
 
                   <div className="w-full sm:w-32 h-32 shrink-0 bg-paper rounded-md border border-line overflow-hidden flex items-center justify-center p-3">
                     <img
-                      src={item.product?.image}
+                      src={imageUrl(item.product?.image)}
                       alt={item.product?.title}
                       className="w-full h-full object-contain"
                     />

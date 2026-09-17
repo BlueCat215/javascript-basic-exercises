@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useProductsByCategories } from "../hooks/useHomeQueries";
+import { imageUrl } from "../../../utils/imageUrl";
 
 const PANEL_THEMES = [
   { bg: "bg-green-light/50", accent: "text-white" },
@@ -17,7 +18,7 @@ const PromoTile = ({ product }) => {
       className="relative h-30 rounded overflow-hidden flex items-end group"
     >
       <img
-        src={product.image}
+        src={imageUrl(product.image)}
         alt={product.title}
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300"
       />
@@ -70,7 +71,7 @@ const CategoryPanel = ({ category, products, theme }) => {
             >
               <span className="w-16 h-16  flex items-center justify-center overflow-hidden shrink-0">
                 <img
-                  src={p.image}
+                  src={imageUrl(p.image)}
                   alt={p.title}
                   className="w-full h-full object-contain group-hover:scale-110 transition"
                 />

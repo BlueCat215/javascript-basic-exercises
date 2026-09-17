@@ -3,6 +3,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useProductListQuery } from "../../../hooks/useProductListQuery";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../components/icons";
 import { ImageWithSkeleton } from "../../../components/ImageWithSkeleton";
+import { imageUrl } from "../../../utils/imageUrl";
 
 const REQUIRED_FIELDS = ["title", "price", "image", "description", "category"];
 const SLIDE_COUNT = 4;
@@ -101,7 +102,7 @@ export const HeroBanner = () => {
           <div className="hidden md:block relative h-85 w-95 shrink-0">
             <ImageWithSkeleton
               key={product.id}
-              src={product.image}
+              src={imageUrl(product.image)}
               alt={product.title}
               loading="eager"
               className="absolute inset-0"

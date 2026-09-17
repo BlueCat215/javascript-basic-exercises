@@ -20,11 +20,11 @@ const initialForm = {
   price: "",
   originalPrice: "",
   description: "",
-  image: [],
+  images: [],
+  stock: 0,
   category: "",
   isNew: false,
   isBestSeller: false,
-  inStock: true,
 };
 
 export default function AdminProducts() {
@@ -59,6 +59,7 @@ export default function AdminProducts() {
       ...initialForm,
       ...product,
       images: product.images ?? [],
+      stock: product.stock ?? 0,
       originalPrice: product.originalPrice ?? "",
     });
     setIsPanelOpen(true);

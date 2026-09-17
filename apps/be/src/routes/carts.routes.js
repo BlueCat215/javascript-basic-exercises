@@ -5,6 +5,17 @@ const { authenticateToken } = require("../middleware/auth");
 const router = express.Router();
 
 const carts = new JsonCollection("carts.json");
+function withImage(product) {
+  const images = Array.isArray(product.images) ? product.images : [];
+  const stock = product.stock ?? 0;
+  return {
+    ...product,
+    images,
+    image: images[0] ?? "",
+    stock,
+    inStock: stock > 0,
+  };
+}
 const productsCollection = new JsonCollection("products.json");
 
 // Bổ sung thông tin sản phẩm vào từng item trong giỏ hàng.
@@ -15,7 +26,8 @@ async function enrichCart(cart) {
   const productMap = new Map(allProducts.map((p) => [p.id, p]));
 
   const products = (cart.products || []).map((item) => {
-    const product = productMap.get(Number(item.productId)) || null;
+    const raw = productMap.get(Number(item.productId)) || null;
+    const product = raw ? withImage(raw) : null;
     return { ...item, product };
   });
 

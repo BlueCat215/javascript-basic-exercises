@@ -4,6 +4,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useOrdersQuery } from "./hooks/useOrdersQuery";
 import { useProductListQuery } from "../../hooks/useProductListQuery";
 import { LoadingState, EmptyState } from "../../components/StatusState";
+import { imageUrl } from "../../utils/imageUrl";
 
 const statusLabel = {
   pending: "Đang xử lý",
@@ -127,7 +128,7 @@ export default function OrdersPage() {
                         <div className="w-14 h-14 shrink-0 bg-paper rounded-md border border-line overflow-hidden flex items-center justify-center p-1.5">
                           {product?.image ? (
                             <img
-                              src={product.image}
+                              src={imageUrl(product.image)}
                               alt={product.title}
                               className="w-full h-full object-contain"
                             />

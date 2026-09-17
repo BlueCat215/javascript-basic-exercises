@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { imageUrl } from "../../../utils/imageUrl";
 import {
   usePromoBannerProducts,
   useClearanceBannerProducts,
@@ -69,7 +70,7 @@ export const DualPromoBanners = () => {
               </Link>
             </div>
             <img
-              src={featured.image}
+              src={imageUrl(featured.image)}
               alt={featured.title}
               className="w-48 h-48 object-contain z-10 mix-blend-screen"
             />
@@ -110,7 +111,7 @@ export const DualPromoBanners = () => {
               </Link>
             </div>
             <img
-              src={onSale.image}
+              src={imageUrl(onSale.image)}
               alt={onSale.title}
               className="w-48 h-48 object-contain"
             />
