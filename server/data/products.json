@@ -4,34 +4,31 @@
     "price": 213.95,
     "originalPrice": null,
     "category": "Thời trang nam",
+    "stock": 0,
     "images": [
       "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
-      "/uploads/products/1789621728336-547474336.jpg",
-      "/uploads/products/1789621728342-212580592.webp"
+      "/uploads/products/1789621728336-547474336.jpg"
     ],
     "description": "Chiếc ba lô hoàn hảo cho việc sử dụng hàng ngày và những chuyến đi dạo trong rừng. Ngăn đệm êm ái giúp bạn cất laptop (kích thước lên đến 15 inch) một cách an toàn, tránh trầy xước trong quá trình di chuyển. Thiết kế nhiều ngăn tiện lợi cho phép sắp xếp gọn gàng sổ tay, ví, chìa khóa, điện thoại và các vật dụng cần thiết hàng ngày khác. Chất liệu vải bền chắc, có khả năng chống thấm nước nhẹ, cùng dây đeo có đệm êm và có thể điều chỉnh, phù hợp với nhiều vóc dáng khác nhau. Đây là lựa chọn lý tưởng cho học sinh, sinh viên, dân văn phòng cũng như những người yêu thích du lịch, dã ngoại hay đi bộ đường dài.",
     "isNew": false,
     "isBestSeller": false,
-    "inStock": false,
-    "id": 1,
-    "stock": 0
+    "id": 1
   },
   {
     "title": "Áo thun nam cao cấp dáng ôm form (Slim Fit)",
     "price": 21.3,
-    "description": "Kiểu dáng ôm sát cơ thể, tay raglan dài phối màu tương phản tạo điểm nhấn thời trang, cổ áo kiểu henley với ba nút cài tinh tế. Chất liệu vải nhẹ và mềm mại giúp thấm hút mồ hôi tốt, mang lại cảm giác thoáng mát và thoải mái suốt cả ngày dài. Đường may chắc chắn, tỉ mỉ ở phần cổ tròn giúp áo bền đẹp theo thời gian, phù hợp cho cả những người yêu bóng chày lẫn phong cách thời trang thường ngày. Sản phẩm phù hợp mặc đi làm, đi chơi, tập luyện thể thao nhẹ hoặc phối cùng áo khoác ngoài vào những ngày se lạnh.",
-    "category": "Thời trang nam",
-    "id": 2,
-    "brand": "Urban Craft",
-    "purchases": 2317,
-    "isBestSeller": false,
-    "isNew": true,
-    "inStock": true,
     "originalPrice": null,
+    "category": "Thời trang nam",
+    "stock": 50,
     "images": [
-      "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png"
+      "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png",
+      "/uploads/products/1789697111180-292011508.png",
+      "/uploads/products/1789697111250-227114510.png"
     ],
-    "stock": 50
+    "description": "Kiểu dáng ôm sát cơ thể, tay raglan dài phối màu tương phản tạo điểm nhấn thời trang, cổ áo kiểu henley với ba nút cài tinh tế. Chất liệu vải nhẹ và mềm mại giúp thấm hút mồ hôi tốt, mang lại cảm giác thoáng mát và thoải mái suốt cả ngày dài. Đường may chắc chắn, tỉ mỉ ở phần cổ tròn giúp áo bền đẹp theo thời gian, phù hợp cho cả những người yêu bóng chày lẫn phong cách thời trang thường ngày. Sản phẩm phù hợp mặc đi làm, đi chơi, tập luyện thể thao nhẹ hoặc phối cùng áo khoác ngoài vào những ngày se lạnh.",
+    "isNew": true,
+    "isBestSeller": false,
+    "id": 2
   },
   {
     "title": "Áo khoác nam chất liệu cotton",

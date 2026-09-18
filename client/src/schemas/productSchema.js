@@ -21,7 +21,7 @@ export const productSchema = z
       .int("Số lượng phải là số nguyên")
       .min(0, "Số lượng không được âm"),
     images: z.array(z.string()).optional(),
-    description: z.string().max(500, "Mô tả tối đa 500 ký tự").optional(),
+    description: z.string().max(2000, "Mô tả tối đa 2000 ký tự").optional(),
     isNew: z.boolean().optional(),
     isBestSeller: z.boolean().optional(),
   })

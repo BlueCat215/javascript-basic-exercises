@@ -1,5 +1,5 @@
 {
-  "name": "mock-store-api",
+  "name": "server",
   "version": "1.0.0",
   "description": "Mock server",
   "main": "server.js",
