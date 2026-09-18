@@ -58,7 +58,7 @@ export const Header = () => {
 
   return (
     <>
-      <TopPromoBanner />
+      {/* <TopPromoBanner /> */}
       {/* Header chính */}
       <header className="bg-green-light/90 py-3 sm:py-4">
         <div className="max-w-6xl mx-auto px-3 sm:px-6 flex items-center gap-2 sm:gap-4 lg:gap-6">
@@ -71,9 +71,12 @@ export const Header = () => {
           </button>
 
           <Link to="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center text-green font-bold text-base sm:text-lg shrink-0">
-              M
-            </div>
+            <img
+              src="/logo.svg"
+              alt="Logo Mini Shop"
+              className="h-10 sm:h-12 w-auto object-contain shrink-0"
+            />
+
             <span className="hidden xs:block text-white font-display text-sm sm:text-lg font-bold leading-tight whitespace-nowrap">
               Mini Shop <br className="hidden sm:block" /> Hieu
             </span>
